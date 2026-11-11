@@ -1,0 +1,1640 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using DAL.COMMON_DAL;
+using DAL.UserPermissions_DAL;
+using DAO.HRIS_DAO;
+using DAO.HRIS_DAO_EF;
+using HELPER_FUNCTIONS.HELPERS;
+
+public partial class UserSetup_EmpGeneralInformation : System.Web.UI.Page
+{
+
+    private CommonDataLoadDAL _commonDataLoad = new CommonDataLoadDAL();
+    private int mid = 0;
+    private string _userId;
+
+    ShowMessage aShowMessage = new ShowMessage();
+    Messages aMessages = new Messages();
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            DateReadOnly();
+            ButtonVisible();
+            LoadInitialDDL();
+
+            if (!string.IsNullOrEmpty(Request.QueryString["mid"]))
+            {
+                mid = int.Parse(Request.QueryString["mid"]);
+                hdpk.Value = mid.ToString();
+                if (mid > 0)
+                {
+                    lblNext.Visible = true;
+                    using (var db = new HRIS_SMCEntities())
+                    {
+                        var emp = (from j in db.tblEmpGeneralInfoes where j.EmpInfoId == mid select j).FirstOrDefault();
+ 
+                        empMasterCode.Text =   emp.EmpMasterCode;
+                        lblEmpName.Text = emp.EmpName;
+
+                        using (DataTable dtdesignation = _commonDataLoad.GetDTDesignationByEmpId(mid))
+                        {
+                            lblDesignation.Text = dtdesignation.Rows[0]["Designation"].ToString();
+
+                        }
+                        //lblDesignation.Text = emp.DesignationId.ToString();
+
+
+
+                        #region 1. General Information
+                        ddlCompany.SelectedValue = emp.CompanyId.ToString();
+                        ddlCompany_SelectedIndexChanged(null, null);
+                        txt_EmpName.Text = emp.EmpName;
+                        ddlGender.SelectedValue = emp.Gender;
+                        ddlBloodGroup.SelectedValue = emp.BloodGroup;
+                        txt_EmpTinNo.Text = emp.TinNo;
+
+                        txt_EmpFatherName.Text = emp.FatherName;
+                        ddlEmpFOccupation.SelectedValue = emp.FatherOccupation.ToString();
+                        txt_EmpMotherName.Text = emp.MotherName;
+                        ddlEmpMOccupation.SelectedValue = emp.MotherOccupation.ToString();
+                        txt_EmpDOB.Text = string.IsNullOrEmpty(emp.DateOfBirth.ToString())
+                            ? String.Empty
+                            : emp.DateOfBirth.Value.ToString("dd-MMM-yyyy");
+
+
+
+                        //SeparationDateTextBox.Text = string.IsNullOrEmpty(emp..ToString()) ? String.Empty : emp.DateOfBirth.Value.ToString("dd-MMM-yyyy");
+
+
+                        txt_EmpDOJ.Text = string.IsNullOrEmpty(emp.DateOfJoin.ToString())
+                            ? String.Empty
+                            : emp.DateOfJoin.Value.ToString("dd-MMM-yyyy");
+                        ddlEmpReligion.SelectedValue = emp.Religion;
+                        ddlEmpMaritalStatus.SelectedValue = emp.MaritalStatus;
+
+                        ddlEmpType.SelectedValue = emp.EmpTypeId.ToString();
+                        txt_EmpPlaceOfBirth.Text = emp.PlaceOfBirth;
+                        ddlEmpNationality.SelectedValue = emp.Nationality;
+                        txt_EmpNationalID.Text = emp.NationalIdNo;
+                        if (ddlEmpType.SelectedValue == "2")
+                        {
+                            txt_ContractEndDate.Text = string.IsNullOrEmpty(emp.ContractEndDate.ToString())
+                                ? String.Empty
+                                : emp.ContractEndDate.Value.ToString("dd-MMM-yyyy");
+                            //ddlSalFromProject.SelectedValue=emp.SalaryFromProject.ToString();
+                            ////TODO
+                            //for (int i = 0; i < cbl_ContractProject.Items.Count; i++)
+                            //{
+                            //    if (cbl_ContractProject.Items[i].Selected)
+                            //    {
+                            //        var ContractProject = new tblEmpContractProject();
+                            //        ContractProject.ProjectId = int.Parse(cbl_ContractProject.Items[i].Value);
+                            //        db.tblEmpContractProjects.Add(ContractProject);
+                            //    }
+                            //}
+                        }
+                        txt_EmpPassport.Text = emp.PassportNo;
+                        txt_EmpExpectedServiceLength.Text = emp.ExpectedServiceLength;
+                        txt_EmpDateOfRetirement.Text = string.IsNullOrEmpty(emp.DateOfRetirement.ToString())
+                            ? String.Empty
+                            : emp.DateOfRetirement.Value.ToString("dd-MMM-yyyy");
+
+                        txt_EmpDateOfConformation.Text = string.IsNullOrEmpty(emp.DateOfConformation.ToString())
+                            ? string.Empty
+                            : emp.DateOfConformation.Value.ToString("dd-MMM-yyyy");
+
+                        if (emp.ConformationStatus == "1")
+                        {
+                            ddlConformationStatus.SelectedIndex = 1;
+                        }
+
+
+                        if (emp.ConformationStatus == "0")
+                        {
+                            ddlConformationStatus.SelectedIndex = 2;
+                        }
+
+
+                        if (emp.ConformationStatus == "NULL")
+                        {
+                            ddlConformationStatus.SelectedValue = "-1";
+                        }
+
+
+                        if (!string.IsNullOrEmpty(emp.ReportingEmpId.ToString()))
+                        {
+                            hdReportingBoss.Value = emp.ReportingEmpId.ToString();
+                            int ReportingEmpId = int.Parse(emp.ReportingEmpId.ToString());
+
+                            var reportingBoss =
+                                (from j in db.vw_EmpInfo where j.EmpInfoId == ReportingEmpId select j).FirstOrDefault();
+                            txt_ReportingBoss.Text = reportingBoss.EmpName;
+                            txt_ReportingBossDesig.Text = reportingBoss.Designation;
+                        }
+
+                        chkIsProbationary.Checked = string.IsNullOrEmpty(emp.IsProbationary.ToString())
+                            ? false
+                            : bool.Parse(emp.IsProbationary.ToString());
+                        chkIsProgramContractual.Checked = string.IsNullOrEmpty(emp.IsProgramContractual.ToString())
+                            ? false
+                            : bool.Parse(emp.IsProgramContractual.ToString());
+                        txt_ProbationaryEndDate.Text = string.IsNullOrEmpty(emp.ProbationEndDate.ToString())
+                            ? string.Empty
+                            : emp.ProbationEndDate.Value.ToString("dd-MMM-yyyy");
+                        hfempimg.Value = emp.EmpImage;
+                        img_emp.ImageUrl = "~/UploadImg/" + emp.EmpImage;
+
+                        hfNomineeImage.Value = emp.NomineeImage;
+                        img_NomineeImage.ImageUrl = "~/UploadImg/" + emp.NomineeImage;
+
+
+                        hfSignature.Value = emp.EmpSign;
+                        SignatureImage.ImageUrl = "~/UploadImg/" + emp.EmpSign;
+
+                        using (DataTable dtreporting = _commonDataLoad.GetReportingEmployee(mid.ToString()))
+                        {
+                            if (dtreporting.Rows.Count > 0)
+                            {
+
+                                loadGridView.DataSource = dtreporting;
+                                loadGridView.DataBind();
+                            }
+
+                        }
+                        #endregion end 
+                    }
+                }
+            }
+        }
+    }
+
+    private void DateReadOnly()
+    {
+      //  txt_EmpDOB.Attributes.Add("readonly", "readonly");
+      //  txt_EmpDOJ.Attributes.Add("readonly", "readonly");
+        txt_ContractEndDate.Attributes.Add("readonly", "readonly");
+        txt_EmpDateOfRetirement.Attributes.Add("readonly", "readonly");
+       // txt_EmpDateOfConformation.Attributes.Add("readonly", "readonly");
+
+        txt_ProbationaryEndDate.Attributes.Add("readonly", "readonly");
+
+
+
+    }
+
+
+    public void ButtonVisible()
+    {
+        //if (Session["Status"] != null)
+        //{
+
+
+        //    if (Session["Status"].ToString() == "Add")
+        //    {
+        //        btn_Save.Visible = true;
+        //    }
+        //    else if (Session["Status"].ToString() == "Edit")
+        //    {
+        //        btn_Edit.Visible = true;
+        //    }
+        //    else if (Session["Status"].ToString() == "Delete")
+        //    {
+        //        btn_Del.Visible = true;
+        //    }
+        //    Session["Status"] = null;
+
+        //}
+        //else
+        //{
+        //    Response.Redirect("EmployeeInfoList.aspx");
+        //}
+
+    }
+
+    private void LoadInitialDDL()
+    {
+        using (DataTable dt = _commonDataLoad.GetCompanyDDL())
+        {
+            ddlCompany.DataSource = dt;
+            ddlCompany.DataValueField = "Value";
+            ddlCompany.DataTextField = "TextField";
+            ddlCompany.DataBind();
+        }
+
+        using (DataTable dt = _commonDataLoad.GetDDLEmpType())
+        {
+            ddlEmpType.DataSource = dt;
+            ddlEmpType.DataValueField = "Value";
+            ddlEmpType.DataTextField = "TextField";
+            ddlEmpType.DataBind();
+        }
+
+        using (DataTable dt = _commonDataLoad.GetDDLOccupation())
+        {
+            ddlEmpFOccupation.DataSource = dt;
+            ddlEmpFOccupation.DataValueField = "Value";
+            ddlEmpFOccupation.DataTextField = "TextField";
+            ddlEmpFOccupation.DataBind();
+
+            ddlEmpMOccupation.DataSource = dt;
+            ddlEmpMOccupation.DataValueField = "Value";
+            ddlEmpMOccupation.DataTextField = "TextField";
+            ddlEmpMOccupation.DataBind();
+
+            
+
+        }
+
+        using (DataTable dt = _commonDataLoad.GetDDLEmpType())
+        {
+            ddlEmpType.DataSource = dt;
+            ddlEmpType.DataValueField = "Value";
+            ddlEmpType.DataTextField = "TextField";
+            ddlEmpType.DataBind();
+        }
+
+        using (DataTable dt = _commonDataLoad.GetNationality())
+        {
+            ddlEmpNationality.DataSource = dt;
+            ddlEmpNationality.DataValueField = "Value";
+            ddlEmpNationality.DataTextField = "TextField";
+            ddlEmpNationality.DataBind();
+        }
+
+    }
+    protected void txt_EmpExpectedServiceLength_OnTextChanged(object sender, EventArgs e)
+    {
+        //if (!string.IsNullOrEmpty(txt_EmpExpectedServiceLength.Text))
+        //{
+        //    int esl = int.Parse(txt_EmpExpectedServiceLength.Text);
+        //    DateTime doj ;
+        //    if (DateTime.TryParse(txt_EmpDOJ.Text,out doj))
+        //    {
+        //        DateTime dor = doj.AddYears(esl);
+        //        txt_EmpDateOfRetirement.Text = dor.ToString("dd-MMM-yyyy");
+        //    }
+        //}
+    }
+
+    protected void txt_EmpDOB_OnTextChanged(object sender, EventArgs e)
+    {
+        try
+        {
+            
+           
+            DataTable dt = _commonDataLoad.GetRetirementSetting();
+            int esl = (int)dt.Rows[0]["RetirementLength"];
+            DateTime doj;
+            if (DateTime.TryParse(txt_EmpDOB.Text, out doj))
+            {
+                DateTime dor = doj.AddYears(esl);
+                txt_EmpDateOfRetirement.Text = dor.ToString("dd-MMM-yyyy");
+            }
+            else
+            {
+                ShowMessageBox("Please Enter Valid Date!!!");
+                txt_EmpDOB.Text = "";
+            }
+        }
+        catch (Exception)
+        {
+
+            ShowMessageBox("Please Enter Valid Date!!!");
+            txt_EmpDOB.Text = "";
+        }
+    }
+
+    protected void ddlCompany_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        Session["cid"] = "";
+        Session["cid"] = ddlCompany.SelectedValue;
+        Session["CompanyId"] = "";
+        Session["CompanyId"] = ddlCompany.SelectedValue;
+    }
+
+    protected void txt_EmpDOJ_OnTextChanged(object sender, EventArgs e)
+    {
+        try
+        {
+            DateTime doj;
+            if (DateTime.TryParse(txt_EmpDOJ.Text, out doj))
+            {
+            }
+            else
+            {
+                ShowMessageBox("Please Enter Valid Date!!!");
+                txt_EmpDOJ.Text = "";
+            }
+        }
+        catch (Exception)
+        {
+
+            ShowMessageBox("Please Enter Valid Date!!!");
+            txt_EmpDOJ.Text = "";
+        }
+    }
+
+
+
+    protected void ddlEmpType_OnSelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (ddlEmpType.SelectedIndex > 0)
+        {
+            ////ddlEmpType.SelectedValue == "1" is for Permanent
+            if (ddlEmpType.SelectedValue == "1")
+            {
+                chkIsProgramContractual.Enabled = false;
+                chkIsProgramContractual.Checked = false;
+            }
+            else
+            {
+                chkIsProgramContractual.Enabled = true;
+            }
+
+
+            //if (ddlEmpType.SelectedValue == "3")
+            //{
+            //    using (DataTable dt = _commonDataLoad.GetDDLSalFromProject(ddlCompany.SelectedValue))
+            //    {
+            //        ddlSalFromProject.DataSource = dt;
+            //        ddlSalFromProject.DataValueField = "Value";
+            //        ddlSalFromProject.DataTextField = "TextField";
+            //        ddlSalFromProject.DataBind();
+            //    }
+            //    using (DataTable dt = _commonDataLoad.GetAllProject(ddlCompany.SelectedValue))
+            //    {
+            //        cbl_ContractProject.DataSource = dt;
+            //        cbl_ContractProject.DataValueField = "Value";
+            //        cbl_ContractProject.DataTextField = "TextField";
+            //        cbl_ContractProject.DataBind();
+            //    }
+            //}
+            iddivContract.Visible = ddlEmpType.SelectedValue == "2";
+        }
+        else
+        {
+
+            chkIsProgramContractual.Enabled = false;
+            chkIsProgramContractual.Checked = false;
+
+        }
+    }
+
+    protected void txt_ReportingBoss_OnTextChanged(object sender, EventArgs e)
+    {
+        string Emp = txt_ReportingBoss.Text.Trim();
+        if (!string.IsNullOrEmpty(Emp))
+        {
+            if (Emp.Contains('>'))
+            {
+                hdReportingBoss.Value = Emp.Split('>')[0];
+                txt_ReportingBoss.Text = Emp.Split('>')[2];
+                txt_ReportingBossDesig.Text = Emp.Split('>')[3];
+            }
+            else
+            {
+
+                txt_ReportingBoss.Text = "";
+                ShowMessageBox("Input Correct Data !!");
+            }
+        }
+    }
+
+    protected void ShowMessageBox(string message)
+    {
+        message = message.Replace("'", "\'");
+        string sScript = String.Format("alert('{0}');", message);
+        ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", sScript, true);
+    }
+
+    protected void chkIsProbationary_OnCheckedChanged(object sender, EventArgs e)
+    {
+
+        if (chkIsProbationary.Checked)
+        {
+            txt_EmpDateOfConformation.Text = "";
+        }
+        else
+        {
+            txt_ProbationaryEndDate.Text = "";
+        }
+        //txt_ProbationaryEndDate.Enabled =  chkIsProbationary.Checked;
+        //txt_ProbationaryEndDate.ReadOnly = !chkIsProbationary.Checked;
+        //txt_EmpDateOfConformation.ReadOnly = chkIsProbationary.Checked;
+       // ddlConformationStatus.Enabled = !chkIsProbationary.Checked;
+    }
+
+    protected void directlySuperTextBox_OnTextChanged(object sender, EventArgs e)
+    {
+        string empName = directlySuperTextBox.Text.Trim();
+
+        if (empName.Contains(':'))
+        {
+            string[] emp = empName.Split(':', ':');
+
+            directlySuperTextBox.Text = emp[2];
+            directlyEmpIdHiddenField.Value = emp[0];
+
+            //DataTable aTable = atblEmployeePromotionEntryDAL.GetEmployeeReportingBodyInfo(Convert.ToInt32(directlyEmpIdHiddenField.Value));
+
+            //if (aTable.Rows.Count > 0)
+            //{
+
+            //    if (aTable.Rows[0]["ReportingEmpId"] != DBNull.Value)
+            //    {
+            //        rptHiddenField.Value = aTable.Rows[0]["ReportingEmpId"].ToString();
+            //    }
+            //    else
+            //    {
+            //        rptHiddenField.Value = 0.ToString();
+            //    }
+
+            //}
+
+            // LoadData(Convert.ToInt32(repEmpIdHiddenField.Value));
+            //productNameTextBox.Text = productInfo[1];
+            //string productCode = productCodeTextBox.Text.Trim();
+
+        }
+        else
+        {
+            rptHiddenField.Value = "";
+            directlySuperTextBox.Text = "";
+            directlyEmpIdHiddenField.Value = "";
+            aShowMessage.ShowMessageBox("Input Correct Data !!", this);
+        }
+    }
+
+    protected void Button1_OnClick(object sender, EventArgs e)
+    {
+        Add();
+    }
+
+    public void Add()
+    {
+        DataTable aDataTable = new DataTable();
+        aDataTable.Columns.Add("EmpInfoId");
+        aDataTable.Columns.Add("EmpName");
+        aDataTable.Columns.Add("PrevEmpReportingBodyId");
+
+        DataRow dataRow = null;
+        for (int i = 0; i < loadGridView.Rows.Count; i++)
+        {
+            dataRow = aDataTable.NewRow();
+            dataRow["EmpName"] = loadGridView.Rows[i].Cells[0].Text;
+            dataRow["EmpInfoId"] = loadGridView.DataKeys[i][0].ToString();
+            //dataRow["PrevEmpReportingBodyId"] = loadGridView.DataKeys[i][1].ToString();
+
+            aDataTable.Rows.Add(dataRow);
+        }
+        dataRow = aDataTable.NewRow();
+        dataRow["EmpName"] = directlySuperTextBox.Text;
+        dataRow["EmpInfoId"] = directlyEmpIdHiddenField.Value;
+        dataRow["PrevEmpReportingBodyId"] = rptHiddenField.Value;
+
+        aDataTable.Rows.Add(dataRow);
+        loadGridView.DataSource = aDataTable;
+        loadGridView.DataBind();
+
+        rptHiddenField.Value = string.Empty;
+        directlySuperTextBox.Text = string.Empty;
+        directlyEmpIdHiddenField.Value = string.Empty;
+    }
+
+    protected void deleteImageButton_OnClick(object sender, ImageClickEventArgs e)
+    {
+        ImageButton ImageButton = (ImageButton)sender;
+        GridViewRow currentRow = (GridViewRow)ImageButton.Parent.Parent;
+        int rowindex = 0;
+        rowindex = currentRow.RowIndex;
+        delEmpIdHiddenField.Value = delEmpIdHiddenField.Value + "," + loadGridView.DataKeys[rowindex][0].ToString();
+
+        Remove(rowindex);
+    }
+
+    public void Remove(int row)
+    {
+        DataTable aDataTable = new DataTable();
+        aDataTable.Columns.Add("EmpInfoId");
+        aDataTable.Columns.Add("EmpName");
+        aDataTable.Columns.Add("PrevEmpReportingBodyId");
+
+
+        DataRow dataRow = null;
+        for (int i = 0; i < loadGridView.Rows.Count; i++)
+        {
+            if (i != row)
+            {
+                dataRow = aDataTable.NewRow();
+                dataRow["EmpName"] = loadGridView.Rows[i].Cells[0].Text;
+                dataRow["EmpInfoId"] = loadGridView.DataKeys[i][0].ToString();
+                //dataRow["PrevEmpReportingBodyId"] = loadGridView.DataKeys[i][1].ToString();
+
+                aDataTable.Rows.Add(dataRow);
+            }
+        }
+        loadGridView.DataSource = aDataTable;
+        loadGridView.DataBind();
+
+    }
+
+    protected void btn_Edit_OnClick(object sender, EventArgs e)
+    {
+        if (Validation())
+        {
+            #region fff
+
+            try
+            {
+                string EmpMasterCode = string.Empty;
+                mid = string.IsNullOrEmpty(hdpk.Value) ? 0 : int.Parse(hdpk.Value);
+                tblEmpGeneralInfo emp = null;
+                using (var db = new HRIS_SMCEntities())
+                {
+                    if (mid > 0)
+                    {
+
+                        emp = (from j in db.tblEmpGeneralInfoes where j.EmpInfoId == mid select j).FirstOrDefault();
+                        EmpMasterCode = emp.EmpMasterCode;
+
+                        #region 1. General Information
+
+                        emp.CompanyId = ddlCompany.SelectedIndex > 0 ? int.Parse(ddlCompany.SelectedValue) : (int?)null;
+                        emp.EmpName = string.IsNullOrEmpty(txt_EmpName.Text) ? null : txt_EmpName.Text;
+                        emp.Gender = ddlGender.SelectedIndex > 0 ? ddlGender.SelectedValue : null;
+                        emp.BloodGroup = ddlBloodGroup.SelectedIndex > 0 ? ddlBloodGroup.SelectedValue : null;
+                        emp.TinNo = string.IsNullOrEmpty(txt_EmpTinNo.Text) ? null : txt_EmpTinNo.Text;
+
+                        emp.FatherName = string.IsNullOrEmpty(txt_EmpFatherName.Text) ? null : txt_EmpFatherName.Text;
+                        emp.FatherOccupation = ddlEmpFOccupation.SelectedIndex > 0
+                            ? int.Parse(ddlEmpFOccupation.SelectedValue)
+                            : (int?)null;
+                        emp.MotherName = string.IsNullOrEmpty(txt_EmpMotherName.Text) ? null : txt_EmpMotherName.Text;
+                        emp.MotherOccupation = ddlEmpMOccupation.SelectedIndex > 0
+                            ? int.Parse(ddlEmpMOccupation.SelectedValue)
+                            : (int?)null;
+
+                        emp.DateOfBirth = string.IsNullOrEmpty(txt_EmpDOB.Text)
+                            ? (DateTime?)null
+                            : DateTime.Parse(txt_EmpDOB.Text).Date;
+                        emp.DateOfJoin = string.IsNullOrEmpty(txt_EmpDOJ.Text)
+                            ? (DateTime?)null
+                            : DateTime.Parse(txt_EmpDOJ.Text).Date;
+                        emp.Religion = ddlEmpReligion.SelectedIndex > 0 ? ddlEmpReligion.SelectedValue : null;
+                        emp.MaritalStatus = ddlEmpMaritalStatus.SelectedIndex > 0
+                            ? ddlEmpMaritalStatus.SelectedValue
+                            : null;
+
+                        emp.EmpTypeId = ddlEmpType.SelectedIndex > 0 ? int.Parse(ddlEmpType.SelectedValue) : (int?)null;
+                        emp.PlaceOfBirth = string.IsNullOrEmpty(txt_EmpPlaceOfBirth.Text)
+                            ? null
+                            : txt_EmpPlaceOfBirth.Text;
+                        emp.Nationality = ddlEmpNationality.SelectedIndex > 0 ? ddlEmpNationality.SelectedValue : null;
+                        emp.NationalIdNo = string.IsNullOrEmpty(txt_EmpNationalID.Text) ? null : txt_EmpNationalID.Text;
+                        if (ddlEmpType.SelectedValue == "2")
+                        {
+                            emp.ContractEndDate = string.IsNullOrEmpty(txt_ContractEndDate.Text)
+                                ? (DateTime?)null
+                                : DateTime.Parse(txt_ContractEndDate.Text).Date;
+                            //emp.SalaryFromProject = ddlSalFromProject.SelectedIndex > 0 ? int.Parse(ddlSalFromProject.SelectedValue) : (int?)null;
+                            ////TODO
+                            //for (int i = 0; i < cbl_ContractProject.Items.Count; i++)
+                            //{
+                            //    if (cbl_ContractProject.Items[i].Selected)
+                            //    {
+                            //        var ContractProject = new tblEmpContractProject();
+                            //        ContractProject.ProjectId = int.Parse(cbl_ContractProject.Items[i].Value);
+                            //        db.tblEmpContractProjects.Add(ContractProject);
+                            //    }
+                            //}
+                        }
+                        emp.PassportNo = string.IsNullOrEmpty(txt_EmpPassport.Text) ? null : txt_EmpPassport.Text;
+                        emp.ExpectedServiceLength = string.IsNullOrEmpty(txt_EmpExpectedServiceLength.Text)
+                            ? null
+                            : txt_EmpExpectedServiceLength.Text;
+                        emp.DateOfRetirement = string.IsNullOrEmpty(txt_EmpDateOfRetirement.Text)
+                            ? (DateTime?)null
+                            : DateTime.Parse(txt_EmpDateOfRetirement.Text).Date;
+
+                        emp.DateOfConformation = string.IsNullOrEmpty(txt_EmpDateOfConformation.Text)
+                            ? (DateTime?)null
+                            : DateTime.Parse(txt_EmpDateOfConformation.Text).Date;
+
+                        //  emp.ConformationStatus = ddlConformationStatus.SelectedIndex > 0 ? ddlConformationStatus.SelectedValue : null;
+
+                        if (ddlConformationStatus.SelectedItem.Text == "Yes")
+                        {
+                            emp.ConformationStatus = "1";
+                        }
+
+                        if (ddlConformationStatus.SelectedItem.Text == "No")
+                        {
+                            emp.ConformationStatus = "0";
+                        }
+
+                        if (ddlConformationStatus.SelectedIndex == 0)
+                        {
+                            emp.ConformationStatus = "Null";
+                        }
+
+
+                        emp.ReportingEmpId = string.IsNullOrEmpty(hdReportingBoss.Value)
+                            ? (int?)null
+                            : int.Parse(hdReportingBoss.Value);
+
+                        emp.IsProbationary = chkIsProbationary.Checked;
+                        emp.IsProgramContractual = chkIsProgramContractual.Checked;
+                        emp.ProbationEndDate = string.IsNullOrEmpty(txt_ProbationaryEndDate.Text)
+                            ? (DateTime?)null
+                            : DateTime.Parse(txt_ProbationaryEndDate.Text).Date;
+                        emp.EmpImage = string.IsNullOrEmpty(hfempimg.Value) ? null : hfempimg.Value;
+                        emp.NomineeImage = string.IsNullOrEmpty(hfNomineeImage.Value) ? null : hfNomineeImage.Value;
+                        emp.EmpSign = string.IsNullOrEmpty(hfSignature.Value) ? null : hfSignature.Value;
+
+                        #endregion end
+
+                        db.SaveChanges();
+
+                        for (int i = 0; i < loadGridView.Rows.Count; i++)
+                        {
+                            _commonDataLoad.UpdateReportingEmpId(loadGridView.DataKeys[i][0].ToString(),
+                                emp.EmpInfoId.ToString());
+                        }
+                        string[] delid = delEmpIdHiddenField.Value.Split(',');
+                        foreach (string id in delid)
+                        {
+                            _commonDataLoad.UpdateReportingEmpId(null,
+                                id);
+                        }
+                    }
+                    else
+                    {
+                        ////Start New Mode
+                        emp = new tblEmpGeneralInfo();
+
+                        #region 1. General Information
+
+                        emp.CompanyId = ddlCompany.SelectedIndex > 0 ? int.Parse(ddlCompany.SelectedValue) : (int?)null;
+                        emp.EmpName = string.IsNullOrEmpty(txt_EmpName.Text) ? null : txt_EmpName.Text;
+                        emp.Gender = ddlGender.SelectedIndex > 0 ? ddlGender.SelectedValue : null;
+                        emp.BloodGroup = ddlBloodGroup.SelectedIndex > 0 ? ddlBloodGroup.SelectedValue : null;
+                        emp.TinNo = string.IsNullOrEmpty(txt_EmpTinNo.Text) ? null : txt_EmpTinNo.Text;
+
+                        emp.FatherName = string.IsNullOrEmpty(txt_EmpFatherName.Text) ? null : txt_EmpFatherName.Text;
+                        emp.FatherOccupation = ddlEmpFOccupation.SelectedIndex > 0 ? int.Parse(ddlEmpFOccupation.SelectedValue) : (int?)null;
+                        emp.MotherName = string.IsNullOrEmpty(txt_EmpMotherName.Text) ? null : txt_EmpMotherName.Text;
+                        emp.MotherOccupation = ddlEmpMOccupation.SelectedIndex > 0 ? int.Parse(ddlEmpMOccupation.SelectedValue) : (int?)null;
+
+                        emp.DateOfBirth = string.IsNullOrEmpty(txt_EmpDOB.Text) ? (DateTime?)null : DateTime.Parse(txt_EmpDOB.Text).Date;
+                        emp.DateOfJoin = string.IsNullOrEmpty(txt_EmpDOJ.Text) ? (DateTime?)null : DateTime.Parse(txt_EmpDOJ.Text).Date;
+                        emp.Religion = ddlEmpReligion.SelectedIndex > 0 ? ddlEmpReligion.SelectedValue : null;
+                        emp.MaritalStatus = ddlEmpMaritalStatus.SelectedIndex > 0 ? ddlEmpMaritalStatus.SelectedValue : null;
+
+                        emp.EmpTypeId = ddlEmpType.SelectedIndex > 0 ? int.Parse(ddlEmpType.SelectedValue) : (int?)null;
+                        emp.PlaceOfBirth = string.IsNullOrEmpty(txt_EmpPlaceOfBirth.Text) ? null : txt_EmpPlaceOfBirth.Text;
+                        emp.Nationality = ddlEmpNationality.SelectedIndex > 0 ? ddlEmpNationality.SelectedValue : null;
+                        emp.NationalIdNo = string.IsNullOrEmpty(txt_EmpNationalID.Text) ? null : txt_EmpNationalID.Text;
+                        if (ddlEmpType.SelectedValue == "2")
+                        {
+                            emp.ContractEndDate = string.IsNullOrEmpty(txt_ContractEndDate.Text) ? (DateTime?)null : DateTime.Parse(txt_ContractEndDate.Text).Date;
+                            //emp.SalaryFromProject = ddlSalFromProject.SelectedIndex > 0 ? int.Parse(ddlSalFromProject.SelectedValue) : (int?)null;
+
+                            //for (int i = 0; i < cbl_ContractProject.Items.Count; i++)
+                            //{
+                            //    if (cbl_ContractProject.Items[i].Selected)
+                            //    {
+                            //        var ContractProject = new tblEmpContractProject();
+                            //        ContractProject.ProjectId = int.Parse(cbl_ContractProject.Items[i].Value);
+                            //        db.tblEmpContractProjects.Add(ContractProject);
+                            //    }
+                            //}
+                        }
+                        emp.PassportNo = string.IsNullOrEmpty(txt_EmpPassport.Text) ? null : txt_EmpPassport.Text;
+                        emp.ExpectedServiceLength = string.IsNullOrEmpty(txt_EmpExpectedServiceLength.Text) ? null : txt_EmpExpectedServiceLength.Text;
+                        emp.DateOfRetirement = string.IsNullOrEmpty(txt_EmpDateOfRetirement.Text) ? (DateTime?)null : DateTime.Parse(txt_EmpDateOfRetirement.Text).Date;
+
+                        emp.DateOfConformation = string.IsNullOrEmpty(txt_EmpDateOfConformation.Text) ? (DateTime?)null : DateTime.Parse(txt_EmpDateOfConformation.Text).Date;
+                        //emp.ConformationStatus = ddlConformationStatus.SelectedIndex > 0 ? ddlConformationStatus.SelectedValue : null;
+
+
+                        if (ddlConformationStatus.SelectedItem.Text == "Yes")
+                        {
+                            emp.ConformationStatus = "1";
+                        }
+
+                        if (ddlConformationStatus.SelectedItem.Text == "No")
+                        {
+                            emp.ConformationStatus = "0";
+                        }
+
+                        if (ddlConformationStatus.SelectedIndex == 0)
+                        {
+                            emp.ConformationStatus = "Null";
+                        }
+
+                        emp.ReportingEmpId = string.IsNullOrEmpty(hdReportingBoss.Value) ? (int?)null : int.Parse(hdReportingBoss.Value);
+
+                        emp.IsProbationary = chkIsProbationary.Checked;
+                        emp.IsProgramContractual = chkIsProgramContractual.Checked;
+                        emp.ProbationEndDate = string.IsNullOrEmpty(txt_ProbationaryEndDate.Text) ? (DateTime?)null : DateTime.Parse(txt_ProbationaryEndDate.Text).Date;
+                        emp.EmpImage = string.IsNullOrEmpty(hfempimg.Value) ? null : hfempimg.Value;
+                        emp.NomineeImage = string.IsNullOrEmpty(hfNomineeImage.Value) ? null : hfNomineeImage.Value;
+                        emp.EmpSign = string.IsNullOrEmpty(hfSignature.Value) ? null : hfSignature.Value;
+                        #endregion end 1. General Information
+
+                        db.SaveChanges();
+                        EmployeeInfoListReportDAL _empdal = new EmployeeInfoListReportDAL();
+                        ////Below stored procedure will generate Emp Master Code based on condition, update on database and return the value
+                        using (DataTable dtEmpCode = _empdal.GetEmpMasterCode(emp.EmpInfoId))
+                        {
+                            if (dtEmpCode.Rows.Count > 0)
+                            {
+                                EmpMasterCode = dtEmpCode.Rows[0]["EmpMasterCode"].ToString();
+                            }
+
+                        }
+                        for (int i = 0; i < loadGridView.Rows.Count; i++)
+                        {
+                            _commonDataLoad.UpdateReportingEmpId(loadGridView.DataKeys[i][0].ToString(),
+                                emp.EmpInfoId.ToString());
+                        }
+                    }
+                }
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(),
+                   "alert",
+                   "alert('Operation Successful...! Employee Master Code: " + EmpMasterCode + "');window.location ='EmployeeInfoEntry.aspx';",
+                   true);
+            }
+            catch (Exception ex)
+            {
+                AlertMessageBoxShow(ex.Message);
+            }
+            #endregion
+        }
+    }
+
+    protected void btn_Save_OnClick(object sender, EventArgs e)
+    {
+        if (Validation())
+        {
+            #region fff
+
+            try
+            {
+                string EmpMasterCode = string.Empty;
+                mid = string.IsNullOrEmpty(hdpk.Value) ? 0 : int.Parse(hdpk.Value);
+                tblEmpGeneralInfo emp = null;
+                using (var db = new HRIS_SMCEntities())
+                {
+                    if (mid > 0)
+                    {
+
+                        emp = (from j in db.tblEmpGeneralInfoes where j.EmpInfoId == mid select j).FirstOrDefault();
+                        EmpMasterCode = emp.EmpMasterCode;
+                        emp.IsActive = true;
+                        emp.EmployeeStatus = "Active";
+                        emp.Updateby = _userId;
+                        emp.UpdateDate = DateTime.Now;
+                        #region 1. General Information
+
+                        emp.CompanyId = ddlCompany.SelectedIndex > 0 ? int.Parse(ddlCompany.SelectedValue) : (int?) null;
+                        emp.EmpName = string.IsNullOrEmpty(txt_EmpName.Text) ? null : txt_EmpName.Text;
+                        emp.Gender = ddlGender.SelectedIndex > 0 ? ddlGender.SelectedValue : null;
+                        emp.BloodGroup = ddlBloodGroup.SelectedIndex > 0 ? ddlBloodGroup.SelectedValue : null;
+                        emp.TinNo = string.IsNullOrEmpty(txt_EmpTinNo.Text) ? null : txt_EmpTinNo.Text;
+                       
+                        emp.FatherName = string.IsNullOrEmpty(txt_EmpFatherName.Text) ? null : txt_EmpFatherName.Text;
+                        emp.FatherOccupation = ddlEmpFOccupation.SelectedIndex > 0
+                            ? int.Parse(ddlEmpFOccupation.SelectedValue)
+                            : (int?) null;
+                        emp.MotherName = string.IsNullOrEmpty(txt_EmpMotherName.Text) ? null : txt_EmpMotherName.Text;
+                        emp.MotherOccupation = ddlEmpMOccupation.SelectedIndex > 0
+                            ? int.Parse(ddlEmpMOccupation.SelectedValue)
+                            : (int?) null;
+
+                        emp.DateOfBirth = string.IsNullOrEmpty(txt_EmpDOB.Text)
+                            ? (DateTime?) null
+                            : DateTime.Parse(txt_EmpDOB.Text).Date;
+                        emp.DateOfJoin = string.IsNullOrEmpty(txt_EmpDOJ.Text)
+                            ? (DateTime?) null
+                            : DateTime.Parse(txt_EmpDOJ.Text).Date;
+                        emp.Religion = ddlEmpReligion.SelectedIndex > 0 ? ddlEmpReligion.SelectedValue : null;
+                        emp.MaritalStatus = ddlEmpMaritalStatus.SelectedIndex > 0
+                            ? ddlEmpMaritalStatus.SelectedValue
+                            : null;
+
+                        emp.EmpTypeId = ddlEmpType.SelectedIndex > 0 ? int.Parse(ddlEmpType.SelectedValue) : (int?) null;
+                        emp.PlaceOfBirth = string.IsNullOrEmpty(txt_EmpPlaceOfBirth.Text)
+                            ? null
+                            : txt_EmpPlaceOfBirth.Text;
+                        emp.Nationality = ddlEmpNationality.SelectedIndex > 0 ? ddlEmpNationality.SelectedValue : null;
+                        emp.NationalIdNo = string.IsNullOrEmpty(txt_EmpNationalID.Text) ? null : txt_EmpNationalID.Text;
+                        if (ddlEmpType.SelectedValue == "2")
+                        {
+                            emp.ContractEndDate = string.IsNullOrEmpty(txt_ContractEndDate.Text)
+                                ? (DateTime?) null
+                                : DateTime.Parse(txt_ContractEndDate.Text).Date;
+                            //emp.SalaryFromProject = ddlSalFromProject.SelectedIndex > 0 ? int.Parse(ddlSalFromProject.SelectedValue) : (int?)null;
+                            ////TODO
+                            //for (int i = 0; i < cbl_ContractProject.Items.Count; i++)
+                            //{
+                            //    if (cbl_ContractProject.Items[i].Selected)
+                            //    {
+                            //        var ContractProject = new tblEmpContractProject();
+                            //        ContractProject.ProjectId = int.Parse(cbl_ContractProject.Items[i].Value);
+                            //        db.tblEmpContractProjects.Add(ContractProject);
+                            //    }
+                            //}
+                        }
+                        emp.PassportNo = string.IsNullOrEmpty(txt_EmpPassport.Text) ? null : txt_EmpPassport.Text;
+                        emp.ExpectedServiceLength = string.IsNullOrEmpty(txt_EmpExpectedServiceLength.Text)
+                            ? null
+                            : txt_EmpExpectedServiceLength.Text;
+                        emp.DateOfRetirement = string.IsNullOrEmpty(txt_EmpDateOfRetirement.Text)
+                            ? (DateTime?) null
+                            : DateTime.Parse(txt_EmpDateOfRetirement.Text).Date;
+
+                        emp.DateOfConformation = string.IsNullOrEmpty(txt_EmpDateOfConformation.Text)
+                            ? (DateTime?) null
+                            : DateTime.Parse(txt_EmpDateOfConformation.Text).Date;
+
+                        //  emp.ConformationStatus = ddlConformationStatus.SelectedIndex > 0 ? ddlConformationStatus.SelectedValue : null;
+
+                        if (ddlConformationStatus.SelectedItem.Text == "Yes")
+                        {
+                            emp.ConformationStatus = "1";
+                        }
+
+                        if (ddlConformationStatus.SelectedItem.Text == "No")
+                        {
+                            emp.ConformationStatus = "0";
+                        }
+
+                        if (ddlConformationStatus.SelectedIndex == 0)
+                        {
+                            emp.ConformationStatus = "Null";
+                        }
+
+
+                        emp.ReportingEmpId = string.IsNullOrEmpty(hdReportingBoss.Value)
+                            ? (int?) null
+                            : int.Parse(hdReportingBoss.Value);
+
+                        emp.IsProbationary = chkIsProbationary.Checked;
+                        emp.IsProgramContractual = chkIsProgramContractual.Checked;
+                        emp.ProbationEndDate = string.IsNullOrEmpty(txt_ProbationaryEndDate.Text)
+                            ? (DateTime?) null
+                            : DateTime.Parse(txt_ProbationaryEndDate.Text).Date;
+                        emp.EmpImage = string.IsNullOrEmpty(hfempimg.Value) ? null : hfempimg.Value;
+                        emp.NomineeImage = string.IsNullOrEmpty(hfNomineeImage.Value) ? null : hfNomineeImage.Value;
+                        emp.EmpSign = string.IsNullOrEmpty(hfSignature.Value) ? null : hfSignature.Value;
+
+                        #endregion end 
+
+                        db.SaveChanges();
+
+                        for (int i = 0; i < loadGridView.Rows.Count; i++)
+                        {
+                            _commonDataLoad.UpdateReportingEmpId(loadGridView.DataKeys[i][0].ToString(),
+                                emp.EmpInfoId.ToString());
+                        }
+                        string[] delid = delEmpIdHiddenField.Value.Split(',');
+                        foreach (string id in delid)
+                        {
+                            _commonDataLoad.UpdateReportingEmpId(null,
+                                id);
+                        }
+                    }
+                    else
+                    {
+////Start New Mode
+                        emp = new tblEmpGeneralInfo();
+
+                        #region 1. General Information
+                        emp.IsActive = true;
+                        emp.EmployeeStatus = "Active";
+                        emp.EntryBy = _userId;
+                        emp.EntryDate = DateTime.Now;
+                        emp.CompanyId = ddlCompany.SelectedIndex > 0 ? int.Parse(ddlCompany.SelectedValue) : (int?)null;
+                        emp.EmpName = string.IsNullOrEmpty(txt_EmpName.Text) ? null : txt_EmpName.Text;
+                        emp.Gender = ddlGender.SelectedIndex > 0 ? ddlGender.SelectedValue : null;
+                        emp.BloodGroup = ddlBloodGroup.SelectedIndex > 0 ? ddlBloodGroup.SelectedValue : null;
+                        emp.TinNo = string.IsNullOrEmpty(txt_EmpTinNo.Text) ? null : txt_EmpTinNo.Text;
+
+                        emp.FatherName = string.IsNullOrEmpty(txt_EmpFatherName.Text) ? null : txt_EmpFatherName.Text;
+                        emp.FatherOccupation = ddlEmpFOccupation.SelectedIndex > 0 ? int.Parse(ddlEmpFOccupation.SelectedValue) : (int?)null;
+                        emp.MotherName = string.IsNullOrEmpty(txt_EmpMotherName.Text) ? null : txt_EmpMotherName.Text;
+                        emp.MotherOccupation = ddlEmpMOccupation.SelectedIndex > 0 ? int.Parse(ddlEmpMOccupation.SelectedValue) : (int?)null;
+
+                        emp.DateOfBirth = string.IsNullOrEmpty(txt_EmpDOB.Text) ? (DateTime?)null : DateTime.Parse(txt_EmpDOB.Text).Date;
+                        emp.DateOfJoin = string.IsNullOrEmpty(txt_EmpDOJ.Text) ? (DateTime?)null : DateTime.Parse(txt_EmpDOJ.Text).Date;
+                        emp.Religion = ddlEmpReligion.SelectedIndex > 0 ? ddlEmpReligion.SelectedValue : null;
+                        emp.MaritalStatus = ddlEmpMaritalStatus.SelectedIndex > 0 ? ddlEmpMaritalStatus.SelectedValue : null;
+
+                        emp.EmpTypeId = ddlEmpType.SelectedIndex > 0 ? int.Parse(ddlEmpType.SelectedValue) : (int?)null;
+                        emp.PlaceOfBirth = string.IsNullOrEmpty(txt_EmpPlaceOfBirth.Text) ? null : txt_EmpPlaceOfBirth.Text;
+                        emp.Nationality = ddlEmpNationality.SelectedIndex > 0 ? ddlEmpNationality.SelectedValue : null;
+                        emp.NationalIdNo = string.IsNullOrEmpty(txt_EmpNationalID.Text) ? null : txt_EmpNationalID.Text;
+                        if (ddlEmpType.SelectedValue == "2")
+                        {
+                            emp.ContractEndDate = string.IsNullOrEmpty(txt_ContractEndDate.Text) ? (DateTime?)null : DateTime.Parse(txt_ContractEndDate.Text).Date;
+                            //emp.SalaryFromProject = ddlSalFromProject.SelectedIndex > 0 ? int.Parse(ddlSalFromProject.SelectedValue) : (int?)null;
+
+                            //for (int i = 0; i < cbl_ContractProject.Items.Count; i++)
+                            //{
+                            //    if (cbl_ContractProject.Items[i].Selected)
+                            //    {
+                            //        var ContractProject = new tblEmpContractProject();
+                            //        ContractProject.ProjectId = int.Parse(cbl_ContractProject.Items[i].Value);
+                            //        db.tblEmpContractProjects.Add(ContractProject);
+                            //    }
+                            //}
+                        }
+                        emp.PassportNo = string.IsNullOrEmpty(txt_EmpPassport.Text) ? null : txt_EmpPassport.Text;
+                        emp.ExpectedServiceLength = string.IsNullOrEmpty(txt_EmpExpectedServiceLength.Text) ? null : txt_EmpExpectedServiceLength.Text;
+                        emp.DateOfRetirement = string.IsNullOrEmpty(txt_EmpDateOfRetirement.Text) ? (DateTime?)null : DateTime.Parse(txt_EmpDateOfRetirement.Text).Date;
+
+                        emp.DateOfConformation = string.IsNullOrEmpty(txt_EmpDateOfConformation.Text) ? (DateTime?)null : DateTime.Parse(txt_EmpDateOfConformation.Text).Date;
+                        //emp.ConformationStatus = ddlConformationStatus.SelectedIndex > 0 ? ddlConformationStatus.SelectedValue : null;
+
+
+                        if (ddlConformationStatus.SelectedItem.Text == "Yes")
+                        {
+                            emp.ConformationStatus = "1";
+                        }
+
+                        if (ddlConformationStatus.SelectedItem.Text == "No")
+                        {
+                            emp.ConformationStatus = "0";
+                        }
+
+                        if (ddlConformationStatus.SelectedIndex == 0)
+                        {
+                            emp.ConformationStatus = "Null";
+                        }
+
+                        emp.ReportingEmpId = string.IsNullOrEmpty(hdReportingBoss.Value) ? (int?)null : int.Parse(hdReportingBoss.Value);
+
+                        emp.IsProbationary = chkIsProbationary.Checked;
+                        emp.IsProgramContractual = chkIsProgramContractual.Checked;
+                        emp.ProbationEndDate = string.IsNullOrEmpty(txt_ProbationaryEndDate.Text) ? (DateTime?)null : DateTime.Parse(txt_ProbationaryEndDate.Text).Date;
+                        emp.EmpImage = string.IsNullOrEmpty(hfempimg.Value) ? null : hfempimg.Value;
+                        emp.NomineeImage = string.IsNullOrEmpty(hfNomineeImage.Value) ? null : hfNomineeImage.Value;
+                        emp.EmpSign = string.IsNullOrEmpty(hfSignature.Value) ? null : hfSignature.Value;
+                        #endregion end 1. General Information
+                        db.tblEmpGeneralInfoes.Add(emp);
+                        db.SaveChanges();
+                        EmployeeInfoListReportDAL _empdal = new EmployeeInfoListReportDAL();
+                        ////Below stored procedure will generate Emp Master Code based on condition, update on database and return the value
+                        using (DataTable dtEmpCode = _empdal.GetEmpMasterCode(emp.EmpInfoId))
+                        {
+                            if (dtEmpCode.Rows.Count > 0)
+                            {
+                                EmpMasterCode = dtEmpCode.Rows[0]["EmpMasterCode"].ToString();
+                            }
+
+                        }
+                        for (int i = 0; i < loadGridView.Rows.Count; i++)
+                        {
+                            _commonDataLoad.UpdateReportingEmpId(loadGridView.DataKeys[i][0].ToString(),
+                                emp.EmpInfoId.ToString());
+                        }
+                    }
+                }
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(),
+                   "alert",
+                   "alert('Operation Successful...! Employee Master Code: " + EmpMasterCode + "');window.location ='EmployeeInfoList.aspx';",
+                   true);
+            }
+            catch (Exception ex)
+            {
+                AlertMessageBoxShow(ex.Message);
+            }
+               #endregion
+        }
+    }
+
+    private bool Validation()
+    {
+
+        if (ddlCompany.SelectedValue == "-1")
+        {
+            aShowMessage.ShowMessageBox("Please Select Company Name", this);
+            ddlCompany.Focus();
+            return false;
+        }
+        if (txt_EmpName.Text == "")
+        {
+            aShowMessage.ShowMessageBox("Please Enter Employee Name", this);
+            txt_EmpName.Focus();
+            return false;
+        }
+        //if (txt_EmpExpectedServiceLength.Text == "")
+        //{
+        //    aShowMessage.ShowMessageBox("Please Enter Service Length ", this);
+        //    txt_EmpName.Focus();
+        //    return false;
+        //}
+
+        if (txt_EmpDOJ.Text == "")
+        {
+            aShowMessage.ShowMessageBox("Please Select Joining Date ", this);
+            txt_EmpDOJ.Focus();
+            return false;
+        }
+        if (ddlConformationStatus.SelectedValue == "-1")
+        {
+            aShowMessage.ShowMessageBox("Please Select Conformation Status", this);
+            ddlConformationStatus.Focus();
+            return false;
+        }
+
+
+
+
+
+
+
+        if (ddlEmpType.SelectedValue == "-1")
+        {
+            aShowMessage.ShowMessageBox("Please Select Empployee Type", this);
+            ddlEmpType.Focus();
+            return false;
+        }
+
+       
+       
+ 
+
+        return true;
+    }
+
+    private void AlertMessageBoxShow(string message)
+    {
+        string sScript;
+        message = message.Replace("'", "\'");
+        sScript = String.Format("alert('{0}');", message);
+        ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", sScript, true);
+        //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert", message, true);
+
+    }
+
+    protected void cancelButton_OnClick(object sender, EventArgs e)
+    {
+       Response.Redirect("EmployeeInfoList.aspx");
+    }
+
+    protected void detailsViewButton_OnClick(object sender, EventArgs e)
+    {
+        Response.Redirect("EmployeeInfoListUpdate.aspx");
+    }
+
+    protected void btn_Next_OnClick(object sender, EventArgs e)
+    {
+        if (Validation())
+        {
+            #region fff
+
+            try
+            {
+                string MasterId = string.Empty;
+                string EmpMasterCode = string.Empty;
+                mid = string.IsNullOrEmpty(hdpk.Value) ? 0 : int.Parse(hdpk.Value);
+                tblEmpGeneralInfo emp = null;
+                using (var db = new HRIS_SMCEntities())
+                {
+                    if (mid > 0)
+                    {
+
+                        emp = (from j in db.tblEmpGeneralInfoes where j.EmpInfoId == mid select j).FirstOrDefault();
+                        EmpMasterCode = emp.EmpMasterCode;
+
+                        MasterId = emp.EmpInfoId.ToString();
+                        emp.IsActive = true;
+                        emp.EmployeeStatus = "Active";
+                        emp.Updateby = _userId;
+                        emp.UpdateDate = DateTime.Now;
+                        #region 1. General Information
+
+                        emp.CompanyId = ddlCompany.SelectedIndex > 0 ? int.Parse(ddlCompany.SelectedValue) : (int?)null;
+                        emp.EmpName = string.IsNullOrEmpty(txt_EmpName.Text) ? null : txt_EmpName.Text;
+                        emp.Gender = ddlGender.SelectedIndex > 0 ? ddlGender.SelectedValue : null;
+                        emp.BloodGroup = ddlBloodGroup.SelectedIndex > 0 ? ddlBloodGroup.SelectedValue : null;
+                        emp.TinNo = string.IsNullOrEmpty(txt_EmpTinNo.Text) ? null : txt_EmpTinNo.Text;
+
+                        emp.FatherName = string.IsNullOrEmpty(txt_EmpFatherName.Text) ? null : txt_EmpFatherName.Text;
+                        emp.FatherOccupation = ddlEmpFOccupation.SelectedIndex > 0
+                            ? int.Parse(ddlEmpFOccupation.SelectedValue)
+                            : (int?)null;
+                        emp.MotherName = string.IsNullOrEmpty(txt_EmpMotherName.Text) ? null : txt_EmpMotherName.Text;
+                        emp.MotherOccupation = ddlEmpMOccupation.SelectedIndex > 0
+                            ? int.Parse(ddlEmpMOccupation.SelectedValue)
+                            : (int?)null;
+
+                        emp.DateOfBirth = string.IsNullOrEmpty(txt_EmpDOB.Text)
+                            ? (DateTime?)null
+                            : DateTime.Parse(txt_EmpDOB.Text).Date;
+                        emp.DateOfJoin = string.IsNullOrEmpty(txt_EmpDOJ.Text)
+                            ? (DateTime?)null
+                            : DateTime.Parse(txt_EmpDOJ.Text).Date;
+                        emp.Religion = ddlEmpReligion.SelectedIndex > 0 ? ddlEmpReligion.SelectedValue : null;
+                        emp.MaritalStatus = ddlEmpMaritalStatus.SelectedIndex > 0
+                            ? ddlEmpMaritalStatus.SelectedValue
+                            : null;
+
+                        emp.EmpTypeId = ddlEmpType.SelectedIndex > 0 ? int.Parse(ddlEmpType.SelectedValue) : (int?)null;
+                        emp.PlaceOfBirth = string.IsNullOrEmpty(txt_EmpPlaceOfBirth.Text)
+                            ? null
+                            : txt_EmpPlaceOfBirth.Text;
+                        emp.Nationality = ddlEmpNationality.SelectedIndex > 0 ? ddlEmpNationality.SelectedValue : null;
+                        emp.NationalIdNo = string.IsNullOrEmpty(txt_EmpNationalID.Text) ? null : txt_EmpNationalID.Text;
+                        if (ddlEmpType.SelectedValue == "2")
+                        {
+                            emp.ContractEndDate = string.IsNullOrEmpty(txt_ContractEndDate.Text)
+                                ? (DateTime?)null
+                                : DateTime.Parse(txt_ContractEndDate.Text).Date;
+                            //emp.SalaryFromProject = ddlSalFromProject.SelectedIndex > 0 ? int.Parse(ddlSalFromProject.SelectedValue) : (int?)null;
+                            ////TODO
+                            //for (int i = 0; i < cbl_ContractProject.Items.Count; i++)
+                            //{
+                            //    if (cbl_ContractProject.Items[i].Selected)
+                            //    {
+                            //        var ContractProject = new tblEmpContractProject();
+                            //        ContractProject.ProjectId = int.Parse(cbl_ContractProject.Items[i].Value);
+                            //        db.tblEmpContractProjects.Add(ContractProject);
+                            //    }
+                            //}
+                        }
+                        emp.PassportNo = string.IsNullOrEmpty(txt_EmpPassport.Text) ? null : txt_EmpPassport.Text;
+                        emp.ExpectedServiceLength = string.IsNullOrEmpty(txt_EmpExpectedServiceLength.Text)
+                            ? null
+                            : txt_EmpExpectedServiceLength.Text;
+                        emp.DateOfRetirement = string.IsNullOrEmpty(txt_EmpDateOfRetirement.Text)
+                            ? (DateTime?)null
+                            : DateTime.Parse(txt_EmpDateOfRetirement.Text).Date;
+
+                        emp.DateOfConformation = string.IsNullOrEmpty(txt_EmpDateOfConformation.Text)
+                            ? (DateTime?)null
+                            : DateTime.Parse(txt_EmpDateOfConformation.Text).Date;
+
+                        //  emp.ConformationStatus = ddlConformationStatus.SelectedIndex > 0 ? ddlConformationStatus.SelectedValue : null;
+
+                        if (ddlConformationStatus.SelectedItem.Text == "Yes")
+                        {
+                            emp.ConformationStatus = "1";
+                        }
+
+                        if (ddlConformationStatus.SelectedItem.Text == "No")
+                        {
+                            emp.ConformationStatus = "0";
+                        }
+
+                        if (ddlConformationStatus.SelectedIndex == 0)
+                        {
+                            emp.ConformationStatus = "Null";
+                        }
+
+
+                        emp.ReportingEmpId = string.IsNullOrEmpty(hdReportingBoss.Value)
+                            ? (int?)null
+                            : int.Parse(hdReportingBoss.Value);
+
+                        emp.IsProbationary = chkIsProbationary.Checked;
+                        emp.IsProgramContractual = chkIsProgramContractual.Checked;
+                        emp.ProbationEndDate = string.IsNullOrEmpty(txt_ProbationaryEndDate.Text)
+                            ? (DateTime?)null
+                            : DateTime.Parse(txt_ProbationaryEndDate.Text).Date;
+                        emp.EmpImage = string.IsNullOrEmpty(hfempimg.Value) ? null : hfempimg.Value;
+                        emp.NomineeImage = string.IsNullOrEmpty(hfNomineeImage.Value) ? null : hfNomineeImage.Value;
+                        emp.EmpSign = string.IsNullOrEmpty(hfSignature.Value) ? null : hfSignature.Value;
+
+                        #endregion end
+
+                        db.SaveChanges();
+
+                        for (int i = 0; i < loadGridView.Rows.Count; i++)
+                        {
+                            _commonDataLoad.UpdateReportingEmpId(loadGridView.DataKeys[i][0].ToString(),
+                                emp.EmpInfoId.ToString());
+                        }
+                        string[] delid = delEmpIdHiddenField.Value.Split(',');
+                        foreach (string id in delid)
+                        {
+                            _commonDataLoad.UpdateReportingEmpId(null,
+                                id);
+                        }
+                    }
+                    else
+                    {
+                      
+                        ////Start New Mode
+                        emp = new tblEmpGeneralInfo();
+                        
+                        #region 1. General Information
+                        emp.IsActive = true;
+                        emp.EmployeeStatus = "Active";
+                        emp.EntryBy = _userId;
+                        emp.EntryDate = DateTime.Now;
+                        emp.CompanyId = ddlCompany.SelectedIndex > 0 ? int.Parse(ddlCompany.SelectedValue) : (int?)null;
+                        emp.EmpName = string.IsNullOrEmpty(txt_EmpName.Text) ? null : txt_EmpName.Text;
+                        emp.Gender = ddlGender.SelectedIndex > 0 ? ddlGender.SelectedValue : null;
+                        emp.BloodGroup = ddlBloodGroup.SelectedIndex > 0 ? ddlBloodGroup.SelectedValue : null;
+                        emp.TinNo = string.IsNullOrEmpty(txt_EmpTinNo.Text) ? null : txt_EmpTinNo.Text;
+
+                        emp.FatherName = string.IsNullOrEmpty(txt_EmpFatherName.Text) ? null : txt_EmpFatherName.Text;
+                        emp.FatherOccupation = ddlEmpFOccupation.SelectedIndex > 0 ? int.Parse(ddlEmpFOccupation.SelectedValue) : (int?)null;
+                        emp.MotherName = string.IsNullOrEmpty(txt_EmpMotherName.Text) ? null : txt_EmpMotherName.Text;
+                        emp.MotherOccupation = ddlEmpMOccupation.SelectedIndex > 0 ? int.Parse(ddlEmpMOccupation.SelectedValue) : (int?)null;
+
+                        emp.DateOfBirth = string.IsNullOrEmpty(txt_EmpDOB.Text) ? (DateTime?)null : DateTime.Parse(txt_EmpDOB.Text).Date;
+                        emp.DateOfJoin = string.IsNullOrEmpty(txt_EmpDOJ.Text) ? (DateTime?)null : DateTime.Parse(txt_EmpDOJ.Text).Date;
+                        emp.Religion = ddlEmpReligion.SelectedIndex > 0 ? ddlEmpReligion.SelectedValue : null;
+                        emp.MaritalStatus = ddlEmpMaritalStatus.SelectedIndex > 0 ? ddlEmpMaritalStatus.SelectedValue : null;
+
+                        emp.EmpTypeId = ddlEmpType.SelectedIndex > 0 ? int.Parse(ddlEmpType.SelectedValue) : (int?)null;
+                        emp.PlaceOfBirth = string.IsNullOrEmpty(txt_EmpPlaceOfBirth.Text) ? null : txt_EmpPlaceOfBirth.Text;
+                        emp.Nationality = ddlEmpNationality.SelectedIndex > 0 ? ddlEmpNationality.SelectedValue : null;
+                        emp.NationalIdNo = string.IsNullOrEmpty(txt_EmpNationalID.Text) ? null : txt_EmpNationalID.Text;
+                        if (ddlEmpType.SelectedValue == "2")
+                        {
+                            emp.ContractEndDate = string.IsNullOrEmpty(txt_ContractEndDate.Text) ? (DateTime?)null : DateTime.Parse(txt_ContractEndDate.Text).Date;
+                            //emp.SalaryFromProject = ddlSalFromProject.SelectedIndex > 0 ? int.Parse(ddlSalFromProject.SelectedValue) : (int?)null;
+
+                            //for (int i = 0; i < cbl_ContractProject.Items.Count; i++)
+                            //{
+                            //    if (cbl_ContractProject.Items[i].Selected)
+                            //    {
+                            //        var ContractProject = new tblEmpContractProject();
+                            //        ContractProject.ProjectId = int.Parse(cbl_ContractProject.Items[i].Value);
+                            //        db.tblEmpContractProjects.Add(ContractProject);
+                            //    }
+                            //}
+                        }
+                        emp.PassportNo = string.IsNullOrEmpty(txt_EmpPassport.Text) ? null : txt_EmpPassport.Text;
+                        emp.ExpectedServiceLength = string.IsNullOrEmpty(txt_EmpExpectedServiceLength.Text) ? null : txt_EmpExpectedServiceLength.Text;
+                        emp.DateOfRetirement = string.IsNullOrEmpty(txt_EmpDateOfRetirement.Text) ? (DateTime?)null : DateTime.Parse(txt_EmpDateOfRetirement.Text).Date;
+
+                        emp.DateOfConformation = string.IsNullOrEmpty(txt_EmpDateOfConformation.Text) ? (DateTime?)null : DateTime.Parse(txt_EmpDateOfConformation.Text).Date;
+                        //emp.ConformationStatus = ddlConformationStatus.SelectedIndex > 0 ? ddlConformationStatus.SelectedValue : null;
+
+
+                        if (ddlConformationStatus.SelectedItem.Text == "Yes")
+                        {
+                            emp.ConformationStatus = "1";
+                        }
+
+                        if (ddlConformationStatus.SelectedItem.Text == "No")
+                        {
+                            emp.ConformationStatus = "0";
+                        }
+
+                        if (ddlConformationStatus.SelectedIndex == 0)
+                        {
+                            emp.ConformationStatus = "Null";
+                        }
+
+                        emp.ReportingEmpId = string.IsNullOrEmpty(hdReportingBoss.Value) ? (int?)null : int.Parse(hdReportingBoss.Value);
+
+                        emp.IsProbationary = chkIsProbationary.Checked;
+                        emp.IsProgramContractual = chkIsProgramContractual.Checked;
+                        emp.ProbationEndDate = string.IsNullOrEmpty(txt_ProbationaryEndDate.Text) ? (DateTime?)null : DateTime.Parse(txt_ProbationaryEndDate.Text).Date;
+                        emp.EmpImage = string.IsNullOrEmpty(hfempimg.Value) ? null : hfempimg.Value;
+                        emp.NomineeImage = string.IsNullOrEmpty(hfNomineeImage.Value) ? null : hfNomineeImage.Value;
+                        emp.EmpSign = string.IsNullOrEmpty(hfSignature.Value) ? null : hfSignature.Value;
+                        #endregion end 1. General Information
+                        db.tblEmpGeneralInfoes.Add(emp);
+                        db.SaveChanges();
+                        EmployeeInfoListReportDAL _empdal = new EmployeeInfoListReportDAL();
+                        ////Below stored procedure will generate Emp Master Code based on condition, update on database and return the value
+                        /// 
+                         MasterId = emp.EmpInfoId.ToString();
+                        using (DataTable dtEmpCode = _empdal.GetEmpMasterCode(emp.EmpInfoId))
+                        {
+                            if (dtEmpCode.Rows.Count > 0)
+                            {
+                                EmpMasterCode = dtEmpCode.Rows[0]["EmpMasterCode"].ToString();
+                            }
+
+                        }
+                        for (int i = 0; i < loadGridView.Rows.Count; i++)
+                        {
+                            _commonDataLoad.UpdateReportingEmpId(loadGridView.DataKeys[i][0].ToString(),
+                                emp.EmpInfoId.ToString());
+                        }
+                    }
+                }
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(),
+                   "alert",
+                   "alert('Operation Successful...! Employee Master Code: " + EmpMasterCode + "');window.location ='EmpEmploymentInformation.aspx?mid=" + MasterId + "';",
+                   true);
+            }
+            catch (Exception ex)
+            {
+                AlertMessageBoxShow(ex.Message);
+            }
+            #endregion
+        }
+    }
+
+    protected void btnSaveExitt_OnClick(object sender, EventArgs e)
+    {
+        if (Validation())
+        {
+            #region fff
+
+            try
+            {
+                string MasterId = string.Empty;
+                string EmpMasterCode = string.Empty;
+                mid = string.IsNullOrEmpty(hdpk.Value) ? 0 : int.Parse(hdpk.Value);
+                tblEmpGeneralInfo emp = null;
+                using (var db = new HRIS_SMCEntities())
+                {
+                    if (mid > 0)
+                    {
+
+                        emp = (from j in db.tblEmpGeneralInfoes where j.EmpInfoId == mid select j).FirstOrDefault();
+                        EmpMasterCode = emp.EmpMasterCode;
+
+                        #region 1. General Information
+
+                        emp.CompanyId = ddlCompany.SelectedIndex > 0 ? int.Parse(ddlCompany.SelectedValue) : (int?)null;
+                        emp.EmpName = string.IsNullOrEmpty(txt_EmpName.Text) ? null : txt_EmpName.Text;
+                        emp.Gender = ddlGender.SelectedIndex > 0 ? ddlGender.SelectedValue : null;
+                        emp.BloodGroup = ddlBloodGroup.SelectedIndex > 0 ? ddlBloodGroup.SelectedValue : null;
+                        emp.TinNo = string.IsNullOrEmpty(txt_EmpTinNo.Text) ? null : txt_EmpTinNo.Text;
+
+                        emp.FatherName = string.IsNullOrEmpty(txt_EmpFatherName.Text) ? null : txt_EmpFatherName.Text;
+                        emp.FatherOccupation = ddlEmpFOccupation.SelectedIndex > 0
+                            ? int.Parse(ddlEmpFOccupation.SelectedValue)
+                            : (int?)null;
+                        emp.MotherName = string.IsNullOrEmpty(txt_EmpMotherName.Text) ? null : txt_EmpMotherName.Text;
+                        emp.MotherOccupation = ddlEmpMOccupation.SelectedIndex > 0
+                            ? int.Parse(ddlEmpMOccupation.SelectedValue)
+                            : (int?)null;
+
+                        emp.DateOfBirth = string.IsNullOrEmpty(txt_EmpDOB.Text)
+                            ? (DateTime?)null
+                            : DateTime.Parse(txt_EmpDOB.Text).Date;
+                        emp.DateOfJoin = string.IsNullOrEmpty(txt_EmpDOJ.Text)
+                            ? (DateTime?)null
+                            : DateTime.Parse(txt_EmpDOJ.Text).Date;
+                        emp.Religion = ddlEmpReligion.SelectedIndex > 0 ? ddlEmpReligion.SelectedValue : null;
+                        emp.MaritalStatus = ddlEmpMaritalStatus.SelectedIndex > 0
+                            ? ddlEmpMaritalStatus.SelectedValue
+                            : null;
+
+                        emp.EmpTypeId = ddlEmpType.SelectedIndex > 0 ? int.Parse(ddlEmpType.SelectedValue) : (int?)null;
+                        emp.PlaceOfBirth = string.IsNullOrEmpty(txt_EmpPlaceOfBirth.Text)
+                            ? null
+                            : txt_EmpPlaceOfBirth.Text;
+                        emp.Nationality = ddlEmpNationality.SelectedIndex > 0 ? ddlEmpNationality.SelectedValue : null;
+                        emp.NationalIdNo = string.IsNullOrEmpty(txt_EmpNationalID.Text) ? null : txt_EmpNationalID.Text;
+                        if (ddlEmpType.SelectedValue == "2")
+                        {
+                            emp.ContractEndDate = string.IsNullOrEmpty(txt_ContractEndDate.Text)
+                                ? (DateTime?)null
+                                : DateTime.Parse(txt_ContractEndDate.Text).Date;
+                            //emp.SalaryFromProject = ddlSalFromProject.SelectedIndex > 0 ? int.Parse(ddlSalFromProject.SelectedValue) : (int?)null;
+                            ////TODO
+                            //for (int i = 0; i < cbl_ContractProject.Items.Count; i++)
+                            //{
+                            //    if (cbl_ContractProject.Items[i].Selected)
+                            //    {
+                            //        var ContractProject = new tblEmpContractProject();
+                            //        ContractProject.ProjectId = int.Parse(cbl_ContractProject.Items[i].Value);
+                            //        db.tblEmpContractProjects.Add(ContractProject);
+                            //    }
+                            //}
+                        }
+                        emp.PassportNo = string.IsNullOrEmpty(txt_EmpPassport.Text) ? null : txt_EmpPassport.Text;
+                        emp.ExpectedServiceLength = string.IsNullOrEmpty(txt_EmpExpectedServiceLength.Text)
+                            ? null
+                            : txt_EmpExpectedServiceLength.Text;
+                        emp.DateOfRetirement = string.IsNullOrEmpty(txt_EmpDateOfRetirement.Text)
+                            ? (DateTime?)null
+                            : DateTime.Parse(txt_EmpDateOfRetirement.Text).Date;
+
+                        emp.DateOfConformation = string.IsNullOrEmpty(txt_EmpDateOfConformation.Text)
+                            ? (DateTime?)null
+                            : DateTime.Parse(txt_EmpDateOfConformation.Text).Date;
+
+                        //  emp.ConformationStatus = ddlConformationStatus.SelectedIndex > 0 ? ddlConformationStatus.SelectedValue : null;
+
+                        if (ddlConformationStatus.SelectedItem.Text == "Yes")
+                        {
+                            emp.ConformationStatus = "1";
+                        }
+
+                        if (ddlConformationStatus.SelectedItem.Text == "No")
+                        {
+                            emp.ConformationStatus = "0";
+                        }
+
+                        if (ddlConformationStatus.SelectedIndex == 0)
+                        {
+                            emp.ConformationStatus = "Null";
+                        }
+
+
+                        emp.ReportingEmpId = string.IsNullOrEmpty(hdReportingBoss.Value)
+                            ? (int?)null
+                            : int.Parse(hdReportingBoss.Value);
+
+                        emp.IsProbationary = chkIsProbationary.Checked;
+                        emp.IsProgramContractual = chkIsProgramContractual.Checked;
+                        emp.ProbationEndDate = string.IsNullOrEmpty(txt_ProbationaryEndDate.Text)
+                            ? (DateTime?)null
+                            : DateTime.Parse(txt_ProbationaryEndDate.Text).Date;
+                        emp.EmpImage = string.IsNullOrEmpty(hfempimg.Value) ? null : hfempimg.Value;
+                        emp.NomineeImage = string.IsNullOrEmpty(hfNomineeImage.Value) ? null : hfNomineeImage.Value;
+                        emp.EmpSign = string.IsNullOrEmpty(hfSignature.Value) ? null : hfSignature.Value;
+
+                        #endregion end
+
+                        db.SaveChanges();
+
+                        for (int i = 0; i < loadGridView.Rows.Count; i++)
+                        {
+                            _commonDataLoad.UpdateReportingEmpId(loadGridView.DataKeys[i][0].ToString(),
+                                emp.EmpInfoId.ToString());
+                        }
+                        string[] delid = delEmpIdHiddenField.Value.Split(',');
+                        foreach (string id in delid)
+                        {
+                            _commonDataLoad.UpdateReportingEmpId(null,
+                                id);
+                        }
+                    }
+                    else
+                    {
+
+                        ////Start New Mode
+                        emp = new tblEmpGeneralInfo();
+                        MasterId = emp.EmpInfoId.ToString();
+                        #region 1. General Information
+                        emp.EmpName = string.IsNullOrEmpty(txt_EmpName.Text) ? null : txt_EmpName.Text;
+                        emp.Gender = ddlGender.SelectedIndex > 0 ? ddlGender.SelectedValue : null;
+                        emp.BloodGroup = ddlBloodGroup.SelectedIndex > 0 ? ddlBloodGroup.SelectedValue : null;
+                        emp.TinNo = string.IsNullOrEmpty(txt_EmpTinNo.Text) ? null : txt_EmpTinNo.Text;
+
+                        emp.FatherName = string.IsNullOrEmpty(txt_EmpFatherName.Text) ? null : txt_EmpFatherName.Text;
+                        emp.FatherOccupation = ddlEmpFOccupation.SelectedIndex > 0 ? int.Parse(ddlEmpFOccupation.SelectedValue) : (int?)null;
+                        emp.MotherName = string.IsNullOrEmpty(txt_EmpMotherName.Text) ? null : txt_EmpMotherName.Text;
+                        emp.MotherOccupation = ddlEmpMOccupation.SelectedIndex > 0 ? int.Parse(ddlEmpMOccupation.SelectedValue) : (int?)null;
+
+                        emp.DateOfBirth = string.IsNullOrEmpty(txt_EmpDOB.Text) ? (DateTime?)null : DateTime.Parse(txt_EmpDOB.Text).Date;
+                        emp.DateOfJoin = string.IsNullOrEmpty(txt_EmpDOJ.Text) ? (DateTime?)null : DateTime.Parse(txt_EmpDOJ.Text).Date;
+                        emp.Religion = ddlEmpReligion.SelectedIndex > 0 ? ddlEmpReligion.SelectedValue : null;
+                        emp.MaritalStatus = ddlEmpMaritalStatus.SelectedIndex > 0 ? ddlEmpMaritalStatus.SelectedValue : null;
+
+                        emp.EmpTypeId = ddlEmpType.SelectedIndex > 0 ? int.Parse(ddlEmpType.SelectedValue) : (int?)null;
+                        emp.PlaceOfBirth = string.IsNullOrEmpty(txt_EmpPlaceOfBirth.Text) ? null : txt_EmpPlaceOfBirth.Text;
+                        emp.Nationality = ddlEmpNationality.SelectedIndex > 0 ? ddlEmpNationality.SelectedValue : null;
+                        emp.NationalIdNo = string.IsNullOrEmpty(txt_EmpNationalID.Text) ? null : txt_EmpNationalID.Text;
+                        if (ddlEmpType.SelectedValue == "2")
+                        {
+                            emp.ContractEndDate = string.IsNullOrEmpty(txt_ContractEndDate.Text) ? (DateTime?)null : DateTime.Parse(txt_ContractEndDate.Text).Date;
+                            //emp.SalaryFromProject = ddlSalFromProject.SelectedIndex > 0 ? int.Parse(ddlSalFromProject.SelectedValue) : (int?)null;
+
+                            //for (int i = 0; i < cbl_ContractProject.Items.Count; i++)
+                            //{
+                            //    if (cbl_ContractProject.Items[i].Selected)
+                            //    {
+                            //        var ContractProject = new tblEmpContractProject();
+                            //        ContractProject.ProjectId = int.Parse(cbl_ContractProject.Items[i].Value);
+                            //        db.tblEmpContractProjects.Add(ContractProject);
+                            //    }
+                            //}
+                        }
+                        emp.PassportNo = string.IsNullOrEmpty(txt_EmpPassport.Text) ? null : txt_EmpPassport.Text;
+                        emp.ExpectedServiceLength = string.IsNullOrEmpty(txt_EmpExpectedServiceLength.Text) ? null : txt_EmpExpectedServiceLength.Text;
+                        emp.DateOfRetirement = string.IsNullOrEmpty(txt_EmpDateOfRetirement.Text) ? (DateTime?)null : DateTime.Parse(txt_EmpDateOfRetirement.Text).Date;
+
+                        emp.DateOfConformation = string.IsNullOrEmpty(txt_EmpDateOfConformation.Text) ? (DateTime?)null : DateTime.Parse(txt_EmpDateOfConformation.Text).Date;
+                        //emp.ConformationStatus = ddlConformationStatus.SelectedIndex > 0 ? ddlConformationStatus.SelectedValue : null;
+
+
+                        if (ddlConformationStatus.SelectedItem.Text == "Yes")
+                        {
+                            emp.ConformationStatus = "1";
+                        }
+
+                        if (ddlConformationStatus.SelectedItem.Text == "No")
+                        {
+                            emp.ConformationStatus = "0";
+                        }
+
+                        if (ddlConformationStatus.SelectedIndex == 0)
+                        {
+                            emp.ConformationStatus = "Null";
+                        }
+
+                        emp.ReportingEmpId = string.IsNullOrEmpty(hdReportingBoss.Value) ? (int?)null : int.Parse(hdReportingBoss.Value);
+
+                        emp.IsProbationary = chkIsProbationary.Checked;
+                        emp.IsProgramContractual = chkIsProgramContractual.Checked;
+                        emp.ProbationEndDate = string.IsNullOrEmpty(txt_ProbationaryEndDate.Text) ? (DateTime?)null : DateTime.Parse(txt_ProbationaryEndDate.Text).Date;
+                        emp.EmpImage = string.IsNullOrEmpty(hfempimg.Value) ? null : hfempimg.Value;
+                        emp.NomineeImage = string.IsNullOrEmpty(hfNomineeImage.Value) ? null : hfNomineeImage.Value;
+                        emp.EmpSign = string.IsNullOrEmpty(hfSignature.Value) ? null : hfSignature.Value;
+                        #endregion end 1. General Information
+                        db.tblEmpGeneralInfoes.Add(emp);
+                        db.SaveChanges();
+                        EmployeeInfoListReportDAL _empdal = new EmployeeInfoListReportDAL();
+                        ////Below stored procedure will generate Emp Master Code based on condition, update on database and return the value
+                        using (DataTable dtEmpCode = _empdal.GetEmpMasterCode(emp.EmpInfoId))
+                        {
+                            if (dtEmpCode.Rows.Count > 0)
+                            {
+                                EmpMasterCode = dtEmpCode.Rows[0]["EmpMasterCode"].ToString();
+                            }
+
+                        }
+                        for (int i = 0; i < loadGridView.Rows.Count; i++)
+                        {
+                            _commonDataLoad.UpdateReportingEmpId(loadGridView.DataKeys[i][0].ToString(),
+                                emp.EmpInfoId.ToString());
+                        }
+                    }
+                }
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(),
+                   "alert",
+                   "alert('Operation Successful...! Employee Master Code: " + EmpMasterCode + "');window.location ='EmployeeInfoList.aspx';",
+                   true);
+            }
+            catch (Exception ex)
+            {
+                AlertMessageBoxShow(ex.Message);
+            }
+            #endregion
+        }
+    }
+
+    protected void txt_EmpDateOfConformation_OnTextChanged(object sender, EventArgs e)
+    {
+        try
+        {
+            DateTime doj;
+            if (DateTime.TryParse(txt_EmpDateOfConformation.Text, out doj))
+            {
+                if (chkIsProbationary.Checked)
+                {
+                    txt_EmpDateOfConformation.Text = "";
+
+                    ShowMessageBox("Please Uncheck Is Probationary!!!!");
+                }
+              
+
+
+            }
+            else
+            {
+                ShowMessageBox("Please Enter Valid Date!!!");
+                txt_EmpDateOfConformation.Text = "";
+            }
+        }
+        catch (Exception)
+        {
+
+            ShowMessageBox("Please Enter Valid Date!!!");
+            txt_EmpDateOfConformation.Text = "";
+        }
+    }
+
+    protected void lblNext_OnClick(object sender, EventArgs e)
+    {
+        string EmpId = Request.QueryString["mid"];
+        if (Convert.ToInt32(EmpId) > 0)
+        {
+            lblNext.Visible = true;
+            Response.Redirect("EmpEmploymentInformation?mid=" + EmpId);
+        }
+        else
+        {
+            lblNext.Visible = false;
+            Response.Redirect("EmployeeInfoListUpdate.aspx");
+        }
+    }
+
+    protected void txt_ProbationaryEndDate_OnTextChanged(object sender, EventArgs e)
+    {
+        if (!chkIsProbationary.Checked)
+        {
+            txt_ProbationaryEndDate.Text = "";
+
+            ShowMessageBox("Please check Is Probationary!!!!");
+        }
+        
+    }
+}

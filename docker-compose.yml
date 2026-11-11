@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  database:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: smc_hris_db
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=sa1234
+      - MSSQL_PID=Developer
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql/data
+    restart: always
+
+  # hris_web:
+  #   image: mcr.microsoft.com/dotnet/framework/aspnet:4.8-windowsservercore-ltsc2019
+  #   container_name: smc_hris_web
+  #   ports:
+  #     - "8080:80"
+  #   environment:
+  #     - DB_SERVER=database
+  #     - DB_NAME=HRIS_SMC_DB
+  #     - DB_USER=sa
+  #     - DB_PASSWORD=sa1234
+  #   depends_on:
+  #     - database
+
+volumes:
+  mssql_data:

@@ -1,0 +1,103 @@
+<?xml version="1.0" standalone="yes"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dtJobRequisitionMasterAuditTrail">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="AuditTrail_JobReqId" type="xs:int" minOccurs="0" />
+              <xs:element name="JobReqId" type="xs:int" minOccurs="0" />
+              <xs:element name="UserName" type="xs:string" minOccurs="0" />
+              <xs:element name="StatusMode" type="xs:string" minOccurs="0" />
+              <xs:element name="ModifyDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Grade" type="xs:string" minOccurs="0" />
+              <xs:element name="BudgetedPosition" type="xs:string" minOccurs="0" />
+              <xs:element name="FinancialYearDesc" type="xs:string" minOccurs="0" />
+              <xs:element name="DepartmentName" type="xs:string" minOccurs="0" />
+              <xs:element name="ShortName" type="xs:string" minOccurs="0" />
+              <xs:element name="IsManagementApproved" type="xs:boolean" minOccurs="0" />
+              <xs:element name="IsBudgeted" type="xs:boolean" minOccurs="0" />
+              <xs:element name="ReqDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Note" type="xs:string" minOccurs="0" />
+              <xs:element name="JobTitle" type="xs:string" minOccurs="0" />
+              <xs:element name="EmploymentType" type="xs:string" minOccurs="0" />
+              <xs:element name="EmpCategoryName" type="xs:string" minOccurs="0" />
+              <xs:element name="Nos" type="xs:int" minOccurs="0" />
+              <xs:element name="ExpDateOfJoining" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="MonthContractual" type="xs:string" minOccurs="0" />
+              <xs:element name="FundContractual" type="xs:string" minOccurs="0" />
+              <xs:element name="ProjectDescription" type="xs:string" minOccurs="0" />
+              <xs:element name="ReportingTo" type="xs:string" minOccurs="0" />
+              <xs:element name="InternalContact" type="xs:string" minOccurs="0" />
+              <xs:element name="ExternalContact" type="xs:string" minOccurs="0" />
+              <xs:element name="PlaceOffice" type="xs:string" minOccurs="0" />
+              <xs:element name="Justification" type="xs:string" minOccurs="0" />
+              <xs:element name="JobSummery" type="xs:string" minOccurs="0" />
+              <xs:element name="ProfCertification" type="xs:string" minOccurs="0" />
+              <xs:element name="Experience" type="xs:string" minOccurs="0" />
+              <xs:element name="Skills" type="xs:string" minOccurs="0" />
+              <xs:element name="Age" type="xs:string" minOccurs="0" />
+              <xs:element name="CmpSkill" type="xs:string" minOccurs="0" />
+              <xs:element name="Remarks" type="xs:string" minOccurs="0" />
+              <xs:element name="OtherExperience" type="xs:string" minOccurs="0" />
+              <xs:element name="Others" type="xs:string" minOccurs="0" />
+              <xs:element name="OtherCircula" type="xs:string" minOccurs="0" />
+              <xs:element name="IsInternalCir" type="xs:boolean" minOccurs="0" />
+              <xs:element name="IsOnlineCir" type="xs:boolean" minOccurs="0" />
+              <xs:element name="IsSMCWeb" type="xs:boolean" minOccurs="0" />
+              <xs:element name="IsNewsPaper" type="xs:boolean" minOccurs="0" />
+              <xs:element name="IsHeadHuntFirm" type="xs:boolean" minOccurs="0" />
+              <xs:element name="IsOtherCircula" type="xs:boolean" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dtJobReqKeyResponAuditTrail">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="AuditTrail_JobReqKeyResId" type="xs:int" minOccurs="0" />
+              <xs:element name="JobReqKeyResId" type="xs:int" minOccurs="0" />
+              <xs:element name="KeyResId" type="xs:int" minOccurs="0" />
+              <xs:element name="JobReqFormId" type="xs:int" minOccurs="0" />
+              <xs:element name="JobReqKeyResName" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dtEducationRequirementsDetailAuditTrail">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DerectlySupervisor" type="xs:string" minOccurs="0" />
+              <xs:element name="Nos" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dtEducationRequirDesJobReqAuditTrail">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EducationRequirements" type="xs:string" minOccurs="0" />
+              <xs:element name="Major" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dtOtherRequirementDetailAuditTrail">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="AuditTrail_OtherRequirementDetailsId" type="xs:int" minOccurs="0" />
+              <xs:element name="OtherRequirementDetailsId" type="xs:int" minOccurs="0" />
+              <xs:element name="MasterId" type="xs:int" minOccurs="0" />
+              <xs:element name="OtherRequirement" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dtCirculationWayDetailAuditTrail">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="WayId" type="xs:int" minOccurs="0" />
+              <xs:element name="CirculationWay" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

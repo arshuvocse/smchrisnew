@@ -1,0 +1,211 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPages/MainMasterPage.master" AutoEventWireup="true" CodeFile="EmployeeSuspendEntry.aspx.cs" Inherits="SuspendAndDiciplinary_UI_EmployeeSuspendEntry" %>
+<%@ Register TagPrefix="ajaxToolkit" Namespace="AjaxControlToolkit" Assembly="AjaxControlToolkit, Version=16.1.0.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    
+    <div class="content" id="content">
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+            <ContentTemplate>
+                <!-- PAGE HEADING -->
+                <div class="page-heading">
+                    <div class="page-heading__container">
+                        <div class="icon"> <img src="../Report_Pages/app.png"  width="20px" /> </div>
+                        <span></span>
+                        <h1 class="title" style="font-size: 18px; padding-top: 9px;">Employee Suspend Entry </h1>
+                    </div>
+                    <div class="page-heading__container float-right d-none d-sm-block">
+                        <%--<asp:Button ID="detailsViewButton" Text="View Details Information" CssClass="btn btn-sm btn-outline-secondary " runat="server" OnClick="departmentListImageButton_Click" />--%>
+                        <%-- <asp:Button ID="reportViewButton" Text="Report" CssClass="btn btn-sm btn-outline-success" runat="server" OnClick="rptImageButton_Click" />--%>
+                    </div>
+                    <nav aria-label="breadcrumb" role="navigation">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Daily Tasks </a></li>
+                            <li class="breadcrumb-item"><a href="#">Employee Suspend Entry</a></li>
+
+                        </ol>
+                    </nav>
+                </div>
+                <!-- //END PAGE HEADING -->
+
+                <div class="container-fluid">
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="form-row">
+                               <div class="col-3">
+                                <div class="form-group">
+                                    <label>Effective Date :</label>
+                                    <div class="input-group date pull-left" id="daterangepicker1">
+                                        <asp:TextBox ID="effectDateTexBox" runat="server" class="form-control form-control-sm" CausesValidation="true"></asp:TextBox>
+                                        <ajaxToolkit:CalendarExtender ID="CalendarExtender1" runat="server"
+                                            Format="dd-MMM-yyyy" PopupButtonID="ImageButton1" CssClass="custom"
+                                            TargetControlID="effectDateTexBox" />
+                                        <div class="input-group-addon" style="border: 1px solid #cccccc">
+                                            <span>
+                                                <asp:ImageButton ID="ImageButton1" runat="server"
+                                                    AlternateText="Click to show calendar"
+                                                     ImageUrl="../Assets/Calendar_scheduleHS.png" TabIndex="4" />
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label>Employee Master Code :</label>
+                                        <asp:TextBox ID="EmpMasterCodeTextBox" runat="server" class="form-control form-control-sm"></asp:TextBox>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-1">
+                                    <div class="form-group">
+                                        <label style="color: white">Search </label> <br />
+                                        <asp:Button ID="searchButton" runat="server" CssClass="btn btn-sm btn-info" onclick="searchButton_Click" Text="Search" />
+                                    </div>
+                                </div>
+                                 <div class="col-3">
+                                    <div class="form-group">
+                                        <label> Employee Name :</label>
+                                        <asp:TextBox ID="empNameTexBox" CssClass="form-control form-control-sm" runat="server"></asp:TextBox>
+                                        <asp:HiddenField ID="EmpInfoIdHiddenField" runat="server" />    
+                                        <asp:HiddenField ID="suspendHiddenField" runat="server" />                                      
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <asp:Label ID="MessageLabel" runat="server" Text=""></asp:Label>
+                            <div class="form-row">
+                               <div class="col-3">
+                                    <div class="form-group">
+                                        <label> Company Name :</label>
+                                        <asp:Label ID="comNameLabel" CssClass="form-control form-control-sm" runat="server"></asp:Label>
+                                        <asp:HiddenField ID="comIdHiddenField" runat="server" />
+                                    </div>
+                                </div>
+                                
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label> Unit Name :</label>
+                                        <asp:Label ID="unitNameLabel" CssClass="form-control form-control-sm" runat="server"></asp:Label>
+                                        <asp:HiddenField ID="unitIdHiddenField" runat="server" />
+                                    </div>
+                                </div>
+                                
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label> Division Name :</label>
+                                        <asp:Label ID="divNameLabel" CssClass="form-control form-control-sm" runat="server"></asp:Label>
+                                        <asp:HiddenField ID="divIdHiddenField" runat="server" />
+                                    </div>
+                                </div>
+                                
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label> Department Name :</label>
+                                        <asp:Label ID="deptNameLabel" CssClass="form-control form-control-sm" runat="server"></asp:Label>
+                                        <asp:HiddenField ID="deptIdHiddenField" runat="server" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label> Section Name :</label>
+                                        <asp:Label ID="secNameLabel" CssClass="form-control form-control-sm" runat="server"></asp:Label>
+                                        <asp:HiddenField ID="secIdHiddenField" runat="server" />
+                                    </div>
+                                  </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label>Designation Name :</label>
+                                        <asp:Label ID="desigNameLabel" CssClass="form-control form-control-sm" runat="server"></asp:Label>
+                                        <asp:HiddenField ID="desigIdHiddenField" runat="server" />
+                                    </div>
+                                </div>
+                               <div class="col-3">
+                                    <div class="form-group">
+                                        <label>Grade :</label>
+                                        <asp:Label ID="empGradeLabel" CssClass="form-control form-control-sm" runat="server"></asp:Label>
+                                        <asp:HiddenField ID="empGradeIdHiddenField" runat="server" />
+                                    </div>
+                                </div>
+                                
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label>Type :</label>
+                                        <asp:Label ID="empTypeLabel" CssClass="form-control form-control-sm" runat="server"></asp:Label>
+                                        <asp:HiddenField ID="empTypeIdHiddenField" runat="server" />
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                            <div class="form-row">
+                                
+                                <div class="col-3">
+                                <div class="form-group">
+                                    <label>Joining Date :</label>
+                                    <div class="input-group date pull-left" id="daterangepicker123">
+                                        <asp:TextBox ID="joiningDateTextBox" runat="server" class="form-control form-control-sm" CausesValidation="true"></asp:TextBox>
+                                        <ajaxToolkit:CalendarExtender ID="CalendarExtender2" runat="server"
+                                            Format="dd-MMM-yyyy" PopupButtonID="ImageButton2" CssClass="custom"
+                                            TargetControlID="joiningDateTextBox" />
+                                        <div class="input-group-addon" style="border: 1px solid #cccccc">
+                                            <span>
+                                                <asp:ImageButton ID="ImageButton2" runat="server"
+                                                    AlternateText="Click to show calendar"
+                                                     ImageUrl="../Assets/Calendar_scheduleHS.png" TabIndex="4" />
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label> Description </label>
+                                        <asp:TextBox ID="descriptionTexBox" runat="server" class="form-control form-control-sm"></asp:TextBox>
+                                    </div>
+                                </div>                              
+                           
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label>Remarks </label>
+                                        <asp:TextBox ID="remarksTextBox" runat="server" class="form-control form-control-sm"></asp:TextBox>
+                                    </div>
+                                </div>  
+                                
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label>Type </label>
+                                        <asp:DropDownList ID="typeDropDownList" runat="server" class="form-control form-control-sm"></asp:DropDownList>
+                                    </div>
+                                </div>                            
+                            </div>
+                        
+                            <br/>
+                            <div class="form-row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <asp:Button ID="Button1" Text="Save" CssClass="btn btn-sm btn-info" runat="server" OnClick="submitButton_Click" />
+                                        <asp:Button ID="cancelButton" Text="Cancel" CssClass="btn btn-sm warning" runat="server" OnClick="cancelButton_OnClick" BackColor="#FFCC00" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </ContentTemplate>
+        </asp:UpdatePanel>
+    </div>
+
+</asp:Content>
+

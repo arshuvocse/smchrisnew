@@ -1,0 +1,48 @@
+﻿
+
+.GridViewStyle {border:1px solid #ddd; border-collapse:collapse; font-family:Arial, sans-serif; table-layout:auto; font-size:14px; }
+
+/*Header*/
+
+ 
+
+.HeaderStyle th {padding:5px 0px 5px 0px; color:#333; text-align:center; }
+
+/*Row*/
+
+tr.RowStyle{text-align:center; background-color:#ffffff; }
+
+ 
+
+tr.AlternatingRowStyle {text-align:center; background-color:#7fefae;}
+
+ 
+
+tr.RowStyle:hover {cursor:pointer; background-color:#f69542;}
+
+ 
+
+tr.AlternatingRowStyle:hover {cursor:pointer; background-color:#f69542;}
+
+/*Footer*/
+
+.FooterStyle {background-color:#938ede; height:25px;}
+
+/*Pager*/
+
+.PagerStyle table { margin:auto;border:none;}
+
+ 
+
+tr.PagerStyle {text-align:center; background-color:#ddd;}
+
+ 
+
+.PagerStyle table td {border:1px; padding:5px; }
+
+ 
+
+.PagerStyle a {border:1px solid #fff; padding:2px 5px 2px 5px; color:#333; text-decoration:none;}
+
+ 
+.PagerStyle span {padding:2px 5px 2px 5px; color:#000; font-weight:bold; border:2px solid #938ede;}

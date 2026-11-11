@@ -1,0 +1,263 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPages/MainMasterPage.master" AutoEventWireup="true" CodeFile="EmployeeTypeChange.aspx.cs" EnableEventValidation="false" Inherits="MasterSetup_UI_EmployeeTypeChange" %>
+
+<%@ Register TagPrefix="cc1" Namespace="AjaxControlToolkit" Assembly="AjaxControlToolkit, Version=16.1.0.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="cpFormBody" runat="Server">
+
+    <style>
+        fieldset.for-panel {
+            background-color: #fcfcfc;
+            border: 1px solid #999;
+            padding: 15px 10px;
+            background-color: white;
+            margin-bottom: 12px;
+        }
+
+            fieldset.for-panel legend {
+                background-color: #fafafa;
+                border: 1px solid #ddd;
+                border-radius: 1px;
+                font-size: 12px;
+                font-weight: bold;
+                line-height: 10px;
+                margin: inherit;
+                padding: 7px;
+                width: auto;
+                margin-bottom: 0;
+                color: black;
+            }
+    </style>
+    <style type="text/css">
+        /*AutoComplete flyout */
+        .autocomplete_completionListElement {
+            margin: 0px !important;
+            background-color: White;
+            color: windowtext;
+            border: buttonshadow;
+            border-width: 1px;
+            border-style: solid;
+            cursor: 'default';
+            overflow: auto;
+            font-family: Calibri;
+            font-size: 12px;
+            text-align: left;
+            list-style-type: none;
+            margin-left: 0px;
+            padding-left: 0px;
+            max-height: 350px;
+            width: 130% !important;
+        }
+
+
+
+        .autocomplete_highlightedListItem {
+            background-color: yellow;
+            color: black;
+            padding: 1px;
+        }
+
+
+
+        .autocomplete_listItem {
+            background-color: white;
+            color: blue;
+            padding: 0px;
+        }
+    </style>
+    <div class="content" id="content">
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+            <ContentTemplate>
+                <!-- PAGE HEADING -->
+                <div class="page-heading">
+                    <div class="page-heading__container">
+                        <div class="icon"> <img src="../Report_Pages/app.png"  width="20px" /> </div>
+                        <span></span>
+                        <h1 class="title" style="font-size: 18px; padding-top: 9px;">Employee Type Change </h1>
+                    </div>
+                    <div class="page-heading__container float-right d-none d-sm-block">
+                        <asp:Button ID="detailsViewButton" Text="View List" CssClass="btn btn-sm btn-outline-secondary " runat="server" OnClick="detailsViewButton_OnClick" />
+                    </div>
+
+                </div>
+                <!-- //END PAGE HEADING -->
+
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <form>
+                                <div class="row">
+
+                                    <div class="col-md-3">
+
+                                        <div class="form-group">
+                                            <label>Company Name </label>
+                                            <asp:DropDownList ID="companyDropDownList" class="form-control form-control-sm" OnSelectedIndexChanged="companyDropDownList_OnSelectedIndexChanged" runat="server" AutoPostBack="True"></asp:DropDownList>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Search Employee: </label>
+                                            <asp:TextBox ID="SearchEmployeeNameTextBoxTextBox" AutoPostBack="True" runat="server" class="form-control form-control-sm" OnTextChanged="SearchEmployeeNameTextBoxTextBox_OnTextChanged"></asp:TextBox>
+                                            <cc1:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server" DelimiterCharacters=""
+                                                EnableCaching="true" Enabled="True" MinimumPrefixLength="1" CompletionSetCount="10"
+                                                ServiceMethod="GetCompanyWiseEmployeeInfo" ServicePath="~/WebService.asmx" TargetControlID="SearchEmployeeNameTextBoxTextBox"
+                                                UseContextKey="True" CompletionListCssClass="autocomplete_completionListElement"
+                                                CompletionListItemCssClass="autocomplete_listItem" CompletionListHighlightedItemCssClass="autocomplete_highlightedListItem"
+                                                ShowOnlyCurrentWordInCompletionListItem="true">
+                                            </cc1:AutoCompleteExtender>
+
+                                            <asp:HiddenField ID="repEmpIdHiddenField" runat="server" />
+
+                                            <%--<asp:AutoCompleteExtender
+                                                            ID="at_txt_JobCirculation"
+                                                            TargetControlID="EmployeeNameTextBox"
+                                                            runat="server"
+                                                            ServiceMethod="GetParticipantList"
+                                                            ServicePath="~/WebService.asmx"
+                                                            MinimumPrefixLength="2"
+                                                            CompletionInterval="10"
+                                                            EnableCaching="false"
+                                                            CompletionSetCount="1"
+                                                            FirstRowSelected="false">
+                                                        </asp:AutoCompleteExtender>--%>
+                                            <asp:HiddenField ID="jobIdHiddenField" runat="server" />
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+
+
+
+
+                                    <div class="col-md-6">
+                                        <fieldset class="for-panel">
+                                            <legend>Promotion To</legend>
+                                            <div class="row">
+
+                                                <div class="col-md-12">
+                                                    
+                                                  
+
+                                                    <div class="form-group">
+
+                                                        <label>Company Name: </label>
+                                                        <asp:Label ID="lblComName" runat="server" Text=""></asp:Label>
+
+                                                    </div>
+                                                    
+                                                        <div class="form-group">
+
+                                                        <label>Employee Name: </label>
+                                                        <asp:Label ID="lblEmp" runat="server" Text=""></asp:Label>
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Employee Code: </label>
+                                                        <asp:Label ID="lblEmployeeCode" runat="server" Text=""></asp:Label>
+                                                    </div>
+                                                    
+                                                       <div class="form-group">
+                                                        <label>Joining Date: </label>
+                                                        <asp:Label ID="lblJdate" runat="server" Text=""></asp:Label>
+                                                    </div>
+                                                    
+                                                       <div class="form-group">
+                                                        <label>Designation: </label>
+                                                        <asp:Label ID="lblDesignation" runat="server" Text=""></asp:Label>
+                                                    </div>
+                                                    
+                                                    
+                                                       <div class="form-group">
+                                                        <label>Salary Grade: </label>
+                                                        <asp:Label ID="lblSalaryGrade" runat="server" Text=""></asp:Label>
+                                                    </div>
+                                                    
+                                                    
+                                                   
+                                                </div>
+
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+
+
+                                    <div class="col-md-6">
+                                        <fieldset class="for-panel">
+                                            <legend>Promotion To</legend>
+                                            <div class="row">
+
+                                                <div class="col-md-12">
+                                                    
+                                                       <div class="form-group">
+
+                                                        <label>Division: </label>
+                                                        <asp:Label ID="lblDivision" runat="server" Text=""></asp:Label>
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Wing: </label>
+                                                        <asp:Label ID="lblWing" runat="server" Text=""></asp:Label>
+                                                    </div>
+                                                    
+                                                       <div class="form-group">
+                                                        <label>Department: </label>
+                                                        <asp:Label ID="lblDepartment" runat="server" Text=""></asp:Label>
+                                                    </div>
+                                                    
+                                                       <div class="form-group">
+                                                        <label>Section: </label>
+                                                        <asp:Label ID="lblSection" runat="server" Text=""></asp:Label>
+                                                    </div>
+                                                    
+                                                    
+                                                       <div class="form-group">
+                                                        <label>Sub-Section: </label>
+                                                        <asp:Label ID="lblSubSection" runat="server" Text=""></asp:Label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                        </div>
+
+                        <div class="col-md-4">
+                        </div>
+
+
+                    <%--    <div class="col-md-3">
+                            <div class="form-group">
+                                <asp:Button ID="submitButton" Text="Save" CssClass="btn btn-sm btn-info" runat="server" OnClick="submitButton_Click" />
+                                <asp:Button ID="cancelButton" Text="Cancel" CssClass="btn btn-sm warning" runat="server" OnClick="cancelButton_OnClick" BackColor="#FFCC00" />
+
+                            </div>
+                        </div>--%>
+                        <div class="col-md-3">
+                        </div>
+
+                        <div class="col-md-4">
+                        </div>
+                    </div>
+
+                    </form>
+                </div>
+
+
+                </div>
+                    </div>
+                </div>
+                </div>
+
+            </ContentTemplate>
+        </asp:UpdatePanel>
+    </div>
+
+</asp:Content>
+

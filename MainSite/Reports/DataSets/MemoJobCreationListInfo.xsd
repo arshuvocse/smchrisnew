@@ -1,0 +1,48 @@
+<?xml version="1.0" standalone="yes"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="MemoJobCreationDataTable">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="MemoJobCreationId" type="xs:int" minOccurs="0" />
+              <xs:element name="JobCreationId" type="xs:int" minOccurs="0" />
+              <xs:element name="HeaderTitle" type="xs:string" minOccurs="0" />
+              <xs:element name="HeaderDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="FirstTitle" type="xs:string" minOccurs="0" />
+              <xs:element name="SecondTitle" type="xs:string" minOccurs="0" />
+              <xs:element name="Positiontitle" type="xs:string" minOccurs="0" />
+              <xs:element name="WeOffer" type="xs:string" minOccurs="0" />
+              <xs:element name="APPLYINSTRACTIONS" type="xs:string" minOccurs="0" />
+              <xs:element name="NameDesignation" type="xs:string" minOccurs="0" />
+              <xs:element name="EntryBy" type="xs:int" minOccurs="0" />
+              <xs:element name="EntryDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="UpdateBy" type="xs:int" minOccurs="0" />
+              <xs:element name="UpdateDate" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="MemoKeyResponseDataTable">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="JobReqKeyResId" type="xs:int" minOccurs="0" />
+              <xs:element name="JobReqKeyResName" type="xs:string" minOccurs="0" />
+              <xs:element name="MemoJobCreationId" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="MemoOtherRequirementsDataTable">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="OtherRequirementsName" type="xs:string" minOccurs="0" />
+              <xs:element name="MemoOtherRequirementDetailId" type="xs:int" minOccurs="0" />
+              <xs:element name="MemoJobCreationId" type="xs:int" minOccurs="0" />
+              <xs:element name="OtherRequirement" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

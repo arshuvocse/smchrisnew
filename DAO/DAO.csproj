@@ -1,0 +1,571 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1507E2AF-7AF4-4A5B-BD11-BD3920CD914F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DAO</RootNamespace>
+    <AssemblyName>DAO</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DivisionWiseEmpTransfer\DivisionWiseEmpTransferDao.cs" />
+    <Compile Include="ExcOfficeDoc_Dao\ExeOffDocSubCategoryDao.cs" />
+    <Compile Include="ExcOfficeDoc_Dao\ExeOfficeDocCategoryDao.cs" />
+    <Compile Include="ExcOfficeDoc_Dao\ExeofficeDocCategory_DEL_Dao.cs" />
+    <Compile Include="ExcOfficeDoc_Dao\ExeOfficeDocDetailsDao.cs" />
+    <Compile Include="ExcOfficeDoc_Dao\ExeOffiDocUpMasterDao.cs" />
+    <Compile Include="HealthCare_Dao\AdvanceBill.cs" />
+    <Compile Include="HealthCare_Dao\BillSettlement.cs" />
+    <Compile Include="HealthCare_Dao\BillSettlementDocument.cs" />
+    <Compile Include="HealthCare_Dao\ClaimDetailsDao.cs" />
+    <Compile Include="HealthCare_Dao\CommetteeSetupDetailsDao.cs" />
+    <Compile Include="HealthCare_Dao\CommiteeSetupMasterDao.cs" />
+    <Compile Include="HealthCare_Dao\HeadOfExpenseMaster.cs" />
+    <Compile Include="HealthCare_Dao\HRDecleration.cs" />
+    <Compile Include="HealthCare_Dao\IPDOPDHeadOfExpenseDao.cs" />
+    <Compile Include="HealthCare_Dao\MedicalSupComDetailsDao.cs" />
+    <Compile Include="HealthCare_Dao\MedicalSupComMasterDao.cs" />
+    <Compile Include="HealthCare_Dao\ReimbursmentberifDiscriptionDao.cs" />
+    <Compile Include="HealthCare_Dao\ReimbursmentDocument.cs" />
+    <Compile Include="HealthCare_Dao\ReimbursmentEnclosuretickMark.cs" />
+    <Compile Include="HealthCare_Dao\ReimbursmentFromEmpListDao.cs" />
+    <Compile Include="HealthCare_Dao\ReimbursmentMaster.cs" />
+    <Compile Include="HealthCare_Dao\TopSheetGeneMasterDao.cs" />
+    <Compile Include="HealthCare_Dao\TopSheetGenerateDetailsDao.cs" />
+    <Compile Include="HRIS_DAO\AppraisalInfoDocumentDAO.cs" />
+    <Compile Include="HRIS_DAO\AppraisalMasterAppLogDAO.cs" />
+    <Compile Include="HRIS_DAO\AppraisalSelfAppLogDAO.cs" />
+    <Compile Include="HRIS_DAO\CandidateCvUploadDAO.cs" />
+    <Compile Include="HRIS_DAO\ClearenceFormDetailDao.cs" />
+    <Compile Include="HRIS_DAO\DepartedDao.cs" />
+    <Compile Include="HRIS_DAO\EmpClearanceDao.cs" />
+    <Compile Include="HRIS_DAO\EmployeeApprovalByOpearationDetails.cs" />
+    <Compile Include="HRIS_DAO\EmployeeApprovalByOpearationMasterDao.cs" />
+    <Compile Include="HRIS_DAO\EmployeeJobLeftAppLogDAO.cs" />
+    <Compile Include="HRIS_DAO\EmpSalaryInfoDAO.cs" />
+    <Compile Include="HRIS_DAO\EmpTransferAndRedesignationAppLogDAO.cs" />
+    <Compile Include="HRIS_DAO\EmployeePromotionEntryAppLogDAO.cs" />
+    <Compile Include="HRIS_DAO\FinancialYearEntry.cs" />
+    <Compile Include="HRIS_DAO\IncrementAppLogDAO.cs" />
+    <Compile Include="HRIS_DAO\IncrementConfirmationDao.cs" />
+    <Compile Include="HRIS_DAO\InterviewBoardMarksSetupDAO.cs" />
+    <Compile Include="HRIS_DAO\InterviewMarksDetailsDAO.cs" />
+    <Compile Include="HRIS_DAO\LunchAllownceCancelDAO.cs" />
+    <Compile Include="HRIS_DAO\MemoPrintPromotionDAO.cs" />
+    <Compile Include="HRIS_DAO\MeetingInfoAppLogIdDAO.cs" />
+    <Compile Include="HRIS_DAO\MidYearKPISetupDAO.cs" />
+    <Compile Include="HRIS_DAO\MiscellaneousInfoAppLogDAO.cs" />
+    <Compile Include="HRIS_DAO\EmpExitDocumentDAO.cs" />
+    <Compile Include="HRIS_DAO\ProbationListDao.cs" />
+    <Compile Include="HRIS_DAO\RecruitmentApprovalAppLogDAO.cs" />
+    <Compile Include="HRIS_DAO\RecruitmentApprovalDAO.cs" />
+    <Compile Include="HRIS_DAO\ReimbursementSelfAppLogDAO.cs" />
+    <Compile Include="HRIS_DAO\SeperationListDao.cs" />
+    <Compile Include="HRIS_DAO\SmcAttendance.cs" />
+    <Compile Include="HRIS_DAO\SmcLeaveData.cs" />
+    <Compile Include="HRIS_DAO\SurveyMasterAnswrDtls.cs" />
+    <Compile Include="HRIS_DAO\EmployeeReDesignationDAO.cs" />
+    <Compile Include="HRIS_DAO\TrainingBudget2MasterAppLogDAO.cs" />
+    <Compile Include="HRIS_DAO\TrainingRecordMasterLogDAO.cs" />
+    <Compile Include="HRIS_DAO\MPBudgetMasterAppLogDAO.cs" />
+    <Compile Include="HRIS_DAO\JobReqFormAppLogDAO.cs" />
+    <Compile Include="HRIS_DAO\MemotblJobReqKeyResponDAO.cs" />
+    <Compile Include="HRIS_DAO\MemoOtherRequirementDetailDAO.cs" />
+    <Compile Include="HRIS_DAO\MemotblJobCreationDAO.cs" />
+    <Compile Include="HRIS_DAO\NominationRelationEntryDAO.cs" />
+    <Compile Include="HRIS_DAO\OfficeLocationForRequisition.cs" />
+    <Compile Include="HRIS_DAO\SurveyParticipateDeclarationDAO.cs" />
+    <Compile Include="HRIS_DAO\SurveyDetailsDeclarationDAO.cs" />
+    <Compile Include="HRIS_DAO\SurveyMasterDeclarationDAO.cs" />
+    <Compile Include="HRIS_DAO\AchievementsEntryDAO.cs" />
+    <Compile Include="HRIS_DAO\DashboardSettingDAO.cs" />
+    <Compile Include="HRIS_DAO\EducationResultEntryDAO.cs" />
+    <Compile Include="HRIS_DAO\EducationSubjectGroupEntryDAO.cs" />
+    <Compile Include="HRIS_DAO\EduInstitiueEntryDAO.cs" />
+    <Compile Include="HRIS_DAO\EmployeeTypeEntryDAO.cs" />
+    <Compile Include="HRIS_DAO\ExtraCurriculamActivitiesEntryDAO.cs" />
+    <Compile Include="HRIS_DAO\FieldofspecializationEntryDAO.cs" />
+    <Compile Include="HRIS_DAO\HobbyEntryDAO.cs" />
+    <Compile Include="HRIS_DAO\MemoPrintEmployeePromotionDAO.cs" />
+    <Compile Include="HRIS_DAO\MemoPrintEmployeePromotionDetailsDAO.cs" />
+    <Compile Include="HRIS_DAO\MemoPrintIncrementDetailsDAO.cs" />
+    <Compile Include="HRIS_DAO\MemoPrintIncrementDAO.cs" />
+    <Compile Include="HRIS_DAO\NationalityEntryDAO.cs" />
+    <Compile Include="HRIS_DAO\NominationPurposeEntryDAO.cs" />
+    <Compile Include="HRIS_DAO\OtherTalentsEntryDAO.cs" />
+    <Compile Include="HRIS_DAO\ProbationEvaluationRating.cs" />
+    <Compile Include="HRIS_DAO\ProjectWiseEmployeeAllocationDetailDAO.cs" />
+    <Compile Include="HRIS_DAO\ProjectWiseEmployeeAllocationDAO.cs" />
+    <Compile Include="HRIS_DAO\AddressDistrictEntryDAO.cs" />
+    <Compile Include="HRIS_DAO\AddressDivisionEntryDAO.cs" />
+    <Compile Include="HRIS_DAO\AddressThanaEntryDAO.cs" />
+    <Compile Include="HRIS_DAO\AppraisalBehaveArea.cs" />
+    <Compile Include="HRIS_DAO\AppraisalDeadLineDetails.cs" />
+    <Compile Include="HRIS_DAO\AppraisalDeadlineMaster.cs" />
+    <Compile Include="HRIS_DAO\AppraisalFinalStatus.cs" />
+    <Compile Include="HRIS_DAO\AppraisalFunctionalArea.cs" />
+    <Compile Include="HRIS_DAO\AppraisalMaster.cs" />
+    <Compile Include="HRIS_DAO\AppraisalTrainingNeeds.cs" />
+    <Compile Include="HRIS_DAO\BoardUniversityDAO.cs" />
+    <Compile Include="HRIS_DAO\ContractualEmpManageAppLogDAO.cs" />
+    <Compile Include="HRIS_DAO\DeadlineExtendedEntryDAO.cs" />
+    <Compile Include="HRIS_DAO\DeadlineExtensionRequestDetailsDAO.cs" />
+    <Compile Include="HRIS_DAO\EducationNameEntryDAO.cs" />
+    <Compile Include="HRIS_DAO\FacilityDetailDAO.cs" />
+    <Compile Include="HRIS_DAO\FacilityJobNatureDAO.cs" />
+    <Compile Include="HRIS_DAO\FacilityMasterDAO.cs" />
+    <Compile Include="HRIS_DAO\JDAppLogDAO.cs" />
+    <Compile Include="HRIS_DAO\JobReqAppLogDAO.cs" />
+    <Compile Include="HRIS_DAO\MPBudgetAppLogDAO.cs" />
+    <Compile Include="HRIS_DAO\OccupationEntryDAO.cs" />
+    <Compile Include="HRIS_DAO\ProbationEvaluationAppLogDAO.cs" />
+    <Compile Include="HRIS_DAO\ProbationEvaluationDetailsDAO.cs" />
+    <Compile Include="HRIS_DAO\ProbationEvaluationMasterDAO.cs" />
+    <Compile Include="HRIS_DAO\surveyQuestionGroupEntryDAO.cs" />
+    <Compile Include="HRIS_DAO\SurveyQuestionSetupEntryDAO.cs" />
+    <Compile Include="HRIS_DAO\TrainingTopicEntryDAO.cs" />
+    <Compile Include="HRIS_DAO\SuspendReasonEntryDao.cs" />
+    <Compile Include="HRIS_DAO\JobLeftTypeDAO.cs" />
+    <Compile Include="HRIS_DAO\TrainingAttendanceDAO.cs" />
+    <Compile Include="HRIS_DAO\TrainingMarksDetailDAO.cs" />
+    <Compile Include="HRIS_DAO\TrainingMarksMasterDAO.cs" />
+    <Compile Include="HRIS_DAO\TrainingRecordScheDateDAO.cs" />
+    <Compile Include="HRIS_DAO\TrainingRecordScheduleDayDAO.cs" />
+    <Compile Include="HRIS_DAO\TraningInstitiueEntryDAO.cs" />
+    <Compile Include="HRIS_DAO\TraingingHeadingEntryDAO.cs" />
+    <Compile Include="HRIS_DAO\TransferConfirmationDao.cs" />
+    <Compile Include="HRIS_DAO\UpLiftEmpDAO.cs" />
+    <Compile Include="HRIS_DAO\VacancyEntryDao.cs" />
+    <Compile Include="HRIS_DAO\EducationRequirementsDetailDao.cs" />
+    <Compile Include="HRIS_DAO\OtherRequirementDetailDAO.cs" />
+    <Compile Include="HRIS_DAO\TrainingRecordDetailsEmployee.cs" />
+    <Compile Include="HRIS_DAO\TrainingRecordMaster.cs" />
+    <Compile Include="HRIS_DAO\TrainingTypeDAO.cs" />
+    <Compile Include="HRIS_DAO\Venue.cs" />
+    <Compile Include="HRIS_DAO\AreaInformationDao.cs" />
+    <Compile Include="HRIS_DAO\BenefitDetailDAO.cs" />
+    <Compile Include="HRIS_DAO\BenefitJobNatureDAO.cs" />
+    <Compile Include="HRIS_DAO\BenefitMasterDAO.cs" />
+    <Compile Include="HRIS_DAO\CirculationWayDao.cs" />
+    <Compile Include="HRIS_DAO\ClearanceForwardingDetailDao.cs" />
+    <Compile Include="HRIS_DAO\ClearanceForwardingMasterDao.cs" />
+    <Compile Include="HRIS_DAO\ClearenceFormDao.cs" />
+    <Compile Include="HRIS_DAO\CompanyInformationDao.cs" />
+    <Compile Include="HRIS_DAO\ContractualEmpManageDAO.cs" />
+    <Compile Include="HRIS_DAO\DepartmentInformationDao.cs" />
+    <Compile Include="HRIS_DAO\DesignationInformationDao.cs" />
+    <Compile Include="HRIS_DAO\DesignationStepInformationDao.cs" />
+    <Compile Include="HRIS_DAO\DesignationTypeDAO.cs" />
+    <Compile Include="HRIS_DAO\DiciplinaryAction.cs" />
+    <Compile Include="HRIS_DAO\DivisionInformationDao.cs" />
+    <Compile Include="HRIS_DAO\DivisionWingInformationDao.cs" />
+    <Compile Include="HRIS_DAO\EducationRequirDesJobReq.cs" />
+    <Compile Include="HRIS_DAO\EmpEducationInfo.cs" />
+    <Compile Include="HRIS_DAO\EmpEduInstitute.cs" />
+    <Compile Include="HRIS_DAO\EmpExitDetailDao.cs" />
+    <Compile Include="HRIS_DAO\EmpExitMasterDao.cs" />
+    <Compile Include="HRIS_DAO\EmpGeneralInfo.cs" />
+    <Compile Include="HRIS_DAO\EmployeeCategoryInformationDao.cs" />
+    <Compile Include="HRIS_DAO\EmployeeJobLeftEntryDAO.cs" />
+    <Compile Include="HRIS_DAO\EmployeeRequsitionDAO.cs" />
+    <Compile Include="HRIS_DAO\EmployeeSuspendDao.cs" />
+    <Compile Include="HRIS_DAO\EmployeeTypeDao.cs" />
+    <Compile Include="HRIS_DAO\EmpQualification.cs" />
+    <Compile Include="HRIS_DAO\EmpTrainingInfo.cs" />
+    <Compile Include="HRIS_DAO\EmpTransferAndRedesignationDao.cs" />
+    <Compile Include="HRIS_DAO\EvaluateTrainingMaster.cs" />
+    <Compile Include="HRIS_DAO\EvaluationFormDetails.cs" />
+    <Compile Include="HRIS_DAO\EvaluationFormMaster.cs" />
+    <Compile Include="HRIS_DAO\EvaluatTrainingDetails.cs" />
+    <Compile Include="HRIS_DAO\ExitFormMasterDao.cs" />
+    <Compile Include="HRIS_DAO\ExitReasonDetailDao.cs" />
+    <Compile Include="HRIS_DAO\ExitServayDetail.cs" />
+    <Compile Include="HRIS_DAO\FinancialYear.cs" />
+    <Compile Include="HRIS_DAO\IncrementDao.cs" />
+    <Compile Include="HRIS_DAO\InterviewBoardEmpDetailsDao.cs" />
+    <Compile Include="HRIS_DAO\InterviewBoardGuestDetailsDao.cs" />
+    <Compile Include="HRIS_DAO\InterviewBoardSetupMasterDao.cs" />
+    <Compile Include="HRIS_DAO\InterviewCandidateInfoDao.cs" />
+    <Compile Include="HRIS_DAO\InterviewCandidateViewModel.cs" />
+    <Compile Include="HRIS_DAO\JCCirculationWayDao.cs" />
+    <Compile Include="HRIS_DAO\JdDesigDetails.cs" />
+    <Compile Include="HRIS_DAO\JdDesigMaster.cs" />
+    <Compile Include="HRIS_DAO\JdDetails.cs" />
+    <Compile Include="HRIS_DAO\JdMaster.cs" />
+    <Compile Include="HRIS_DAO\JobCreationDao.cs" />
+    <Compile Include="HRIS_DAO\JobCreationEdReqDao.cs" />
+    <Compile Include="HRIS_DAO\JobCreationLocationDao.cs" />
+    <Compile Include="HRIS_DAO\JobExperiancInfo.cs" />
+    <Compile Include="HRIS_DAO\JobLocationDao.cs" />
+    <Compile Include="HRIS_DAO\JobReqKeyRespon.cs" />
+    <Compile Include="HRIS_DAO\KeyJobLocationCirculationDao.cs" />
+    <Compile Include="HRIS_DAO\KPIDeadLineDetails.cs" />
+    <Compile Include="HRIS_DAO\KpiDeadlineMaster.cs" />
+    <Compile Include="HRIS_DAO\Messages.cs" />
+    <Compile Include="HRIS_DAO\MPBudgetViewModel.cs" />
+    <Compile Include="HRIS_DAO\OfficeBranch.cs" />
+    <Compile Include="HRIS_DAO\ParticipantListDao.cs" />
+    <Compile Include="HRIS_DAO\ProjectSetupDao.cs" />
+    <Compile Include="HRIS_DAO\RegionInformatinDao.cs" />
+    <Compile Include="HRIS_DAO\ReqEducationDAO.cs" />
+    <Compile Include="HRIS_DAO\SalaryGradeDao.cs" />
+    <Compile Include="HRIS_DAO\SalaryLocationInformationDao.cs" />
+    <Compile Include="HRIS_DAO\SalaryStepInformationDao.cs" />
+    <Compile Include="HRIS_DAO\SalaryTypeInformationDao.cs" />
+    <Compile Include="HRIS_DAO\SectionInformationDao.cs" />
+    <Compile Include="HRIS_DAO\SubSectionInformationDao.cs" />
+    <Compile Include="HRIS_DAO\tblEmployeePromotionEntryDAO.cs" />
+    <Compile Include="HRIS_DAO\TrainerInfo.cs" />
+    <Compile Include="HRIS_DAO\TrainingAttendanceDetails.cs" />
+    <Compile Include="HRIS_DAO\TrainingAttendanceMaster.cs" />
+    <Compile Include="HRIS_DAO\TrainingBudget2Details.cs" />
+    <Compile Include="HRIS_DAO\TrainingBudget2Master.cs" />
+    <Compile Include="HRIS_DAO\TrainingBudgetAllocationDetails.cs" />
+    <Compile Include="HRIS_DAO\TrainingBudgetAllocationMaster.cs" />
+    <Compile Include="HRIS_DAO\TrainingBudgetDetailsDpt.cs" />
+    <Compile Include="HRIS_DAO\TrainingBudgetDetailsEmployee.cs" />
+    <Compile Include="HRIS_DAO\TrainingBudgetDetailsGrade.cs" />
+    <Compile Include="HRIS_DAO\TrainingBudgetMaster.cs" />
+    <Compile Include="HRIS_DAO\TrainingDetailsInfo.cs" />
+    <Compile Include="HRIS_DAO\TrainingMasterInfo.cs" />
+    <Compile Include="HRIS_DAO\TrainingOrganizationDao.cs" />
+    <Compile Include="HRIS_DAO\TrainingOrganizationLocationDao.cs" />
+    <Compile Include="HRIS_DAO\TrainingOrgInfo.cs" />
+    <Compile Include="HRIS_DAO\TrainingRequirementFormDao.cs" />
+    <Compile Include="HRIS_DAO\TrainingRequisition2Details.cs" />
+    <Compile Include="HRIS_DAO\TrainingRequisition2Master.cs" />
+    <Compile Include="HRIS_DAO\TrainingRequisitionDetails.cs" />
+    <Compile Include="HRIS_DAO\TrainingRequisitionMaster.cs" />
+    <Compile Include="HRIS_DAO\TrainingSetup2Details.cs" />
+    <Compile Include="HRIS_DAO\TrainingSetup2Master.cs" />
+    <Compile Include="HRIS_DAO\UserEntryDAO.cs" />
+    <Compile Include="HRIS_DAO\UserInformation.cs" />
+    <Compile Include="HRIS_DAO\VacancyCirculationDAO.cs" />
+    <Compile Include="HRIS_DAO\WeeklyHoliday.cs" />
+    <Compile Include="HRIS_DAO\YearQuater.cs" />
+    <Compile Include="HRIS_DAO_EF\HRDBModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HRDBModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\HRDBModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\HRDBModel1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HRDBModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblApprovalStepInfo.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblApprovalStepSetup.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblApprovalStepSetupStepDtl.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblAttachmentType.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblCompanyInfo.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblCompanyUnit.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblDepartment.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblDesignation.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblDesignationStep.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblDesignationType.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblDivision.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblDivisionWing.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblEmpAchievement.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblEmpAttachment.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblEmpCategory.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblEmpChildren.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblEmpContractProject.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblEmpEducation.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblEmpExperience.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblEmpExtraCurriculam.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblEmpGeneralInfo.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblEmpHobby.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblEmployeeType.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblEmpNominee.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblEmpOtherTalent.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblEmpReference.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblEmpTraining.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblInterviewActivity.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblInterviewBoardEmpDetail.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblInterviewBoardSetupDetail.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblInterviewBoardSetupMaster.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblInterviewCandidateAttandance.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblInterviewCandidateGrading.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblInterviewCandidateInfo.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblInterviewCandidateInvitation.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblInterviewCandidateTotalMark.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblInterviewGrading.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblInterviewMarksDetail.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblJobCreation.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblMainMenu.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblMasterAchievement.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblMasterExtraCurriculam.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblMasterHobby.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblMasterOtherTalent.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblMenuApprovalGroupPermission.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblMenuApprovalGroupPermissionDtl.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblMenuApprovalGroupSetup.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblMenuApprovalGroupSetupDetail.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblMenuGroupPermission.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblMenuGroupPermissionDtl.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblMenuGroupSetup.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblMenuGroupSetupDetail.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblMenuTypeSetup.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblMPBudgetDetail.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblMPBudgetMaster.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblQuarterInfo.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblQuarterMonthInfo.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblUser.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblUserCategory.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblUserCompanyMaping.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblUserDepartmentPermission.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\tblUserType.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HRIS_DAO_EF\vw_EmpInfo.cs">
+      <DependentUpon>HRDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MeetingMinorsDAO\MeetingCategoryDao.cs" />
+    <Compile Include="MeetingMinorsDAO\MeetingEntryDAO.cs" />
+    <Compile Include="MeetingMinorsDAO\MeetingInfoAgendaDAO.cs" />
+    <Compile Include="MeetingMinorsDAO\MeetingInfoApprovalPathDAO.cs" />
+    <Compile Include="MeetingMinorsDAO\MeetingInfoDetailDAO.cs" />
+    <Compile Include="MeetingMinorsDAO\FloorDAO.cs" />
+    <Compile Include="MeetingMinorsDAO\MeetingRoomDao.cs" />
+    <Compile Include="MeetingMinorsDAO\MemberDetailsInfoNewDAO.cs" />
+    <Compile Include="MeetingMinorsDAO\MemberSetupDetails.cs" />
+    <Compile Include="MeetingMinorsDAO\MemberSetupMaster.cs" />
+    <Compile Include="MeetingMinorsDAO\MiscellaneousInfoDAO.cs" />
+    <Compile Include="MeetingMinorsDAO\MiscellaneousInfoDetailDAO.cs" />
+    <Compile Include="MeetingMinorsDAO\MiscellaneousInfoDocumentDAO.cs" />
+    <Compile Include="MeetingMinorsDAO\MiscellaneousInfoRoutingPathDAO.cs" />
+    <Compile Include="MeetingMinorsDAO\RoutingPathSetupDetails.cs" />
+    <Compile Include="MeetingMinorsDAO\RoutingPathSetupMaster.cs" />
+    <Compile Include="MeetingMinorsDAO\SubcommitteeMasterDAO.cs" />
+    <Compile Include="Panal_Entities\ObjActionPageWiseStep.cs" />
+    <Compile Include="Panal_Entities\ObjPanal.cs" />
+    <Compile Include="Panal_Entities\ObjUserWiseApprovalPermission.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SkillWill_Dao\EmpSkillWillAssessmentMaster.cs" />
+    <Compile Include="SkillWill_Dao\EmpSkillWillDetailsDao.cs" />
+    <Compile Include="SkillWill_Dao\SkillWillAssesmentDecDetailsDao.cs" />
+    <Compile Include="SkillWill_Dao\SkillWillAssessmentDecMasterDao.cs" />
+    <Compile Include="UA_DAO\MenuDataPermissionDAO.cs" />
+    <Compile Include="UA_DAO\ObjActionPageWiseStep.cs" />
+    <Compile Include="UA_DAO\ObjUserWiseApprovalPermission.cs" />
+    <Compile Include="UA_DAO\SupervisorMenuAppDAO.cs" />
+    <Compile Include="UA_DAO\UserAuthenticationDAO.cs" />
+    <Compile Include="UA_DAO\UserInformationDAO.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="COMMON_DAO\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="HRIS_DAO_EF\HRDBModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>HRDBModel1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="HRIS_DAO_EF\HRDBModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>HRDBModel.Context.cs</LastGenOutput>
+      <DependentUpon>HRDBModel.edmx</DependentUpon>
+    </None>
+    <None Include="HRIS_DAO_EF\HRDBModel.edmx.diagram">
+      <DependentUpon>HRDBModel.edmx</DependentUpon>
+    </None>
+    <None Include="HRIS_DAO_EF\HRDBModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>HRDBModel.cs</LastGenOutput>
+      <DependentUpon>HRDBModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

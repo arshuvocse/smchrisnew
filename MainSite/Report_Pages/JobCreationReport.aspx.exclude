@@ -1,0 +1,179 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPages/MainMasterPage.master" AutoEventWireup="true" CodeFile="JobCreationReport.aspx.cs" Inherits="CSTL_SINV_UI_JobCreationReport" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="cpFormBody" runat="Server">
+        
+    <asp:UpdatePanel ID="UpdatePanel" runat="server">
+        <ContentTemplate>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="box">
+                        <div class="box-title">
+                            <h3>
+                                <i class="fa fa-edit"></i>Item Information Report</h3>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Select Report :</label>
+                                            <asp:DropDownList ID="reportDropDownList1" runat="server" AutoPostBack="True"
+                                                CssClass="form-control" OnSelectedIndexChanged="reportDropDownList1_SelectedIndexChanged">
+                                                <asp:ListItem>---Select---</asp:ListItem>
+                                                <asp:ListItem Value="IG"> Item Group </asp:ListItem>
+                                                <asp:ListItem Value="IT"> Item Type </asp:ListItem>
+                                                <asp:ListItem Value="ICA">Item Category</asp:ListItem>
+                                                <asp:ListItem Value="IN"> Item Name</asp:ListItem>
+                                                <asp:ListItem Value="ID"> Item Description</asp:ListItem>
+                                                <%--<asp:ListItem Value="IB"> Item Brand</asp:ListItem>
+                                                <asp:ListItem Value="IC"> Item Color</asp:ListItem>
+                                                <asp:ListItem Value="IS"> Item Size</asp:ListItem>--%>
+                                                <%--  <asp:ListItem Value="IS">Item Size Detail</asp:ListItem>--%>
+                                                <%--    <asp:ListItem Value="IM">Item Manufacturer</asp:ListItem>--%>
+                                                <%--<asp:ListItem Value="ID">  Item Details </asp:ListItem>--%>
+                                                <%--  <asp:ListItem Value="IP">Item Price </asp:ListItem>--%>
+                                                <%--  <asp:ListItem Value="UOM">Stock Unit </asp:ListItem>
+                                                <asp:ListItem Value="UOM">Default Transaction Unit </asp:ListItem>--%>
+                                            </asp:DropDownList>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3" id="DivGroup" runat="server" Visible="False" >
+                                        <div class="form-group">
+                                            <a href="ItemGroup.aspx" target="_blank"><label>Item Group Name</label>&nbsp;<label style="color: #a52a2a">*</label></a>
+                                            <asp:DropDownList ID="itemGroupDropDownList" runat="server" TabIndex="1"   class="form-control" OnSelectedIndexChanged="itemGroupDropDownList_SelectedIndexChanged" AutoPostBack="True"></asp:DropDownList>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-2" id="divtype" runat="server" Visible="False">
+                                        <div class="form-group">
+                                            <a href="ItemType.aspx" target="_blank"> <label>Item Type Name</label>&nbsp;<label style="color: #a52a2a">*</label></a>
+                                            <asp:DropDownList ID="itemTypeDropDownList" runat="server" TabIndex="2"   class="form-control" OnSelectedIndexChanged="itemTypeDropDownList_SelectedIndexChanged" AutoPostBack="True"></asp:DropDownList>
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="col-md-2" id="divcat" runat="server" Visible="False">
+                                        <div class="form-group">
+                                            <a href="ItemCategory.aspx" target="_blank"><label>Item Category Name</label>&nbsp;<label style="color: #a52a2a">*</label></a>
+                                            <asp:DropDownList ID="itemCatagoryDropDownList" runat="server" TabIndex="3"   class="form-control" OnSelectedIndexChanged="itemCatagoryDropDownList_SelectedIndexChanged" AutoPostBack="True"></asp:DropDownList>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-2" id="divname" runat="server" Visible="False">
+                                        <div class="form-group">
+                                            <a href="ItemName.aspx" target="_blank"> <label>Item Name</label>&nbsp;<label style="color: #a52a2a">*</label></a>
+                                            <asp:DropDownList ID="itemNameDropDownList" runat="server"  TabIndex="4" AutoPostBack="True"  class="form-control" OnSelectedIndexChanged="itemNameDropDownList_OnSelectedIndexChanged"></asp:DropDownList>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" id="divdesc" runat="server" Visible="False">
+                                        <div class="form-group">
+                                            <a href="ItemDescription.aspx" target="_blank"> <label>Item Description</label>&nbsp;<label style="color: #a52a2a">*</label></a>
+                                            <asp:DropDownList ID="itemDescDropDownList" runat="server"  TabIndex="5"  class="form-control"></asp:DropDownList>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="row" id="divdesother" runat="server" Visible="False">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <a href="ItemBrand.aspx" target="_blank"><label>Item Brand</label>&nbsp;<label style="color: #a52a2a">*</label></a>
+                                            <asp:DropDownList ID="itembrandDropDownList" runat="server" TabIndex="5" class="form-control"></asp:DropDownList>
+                                                                
+                                        </div>
+                                    </div>
+                                   
+                                    
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <a href="ItemSizeMaster.aspx" target="_blank"><label>Item Size Master</label>&nbsp;<label style="color: #a52a2a">*</label></a>
+                                            <asp:DropDownList ID="itemSizeMasterDropDownList" runat="server" TabIndex="6"   class="form-control" OnSelectedIndexChanged="itemSizeMasterDropDownList_SelectedIndexChanged" AutoPostBack="True"></asp:DropDownList>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <a href="ItemSizeDetail.aspx" target="_blank"><label>Item Size Detail</label>&nbsp;<label style="color: #a52a2a">*</label></a>
+                                            <asp:DropDownList ID="itemSizeDropDownList" runat="server" TabIndex="7"   class="form-control"></asp:DropDownList>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <a href="ItemColour.aspx" target="_blank"><label>Item Color</label>&nbsp;<label style="color: #a52a2a">*</label></a></a>
+                                            <asp:DropDownList ID="itemcolorDropDownList" runat="server" TabIndex="8"   class="form-control"></asp:DropDownList>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                                <div class="row" id="divdesother2" runat="server" Visible="False">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <a href="ItemManufacturer.aspx" target="_blank"><label>Item Manufacture</label>&nbsp;<label style="color: #a52a2a">*</label></a>
+                                            <asp:DropDownList ID="itemManufactureDropDownList" runat="server" TabIndex="9"   class="form-control"></asp:DropDownList>
+                                        </div>
+                                    </div>
+                                   
+                                   <%-- <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Country Name</label>&nbsp;<label style="color: #a52a2a">*</label>
+                                            <asp:DropDownList ID="countryDropDownList" runat="server" TabIndex="10"  class="form-control"></asp:DropDownList>
+                                        </div>
+                                    </div>--%>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Stock Unit</label>&nbsp;<label style="color: #a52a2a">*</label>
+                                            <asp:DropDownList ID="stockUnitDropDownList" runat="server" TabIndex="11" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="stockUnitDropDownList_OnSelectedIndexChanged"></asp:DropDownList>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Default Transaction Unit</label>&nbsp;<label style="color: #a52a2a">*</label>
+                                            <asp:DropDownList ID="defaultUnitDropDownList" runat="server" TabIndex="12"  class="form-control" AutoPostBack="True"></asp:DropDownList>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <asp:Button ID="SearchButton" runat="server" Text="Search"
+                                                class="btn btn-green" OnClick="SearchButton_Click" />
+                                            <asp:Button ID="cancelButton" runat="server" Text="Clear"
+                                                class="btn btn-warning" />
+                                            <asp:Button ID="submitButton" runat="server" Text="View Report" class="btn btn-primary"
+                                                OnClick="submitButton_Click" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <asp:GridView ID="itemsGridView" runat="server" AutoGenerateColumns="False"
+                                    PageIndex="1" CssClass="table"
+                                    AllowPaging="True" PageSize="10">
+                                    <%--<Columns>
+                                        <asp:TemplateField HeaderText="SL">
+                                            <ItemTemplate>
+                                                <asp:Label ID="LabelSL" Text='<%# Container.DataItemIndex + 1 %>' runat="server"></asp:Label>
+                                              
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:BoundField DataField="ItemGroupCode" HeaderText="Brand Name" />
+                                         <asp:BoundField DataField="ItemGroupName" HeaderText="Brand Name" />
+                                    </Columns>--%>
+                                </asp:GridView>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ContentTemplate>
+    </asp:UpdatePanel>
+</asp:Content>
+

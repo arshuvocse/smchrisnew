@@ -1,0 +1,78 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/MasterPages/MainMasterPage.master" CodeFile="InterviewCandidateGrading.aspx.cs" Inherits="Inverview_InterviewCandidateGrading" %>
+
+<%@ Register Src="~/Report_Pages/IVSearchControlReport.ascx" TagPrefix="uc1" TagName="IVSearchControl" %>
+
+
+<asp:Content ID="c1" ContentPlaceHolderID="head" runat="Server">
+    
+   
+    <style type="text/css">
+        
+        </style>
+</asp:Content>
+<asp:Content ID="c2" ContentPlaceHolderID="cpFormBody" runat="Server">
+      <div class="content" id="content">
+    <asp:UpdatePanel ID="upFormBody" runat="server">
+        <ContentTemplate>
+              <asp:UpdateProgress ID="progress" runat="server" ClientIDMode="Static" DisplayAfter="0" DynamicLayout="true">
+                    <ProgressTemplate>
+                        <div class="divWaiting">
+                            <asp:Image ID="imgWait" CssClass="position-set" runat="server" ImageAlign="Middle" ImageUrl="~/Assets/img/progress-bar-opt.gif" Width="120px" Height="120px" />
+                        </div>
+                    </ProgressTemplate>
+                </asp:UpdateProgress>
+                    <div class="page-heading">
+                        <div class="page-heading__container">
+                            <h1 class="title" style="font-size: 18px; padding-top: 0px;">Interview Candidate Grading</h1>
+                        </div>
+                    </div>
+               <div class="container-fluid">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="form-row">
+                                <uc1:IVSearchControl runat="server" ID="IVSearchControl" />
+                                <div class="col-4"></div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <div></div>
+                                        <input type="button" class="btn btn-outline-info btn-block disabled btn-sm" id="btnSearch" value="Search"></input>
+                                    </div>
+                                </div>
+                            </div>
+                          
+                            <br/>
+                            <div class="form-row">
+                                <div id="tbl_container" style="width: 100%" class="">
+                                </div>
+                            </div>
+                        </div>  <br/>
+                          
+                    </div>  <br/>
+                            <br/>
+                            <br/><br/>
+                            <br/><br/>
+                </div>
+        </ContentTemplate>
+    </asp:UpdatePanel>
+
+              </div>
+    
+      <style>
+                             .table   thead th {
+   background-color: #5B799E;
+    color: white;
+}
+          </style>
+    <%--<script src="../Assets/MaterialDT/jquery-3.3.1.js"></script>--%>
+       
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+       <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css" />
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script type="text/javascript">
+        $.getScript('../AppJs/InterviewCandidateGrading.js', function (data, textStatus, jqxhr) {
+            console.log('Script File Load Status=' + jqxhr.status);
+        });
+    </script>
+</asp:Content>
+

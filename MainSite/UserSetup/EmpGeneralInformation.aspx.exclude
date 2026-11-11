@@ -1,0 +1,615 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPages/MainMasterPage.master" EnableEventValidation="false"  AutoEventWireup="true" CodeFile="EmpGeneralInformation.aspx.cs" Inherits="UserSetup_EmpGeneralInformation" %>
+
+<%@ Register TagPrefix="cc1" Namespace="AjaxControlToolkit" Assembly="AjaxControlToolkit, Version=16.1.0.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="cpFormBody" runat="Server">
+
+    <div class="container-fluid">
+        <div class="page-heading">
+            <div class="page-heading__container">
+                <h1 class="title" style="font-size: 18px; padding-top: 0px;">Update Information</h1>
+            </div>
+            <div class="page-heading__container">
+                <asp:Label runat="server" ID="lbl_Mode"></asp:Label>
+                <span>
+
+                    <label class="btn infoN" style="font-size: 14px;">Employee ID:  &nbsp;
+                        <asp:Label runat="server" class="label w3-tag w3-green" Style="font-size: 14px;" ID="empMasterCode"></asp:Label></label>
+                    &nbsp;
+                    
+                  <label class="btn infoN" style="font-size: 14px;">Employee Name: &nbsp; 
+                      <asp:Label runat="server" class="label w3-tag w3-green" Style="font-size: 14px;" ID="lblEmpName"></asp:Label></label>
+                    
+                    
+                      <label class="btn infoN" style="font-size: 12px;">Designation: &nbsp; 
+                      <asp:Label runat="server" class="label w3-tag w3-green" Style="font-size: 10px;" ID="lblDesignation"></asp:Label></label>
+
+                </span>
+            </div>
+            <div class="page-heading__container float-right d-none d-sm-block">
+                <asp:Button ID="detailsViewButton" Text="Update Information" CssClass="btn btn-sm btn-outline-secondary " runat="server" OnClick="detailsViewButton_OnClick" />
+            </div>
+        </div>
+        <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Always">
+            <ContentTemplate>
+
+
+                <div class="card">
+                    <div class="card-body">
+                        <ajaxToolkit:Accordion ID="MyAccordion" runat="server" SelectedIndex="0" HeaderCssClass="accordionHeader" HeaderSelectedCssClass="accordionHeaderSelected" ContentCssClass="accordionContent" FadeTransitions="false" FramesPerSecond="40" TransitionDuration="250" RequireOpenedPane="false" SuppressHeaderPostbacks="true">
+                            <Panes>
+
+
+                                <ajaxToolkit:AccordionPane ID="AccordionPane2" runat="server">
+                                    <Header>
+                                        <span class="accordionLink">1. Employment Information</span>
+                                    </Header>
+                                    <Content>
+                                        <br />
+                                        <br />
+
+
+                                        <div class="form-row">
+
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Company</label>
+                                                    <label style="color: #a52a2a">*</label>
+                                                    <asp:DropDownList runat="server" AutoPostBack="False" ID="ddlCompany" OnSelectedIndexChanged="ddlCompany_SelectedIndexChanged" class="form-control form-control-sm" />
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Employee Name</label>
+                                                    <label style="color: #a52a2a">*</label>
+                                                    <asp:TextBox runat="server" ID="txt_EmpName" class="form-control form-control-sm" />
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Gender</label>
+                                                    <asp:DropDownList runat="server" ID="ddlGender" class="form-control form-control-sm">
+                                                        <asp:ListItem Text="Select..." Value="-1"></asp:ListItem>
+                                                        <asp:ListItem Text="Male" Value="Male"></asp:ListItem>
+                                                        <asp:ListItem Text="FeMale" Value="FeMale"></asp:ListItem>
+                                                    </asp:DropDownList>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Blood Group</label>
+                                                    <asp:DropDownList runat="server" ID="ddlBloodGroup" class="form-control form-control-sm">
+                                                        <asp:ListItem Text="Unknown" Value="Unknown"></asp:ListItem>
+                                                        <asp:ListItem Text="A+" Value="A+"></asp:ListItem>
+                                                        <asp:ListItem Text="A-" Value="A-"></asp:ListItem>
+                                                        <asp:ListItem Text="B+" Value="B+"></asp:ListItem>
+                                                        <asp:ListItem Text="B-" Value="B-"></asp:ListItem>
+                                                        <asp:ListItem Text="O+" Value="O+"></asp:ListItem>
+                                                        <asp:ListItem Text="O-" Value="O-"></asp:ListItem>
+                                                        <asp:ListItem Text="AB+" Value="AB+"></asp:ListItem>
+                                                        <asp:ListItem Text="AB-" Value="AB-"></asp:ListItem>
+
+                                                    </asp:DropDownList>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Tin No.</label>
+                                                    <asp:TextBox runat="server" ID="txt_EmpTinNo" class="form-control form-control-sm" />
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Father's Name</label>
+                                                    <asp:TextBox runat="server" ID="txt_EmpFatherName" class="form-control form-control-sm" />
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Father's Occupation</label>
+                                                    <asp:DropDownList runat="server" ID="ddlEmpFOccupation" class="form-control form-control-sm">
+                                                    </asp:DropDownList>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Mother's Name</label>
+                                                    <asp:TextBox runat="server" ID="txt_EmpMotherName" class="form-control form-control-sm" />
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Mother's Occupation</label>
+                                                    <asp:DropDownList runat="server" ID="ddlEmpMOccupation" class="form-control form-control-sm">
+                                                    </asp:DropDownList>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Date of Birth</label>
+                                                    <label style="color: #a52a2a">*</label>
+                                                    <asp:TextBox runat="server" ID="txt_EmpDOB" class="form-control form-control-sm" autocomplete="off" placeholder="example: 01-Jan-2019" AutoPostBack="True" OnTextChanged="txt_EmpDOB_OnTextChanged" />
+                                                    <ajaxToolkit:CalendarExtender ID="CalendarExtender1" runat="server"
+                                                        Format="dd-MMM-yyyy" CssClass="MyCalendar"
+                                                        TargetControlID="txt_EmpDOB" />
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Date of Join</label>
+                                                    <label style="color: #a52a2a">*</label>
+                                                    <asp:TextBox runat="server" ID="txt_EmpDOJ" class="form-control form-control-sm" autocomplete="off" AutoPostBack="True" placeholder="example: 01-Jan-2019" OnTextChanged="txt_EmpDOJ_OnTextChanged" />
+                                                    <ajaxToolkit:CalendarExtender ID="CalendarExtender2" runat="server"
+                                                        Format="dd-MMM-yyyy" CssClass="MyCalendar"
+                                                        TargetControlID="txt_EmpDOJ" />
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Religion</label>
+                                                    <asp:DropDownList runat="server" ID="ddlEmpReligion" class="form-control form-control-sm">
+                                                        <asp:ListItem Text="Select..." Value="-1"></asp:ListItem>
+                                                        <asp:ListItem Text="Islam" Value="Islam"></asp:ListItem>
+                                                        <asp:ListItem Text="Hindu" Value="Hindu"></asp:ListItem>
+                                                        <asp:ListItem Text="Christian" Value="Christian"></asp:ListItem>
+                                                    </asp:DropDownList>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Marital Status</label>
+                                                    <asp:DropDownList runat="server" ID="ddlEmpMaritalStatus" class="form-control form-control-sm">
+                                                        <asp:ListItem Text="Select..." Value="-1"></asp:ListItem>
+                                                        <asp:ListItem Text="Single" Value="Single"></asp:ListItem>
+                                                        <asp:ListItem Text="Married" Value="Married"></asp:ListItem>
+                                                    </asp:DropDownList>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Employee Type</label>
+                                                    <label style="color: #a52a2a">*</label>
+                                                    <asp:DropDownList runat="server" AutoPostBack="True" ID="ddlEmpType" class="form-control form-control-sm" OnSelectedIndexChanged="ddlEmpType_OnSelectedIndexChanged" />
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Program Contractual</label>
+                                                    <asp:CheckBox runat="server" ID="chkIsProgramContractual" Enabled="false" />
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Contract End Date</label>
+                                                    <asp:TextBox runat="server" ID="txt_ContractEndDate" CssClass="form-control form-control-sm" />
+                                                    <ajaxToolkit:CalendarExtender ID="CalendarExtender154" runat="server"
+                                                        Format="dd-MMM-yyyy" CssClass="MyCalendar"
+                                                        TargetControlID="txt_ContractEndDate" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Place Of Birth</label>
+                                                    <asp:TextBox runat="server" ID="txt_EmpPlaceOfBirth" class="form-control form-control-sm" />
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Nationality</label>
+                                                    <asp:DropDownList runat="server" ID="ddlEmpNationality" class="form-control form-control-sm">
+                                                    </asp:DropDownList>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>National ID</label>
+                                                    <asp:TextBox runat="server" ID="txt_EmpNationalID" class="form-control form-control-sm" />
+                                                    <cc1:FilteredTextBoxExtender ID="FilteredTextB56oxExxxtenderunitsalePrice" runat="server"
+                                                        Enabled="True" TargetControlID="txt_EmpNationalID" FilterType="Custom" ValidChars="0123456789."></cc1:FilteredTextBoxExtender>
+                                                </div>
+                                            </div>
+                                            <div id="iddivContract" cssclass="row" runat="server" visible="False">
+                                                <div cssclass="col-3">
+                                                    <div cssclass="form-group">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+
+
+
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Passport No.</label>
+                                                    <label>Passport No.</label>
+                                                    <asp:TextBox runat="server" ID="txt_EmpPassport" class="form-control form-control-sm" />
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Expected Service length(Y)</label>
+                                                    <asp:TextBox runat="server" ID="txt_EmpExpectedServiceLength" class="form-control form-control-sm" AutoPostBack="True" OnTextChanged="txt_EmpExpectedServiceLength_OnTextChanged" />
+                                                    <cc1:FilteredTextBoxExtender ID="FilteredTextBoxExtenderunitValue" runat="server"
+                                                        Enabled="True" TargetControlID="txt_EmpExpectedServiceLength" FilterType="Custom" ValidChars="0123456789"></cc1:FilteredTextBoxExtender>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Date of Retirement</label>
+                                                    <asp:TextBox runat="server" ID="txt_EmpDateOfRetirement" class="form-control form-control-sm" />
+                                                    <%--    <ajaxToolkit:CalendarExtender ID="CalendarExtender3" runat="server"
+                                                                    Format="dd-MMM-yyyy" CssClass="MyCalendar"
+                                                                    TargetControlID="txt_EmpDateOfRetirement" />--%>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Date of Confirmation</label>
+                                                    <asp:TextBox runat="server" ID="txt_EmpDateOfConformation" class="form-control form-control-sm" autocomplete="off" AutoPostBack="True" OnTextChanged="txt_EmpDateOfConformation_OnTextChanged" placeholder="example: 01-Jan-2019" />
+                                                    <ajaxToolkit:CalendarExtender ID="CalendarExtender4" runat="server"
+                                                        Format="dd-MMM-yyyy" CssClass="MyCalendar"
+                                                        TargetControlID="txt_EmpDateOfConformation" />
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Confirmation Status</label>
+                                                    <label style="color: #a52a2a">*</label>
+                                                    <asp:DropDownList runat="server" ID="ddlConformationStatus" CssClass="form-control form-control-sm">
+                                                        <asp:ListItem Text="Select..." Value="-1"></asp:ListItem>
+                                                        <asp:ListItem Text="Yes" Value="true"></asp:ListItem>
+                                                        <asp:ListItem Text="No" Value="false"></asp:ListItem>
+                                                    </asp:DropDownList>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Reporting Boss</label>
+                                                    <asp:TextBox runat="server" AutoPostBack="True" ID="txt_ReportingBoss" class="form-control form-control-sm" OnTextChanged="txt_ReportingBoss_OnTextChanged" />
+
+                                                    <ajaxToolkit:AutoCompleteExtender
+                                                        ID="at_txt_ReportingBoss"
+                                                        TargetControlID="txt_ReportingBoss" DelimiterCharacters=""
+                                                        EnableCaching="true" Enabled="True" CompletionSetCount="10"
+                                                        runat="server"
+                                                        ServiceMethod="GetEmpNameDesigIDAuto_AllCompany"
+                                                        ServicePath="~/WebService.asmx"
+                                                        MinimumPrefixLength="1"
+                                                        CompletionInterval="500"
+                                                        CompletionListCssClass="autocomplete_completionListElement"
+                                                        FirstRowSelected="false">
+                                                    </ajaxToolkit:AutoCompleteExtender>
+                                                    <asp:HiddenField runat="server" ID="hdReportingBoss" />
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Reporting Boss's Designation</label>
+                                                    <asp:TextBox runat="server" ID="txt_ReportingBossDesig" class="form-control form-control-sm" ReadOnly="True" />
+                                                </div>
+                                            </div>
+                                            <div class="col-3" style="margin-top: 20px;">
+                                                <div class="form-group">
+                                                   
+                                                    <asp:CheckBox runat="server" Text=" Is Probationary" ID="chkIsProbationary" AutoPostBack="True" OnCheckedChanged="chkIsProbationary_OnCheckedChanged" />
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Probationary End Date</label>
+                                                    <asp:TextBox runat="server" ID="txt_ProbationaryEndDate" class="form-control form-control-sm" AutoPostBack="True" OnTextChanged="txt_ProbationaryEndDate_OnTextChanged"   />
+                                                    <ajaxToolkit:CalendarExtender ID="CalendarExtender114" runat="server"
+                                                        Format="dd-MMM-yyyy" CssClass="MyCalendar"
+                                                        TargetControlID="txt_ProbationaryEndDate" />
+                                                </div>
+                                            </div>
+                                            <%-- <div class="col-3">
+                                                            <div class="form-group">
+                                                                <label>Separation Date</label>
+                                                                <asp:TextBox runat="server" ID="SeparationDateTextBox" class="form-control form-control-sm" ReadOnly="True" />
+                                                               
+                                                            </div>
+                                                        </div>--%>
+
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Photo Upload</label>
+                                                    <div>
+                                                        <%--<asp:FileUpload ID="fu_Image" runat="server" />
+                                                                    <asp:Button ID="btn_ImageUpload" runat="server" Text="Image Upload" OnClick="btn_ImageUpload_OnClick" />--%>
+                                                        <%--<asp:Button ID="btnProcessData"
+                                                                                runat="server" Text="Process Data"
+                                                                                OnClick="btnProcessData_Click" />--%>
+                                                        <%--<asp:UpdateProgress ID="UpdateProgress1" runat="server"
+                                                                        AssociatedUpdatePanelID="upFormBody">
+                                                                        <ProgressTemplate>
+                                                                            Please wait, your file is getting uploaded....
+                                                                        </ProgressTemplate>
+                                                                    </asp:UpdateProgress>
+                                                                    <triggers>
+                                                                        <asp:PostBackTrigger ControlID="btn_ImageUpload"  />--%>
+                                                        <%--<asp:AsyncPostBackTrigger ControlID="btnProcessData" />--%>
+                                                        <%--</triggers>
+
+                                                                    <asp:Image ID="img" runat="server"
+                                                                        Width="100" Height="100" ImageAlign="Middle" />--%>
+                                                        <%--                                                                    <ajaxToolkit:AjaxFileUpload
+                                                                        id="ajaxUpload1" 
+                                                                        OnUploadComplete="ajaxUpload1_OnUploadComplete"
+                                                                        
+                                                                        runat="server"  />--%>
+
+
+                                                        <%--                                                                    <br />
+                                                                    <asp:Image ID="Image1" runat="server" Width="120" Height="90" BorderWidth="1" />--%>
+
+                                                        <input type="file" name="EmpImage" accept="image/*" />
+                                                        <input type="button" id="btnUpload" value="Photo Upload" />
+                                                        <progress id="fileProgress" style="display: none"></progress>
+                                                        <hr />
+                                                        <asp:Image ID="img_emp" runat="server" Width="120" Height="90" BorderWidth="1" />
+                                                        <asp:HiddenField runat="server" ID="hfempimg" />
+                                                        <span id="lblMessage" style="color: Green"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Signature Upload</label>
+                                                    <div>
+
+                                                        <input type="file" name="SignatureFile" accept="image/*" />
+                                                        <input type="button" id="btnSignatureUpload" value="Signature Upload" />
+                                                        <progress id="SignaturefileProgress" style="display: none"></progress>
+                                                        <hr />
+                                                        <asp:Image ID="SignatureImage" runat="server" Width="120" Height="90" BorderWidth="1" />
+                                                        <asp:HiddenField runat="server" ID="hfSignature" />
+                                                        <span id="lblMessageSignature" style="color: Green"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Nominee Image Upload</label>
+                                                    <div>
+
+                                                        <input type="file" name="NomineeImageUpload" accept="image/*" />
+                                                        <input type="button" id="btnNomineeImageUpload" value="Nominee Image Upload" />
+                                                        <progress id="NomineeImageProgress" style="display: none"></progress>
+                                                        <hr />
+                                                        <asp:Image ID="img_NomineeImage" runat="server" Width="120" Height="90" BorderWidth="1" />
+                                                        <asp:HiddenField runat="server" ID="hfNomineeImage" />
+                                                        <span id="lblMessageNomineeImage" style="color: Green"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-3">
+                                                <asp:Label runat="server" ID="Label5">Directly Supervised </asp:Label>
+                                                <br />
+                                                <asp:TextBox ID="directlySuperTextBox" AutoPostBack="True" runat="server" class="form-control form-control-sm" OnTextChanged="directlySuperTextBox_OnTextChanged"></asp:TextBox>
+                                                <cc1:AutoCompleteExtender ID="AutoCompleteExtender4" runat="server" DelimiterCharacters=""
+                                                    EnableCaching="true" Enabled="True" MinimumPrefixLength="1" CompletionSetCount="10"
+                                                    ServiceMethod="GetCompanyWiseEmployeeInfoOnlyForPromotion" ServicePath="~/WebService.asmx" TargetControlID="directlySuperTextBox"
+                                                    UseContextKey="True" CompletionListCssClass="autocomplete_completionListElement"
+                                                    CompletionListItemCssClass="autocomplete_listItem" CompletionListHighlightedItemCssClass="autocomplete_highlightedListItem"
+                                                    ShowOnlyCurrentWordInCompletionListItem="true">
+                                                </cc1:AutoCompleteExtender>
+
+                                                <asp:HiddenField ID="directlyEmpIdHiddenField" runat="server" />
+                                                <asp:HiddenField ID="rptHiddenField" runat="server" />
+                                                <asp:Button ID="Button1" Text="Add" CssClass="btn btn-sm btn-info" runat="server" OnClick="Button1_OnClick" />
+                                                <%--<asp:AutoCompleteExtender
+                                                    ID="at_txt_JobCirculation"
+                                                    TargetControlID="EmployeeNameTextBox"
+                                                    runat="server"
+                                                    ServiceMethod="GetParticipantList"
+                                                    ServicePath="~/WebService.asmx"
+                                                    MinimumPrefixLength="2"
+                                                    CompletionInterval="10"
+                                                    EnableCaching="false"
+                                                    CompletionSetCount="1"
+                                                    FirstRowSelected="false">
+                                                </asp:AutoCompleteExtender>--%>
+                                                <asp:HiddenField ID="HiddenField4" runat="server" />
+
+                                                <%--<asp:DropDownList ID="NewReportingBodyDropDownList" runat="server" AutoPostBack="True" CssClass="form-control form-control-sm"></asp:DropDownList>--%>
+                                            </div>
+                                            <div class="col-6">
+                                                <asp:HiddenField ID="delEmpIdHiddenField" runat="server" />
+                                                <asp:GridView ID="loadGridView" runat="server" AutoGenerateColumns="False"
+                                                    CssClass="table table-bordered  text-center thead-dark" DataKeyNames="EmpInfoId">
+                                                    <Columns>
+
+
+                                                        <asp:BoundField DataField="EmpName" HeaderText="Employee Name" />
+
+
+                                                        <asp:TemplateField HeaderText="Delete">
+                                                            <ItemTemplate>
+                                                                <asp:ImageButton ID="deleteImageButton" runat="server" OnClick="deleteImageButton_OnClick"
+                                                                    ImageUrl="~/Assets/img/delete.png" />
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+
+                                                    </Columns>
+                                                </asp:GridView>
+                                            </div>
+                                        </div>
+
+                                        <br />
+                                        <div class="form-row">
+                                            <div class="col-md-10">
+                                                <asp:HiddenField runat="server" ID="hdpk" />
+
+
+                                                <link href="ButtonGrups.css" rel="stylesheet" />
+                                                <div class="ui-group-buttons">
+
+                                                    <asp:Button runat="server" ID="btn_Save" OnClientClick="return confirm('Are you sure you want to Save ?')" OnClick="btn_Save_OnClick" Text="  Save  " CssClass="btn btn-sm btn-info" />
+                                                    <div class="or or-sm"></div>
+                                                    <asp:Button runat="server" ID="btnNext" OnClientClick="return confirm('Are you sure you want to Save & Next ?')"  OnClick="btn_Next_OnClick" Text="   Save & Next   " CssClass="btn btn-sm btn-success" />
+
+                                                    <div class="or or-sm"></div>
+                                                    <asp:Button ID="cancelButton"  OnClientClick="return confirm('Are you sure you want to Exit ?')"  Text="  Exit  " OnClick="cancelButton_OnClick" CssClass="btn btn-sm warning" runat="server" BackColor="#FFCC00" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                            </div>
+                                            <div class="col-md-1">
+
+                                                <asp:LinkButton CssClass="hh next" Visible="False" runat="server" ID="lblNext" OnClick="lblNext_OnClick">Next &raquo;</asp:LinkButton>
+
+                                            </div>
+                                        </div>
+
+                                    </Content>
+                                </ajaxToolkit:AccordionPane>
+                            </Panes>
+                        </ajaxToolkit:Accordion>
+
+                    </div>
+                </div>
+
+
+
+            </ContentTemplate>
+        </asp:UpdatePanel>
+    </div>
+
+    <script type="text/javascript">
+
+
+        $("body").on("click", "#btnUpload", function () {
+            $.ajax({
+                url: '/FileUploadHandler.ashx',
+                type: 'POST',
+                data: new FormData($('form')[0]),
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (file) {
+                    $("#fileProgress").hide();
+                    $("#SignaturefileProgress").hide();
+                    $("#NomineeImageProgress").hide();
+                    //$("#lblMessage").html("<b>" + file.name + "</b> has been uploaded.");
+                    $("#lblMessage").html("Image has been uploaded.");
+                    //console.log(file);
+                    $('#cpFormBody_img_emp').prop({ src: '/UploadImg/' + file.dbfilename });
+                    $('#cpFormBody_hfempimg').val(file.dbfilename);
+
+                },
+                xhr: function () {
+                    var fileXhr = $.ajaxSettings.xhr();
+                    if (fileXhr.upload) {
+                        $("#SignaturefileProgress").hide();
+                        $("#NomineeImageProgress").hide();
+                        $("#fileProgress").show();
+                        fileXhr.upload.addEventListener("progress", function (e) {
+                            if (e.lengthComputable) {
+                                $("#fileProgress").attr({
+                                    value: e.loaded,
+                                    max: e.total
+                                });
+                            }
+                        }, false);
+                    }
+                    return fileXhr;
+                }
+            });
+        });
+
+        $("body").on("click", "#btnSignatureUpload", function () {
+            $.ajax({
+                url: '/SignatureUploadHandler.ashx',
+                type: 'POST',
+                data: new FormData($('form')[0]),
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (file) {
+                    $("#fileProgress").hide();
+                    $("#SignaturefileProgress").hide();
+                    $("#NomineeImageProgress").hide();
+
+                    $("#lblMessageSignature").html("Signature has been uploaded.");
+                    $('#cpFormBody_SignatureImage').prop({ src: '/UploadImg/' + file.dbfilename });
+                    $('#cpFormBody_hfSignature').val(file.dbfilename);
+
+
+                },
+                xhr: function () {
+                    var fileXhr = $.ajaxSettings.xhr();
+                    if (fileXhr.upload) {
+                        $("#fileProgress").hide();
+                        $("#NomineeImageProgress").hide();
+                        $("#SignaturefileProgress").show();
+                        fileXhr.upload.addEventListener("SignaturefileProgress", function (e) {
+                            if (e.lengthComputable) {
+                                $("#SignaturefileProgress").attr({
+                                    value: e.loaded,
+                                    max: e.total
+                                });
+                            }
+                        }, false);
+                    }
+                    return fileXhr;
+                }
+            });
+        });
+
+        $("body").on("click", "#btnNomineeImageUpload", function () {
+            $.ajax({
+                url: '/NomineeImageUploadHandler.ashx',
+                type: 'POST',
+                data: new FormData($('form')[0]),
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (file) {
+                    $("#fileProgress").hide();
+                    $("#SignaturefileProgress").hide();
+                    $("#NomineeImageProgress").hide();
+
+                    $("#lblMessageNomineeImage").html("Nominee Image has been uploaded.");
+                    $('#cpFormBody_img_NomineeImage').prop({ src: '/UploadImg/' + file.dbfilename });
+                    $('#cpFormBody_hfNomineeImage').val(file.dbfilename);
+                },
+                xhr: function () {
+                    var fileXhr = $.ajaxSettings.xhr();
+                    if (fileXhr.upload) {
+                        $("#fileProgress").hide();
+                        $("#SignaturefileProgress").hide();
+
+                        $("#NomineeImageProgress").show();
+                        fileXhr.upload.addEventListener("NomineeImageProgress", function (e) {
+                            if (e.lengthComputable) {
+                                $("#NomineeImageProgress").attr({
+                                    value: e.loaded,
+                                    max: e.total
+                                });
+                            }
+                        }, false);
+                    }
+                    return fileXhr;
+                }
+            });
+        });
+    </script>
+</asp:Content>
+

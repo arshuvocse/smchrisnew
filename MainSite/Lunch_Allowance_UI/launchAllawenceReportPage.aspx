@@ -1,0 +1,563 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPages/MainMasterPage.master" AutoEventWireup="true" CodeFile="launchAllawenceReportPage.aspx.cs" Inherits="Lunch_Allowance_UI_launchAllawenceReportPage" %>
+<%@ Register TagPrefix="cc1" Namespace="AjaxControlToolkit" Assembly="AjaxControlToolkit, Version=16.1.0.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+    
+               <script src="../Assets/table2excel.js"></script>
+
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js" integrity="sha512-rMGGF4wg1R73ehtnxXBt5mbUfN9JUJwbk21KMlnLZDJh7BkPmeovBuddZCENJddHYYMkCh9hPFnPmS9sspki8g==" crossorigin="anonymous"></script>
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" integrity="sha512-yVvxUQV0QESBt1SyZbNJMAwyKvFTLMyXSyBHDO4BG5t7k/Lw34tyqlSDlKIrIENIzCl+RVUNjmCPG+V/GMesRw==" crossorigin="anonymous" />
+    
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="cpFormBody" Runat="Server">
+    <style>
+          .btnexcelcc {
+            border: none;
+            color: #131313;
+            padding-left: 36px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            padding-right: 36px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+            margin: 4px 2px;
+            cursor: pointer;
+            background: url(../Assets/excel.png);
+            background-position: center;
+            background-repeat: no-repeat;
+            box-shadow: 0 0 3px 1px rgba(0,0,0,.35);
+        }
+    </style>
+    <div class="content" id="content" >
+       <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+            <ContentTemplate> 
+                
+                  <asp:UpdateProgress ID="progress" runat="server" ClientIDMode="Static" DisplayAfter="0" DynamicLayout="true">
+                    <ProgressTemplate>
+                        <div class="divWaiting">
+                            <asp:Image ID="imgWait" CssClass="position-set" runat="server" ImageAlign="Middle" ImageUrl="~/Assets/img/progress-bar-opt.gif" Width="120px" Height="120px" />
+                        </div>
+                    </ProgressTemplate>
+                </asp:UpdateProgress> 
+                <!-- PAGE HEADING -->
+                <div class="page-heading">
+                    <div class="page-heading__container">
+                       
+                        <h1 class="title" style="font-size: 18px; padding-top: 9px;">  <img src="../Report_Pages/app.png"  width="20px" />  Lunch  Report  </h1>
+                    </div>
+                    <div class="page-heading__container float-right d-none d-sm-block">
+                           <%--<asp:Button ID="HomeButton" Text="Home" CssClass="btn btn-sm btn-outline-secondary " runat="server" OnClick="HomeButton_OnClick" />
+                        <asp:Button ID="detailsViewButton" Text="Go Back" CssClass="btn btn-sm btn-outline-secondary "   runat="server" OnClick="detailsViewButton_OnClick" />--%>
+                    </div>
+
+                </div>   <asp:HiddenField ID="hdpk" runat="server" />
+                <!-- //END PAGE HEADING -->
+
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="card-body">
+                            
+                            
+                            
+                            
+                             <div class="row" runat="server" Visible="False">
+                                
+                                <div class="col-md-2">                        
+
+                                     <div class="form-group">
+                                        <label>Report Type </label>
+                                        <span style="color: red">&nbsp;*</span>
+                                        <asp:DropDownList ID="ddlReport" class="form-control form-control-sm"  runat="server"   >
+                                            <asp:ListItem Value="0">Select One</asp:ListItem>
+                                            <asp:ListItem Value="1" Selected="True">Summary Report</asp:ListItem>
+                                            <%--<asp:ListItem Value="2">Details Report</asp:ListItem>--%>
+                                         </asp:DropDownList>
+                                    </div>
+                                </div>
+                                 </div>
+                            
+                            
+
+                            <%--<form>--%>
+                            <div class="row">
+                                
+                                <div class="col-md-2">                        
+
+                                     <div class="form-group">
+                                        <label>Company Name </label>
+                                        <span style="color: red">&nbsp;*</span>
+                                        <asp:DropDownList ID="companyDropDownList" class="form-control form-control-sm seleceeemm"  runat="server" AutoPostBack="True" OnSelectedIndexChanged="companyDropDownList_OnSelectedIndexChanged"  ></asp:DropDownList>
+                                         
+                                                     <script type="text/javascript">
+                                                         function pageLoad() {
+
+                                                       
+
+                                                             $('.seleceeemm').chosen({ disable_search_threshold: 5, search_contains: true });
+                                                         }
+
+                                                       
+                                                     
+</script>
+                                    </div>
+                                </div>
+                                
+                                
+                                <div class="col-md-2" runat="server">                        
+
+                                     <div class="form-group">
+                                        <label>From Date </label> <span style="color: red">&nbsp;*</span>
+                                        
+
+                                        <asp:TextBox ID="effectiveDateTextBox" AutoCompleteType="Disabled" runat="server"    CausesValidation="true" 
+                                            class="form-control form-control-sm"></asp:TextBox>
+                                        <ajaxToolkit:CalendarExtender ID="CalendarExtender1" runat="server"
+                                            Format="dd-MMM-yyyy" CssClass="MyCalendar" PopupPosition="TopLeft"
+                                            TargetControlID="effectiveDateTextBox" />
+                                    </div>
+                                </div>
+                                
+                                
+                                <div class="col-md-2"  runat="server" >                        
+
+                                     <div class="form-group">
+                                        <label>To Date </label> <span style="color: red">&nbsp;*</span>
+                                        
+
+                                        <asp:TextBox ID="txtToDate" AutoCompleteType="Disabled" runat="server"    CausesValidation="true" 
+                                            class="form-control form-control-sm"></asp:TextBox>
+                                        <ajaxToolkit:CalendarExtender ID="CalendarExtender2" runat="server"
+                                            Format="dd-MMM-yyyy" CssClass="MyCalendar" PopupPosition="TopLeft"
+                                            TargetControlID="txtToDate" />
+                                    </div>
+                                </div>
+                                
+                                
+                                 <div class="col-2"  runat="server" Visible="False">
+                                        <div class="form-group">
+                                            <label>Division</label>
+                                            <asp:DropDownList runat="server" AutoPostBack="True" ID="ddlDivision" class="form-control form-control-sm" OnSelectedIndexChanged="ddlDivision_OnSelectedIndexChanged" />
+
+                                        </div>
+                                    </div>
+                                    <div class="col-2" runat="server" id="wing" visible="False">
+                                        <div class="form-group">
+                                            <label>Wing</label>
+                                            <asp:DropDownList runat="server" AutoPostBack="True" ID="ddlWing" class="form-control form-control-sm" OnSelectedIndexChanged="ddlWing_OnSelectedIndexChanged" />
+
+                                        </div>
+                                    </div>
+                                    <div class="col-2" runat="server" id="dept" >
+                                        <div class="form-group">
+                                            <label>Department</label>
+                                            <asp:DropDownList runat="server" AutoPostBack="True" ID="ddlDepartment" class="form-control form-control-sm seleceeemm" OnSelectedIndexChanged="ddlDepartment_OnSelectedIndexChanged" />
+
+                                        </div>
+                                    </div>
+                                    <div class="col-2" runat="server" id="sec" visible="False">
+                                        <div class="form-group">
+                                            <label>Section</label>
+                                            <asp:DropDownList runat="server" AutoPostBack="True" ID="ddlSection" class="form-control form-control-sm" OnSelectedIndexChanged="ddlSection_OnSelectedIndexChanged" />
+
+                                        </div>
+                                    </div>
+                                    <div class="col-2" runat="server" id="subsec" visible="False">
+                                        <div class="form-group">
+                                            <label>Sub Section</label>
+                                            <asp:DropDownList runat="server" AutoPostBack="True" ID="ddlSubSection" class="form-control form-control-sm" OnSelectedIndexChanged="ddlSubSection_OnSelectedIndexChanged" />
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2" runat="server" Visible="False">
+
+                                        <div class="form-group">
+                                            <label>Employee ID </label>
+                                            <asp:TextBox ID="txtSearch" runat="server" AutoPostBack="True" placeholder=" Employee ID" CssClass="form-control form-control-sm"
+                                                OnTextChanged="EmployeeDropDownList2_SelectedIndexChanged"></asp:TextBox>
+                                             <cc1:AutoCompleteExtender ID="AutoCompleteExtender2" runat="server" DelimiterCharacters=""
+                                                    EnableCaching="true" Enabled="True" MinimumPrefixLength="1" CompletionSetCount="10"
+                                                    ServiceMethod="GetCompanyWiseEmployeeInfoForIDANdNae" ServicePath="~/WebService.asmx" TargetControlID="txtSearch"
+                                                    UseContextKey="True" CompletionListCssClass="autocomplete_completionListElement"
+                                                    CompletionListItemCssClass="autocomplete_listItem" CompletionListHighlightedItemCssClass="autocomplete_highlightedListItem"
+                                                    ShowOnlyCurrentWordInCompletionListItem="true">
+                                                </cc1:AutoCompleteExtender>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-2" runat="server" Visible="False">
+
+                                        <div class="form-group">
+                                            <label>Employee Name </label>
+                                            <asp:TextBox ID="NameTextBox" runat="server" AutoPostBack="True" placeholder=" Employee Name" CssClass="form-control form-control-sm" OnTextChanged="EmployeeDropDownList_SelectedIndexChanged"></asp:TextBox>
+                                            
+                                               <cc1:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server" DelimiterCharacters=""
+                                                    EnableCaching="true" Enabled="True" MinimumPrefixLength="1" CompletionSetCount="10"
+                                                    ServiceMethod="GetCompanyWiseEmployeeInfoForIDANdNae" ServicePath="~/WebService.asmx" TargetControlID="NameTextBox"
+                                                    UseContextKey="True" CompletionListCssClass="autocomplete_completionListElement"
+                                                    CompletionListItemCssClass="autocomplete_listItem" CompletionListHighlightedItemCssClass="autocomplete_highlightedListItem"
+                                                    ShowOnlyCurrentWordInCompletionListItem="true">
+                                                </cc1:AutoCompleteExtender>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Designation</label>
+                                            <asp:DropDownList runat="server" AutoPostBack="True" ID="ddlDesignation" class="form-control form-control-sm seleceeemm" />
+
+                                        </div>
+                                    </div>
+                                     
+                                   <div class="col-md-2" runat="server" >
+                                        <div class="form-group">
+                                            <label>Office</label>
+                                            <asp:DropDownList runat="server" ID="ddlSalaryLocation" class="form-control form-control-sm seleceeemm" />
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2" runat="server" Visible="False">
+                                        <div class="form-group">
+                                            <label>Confirmation Status</label>
+                                            <asp:DropDownList runat="server" ID="ddlConformationStatus" CssClass="form-control form-control-sm">
+                                                <asp:ListItem Text="Select..." Value="-1"></asp:ListItem>
+                                                <asp:ListItem Text="Yes" Value="1"></asp:ListItem>
+                                                <asp:ListItem Text="No" Value="0"></asp:ListItem>
+                                            </asp:DropDownList>
+                                        </div>
+                                    </div>
+                                         <div class="col-md-2" runat="server" Visible="False">
+                                        <div class="form-group">
+                                            <label>Active Status</label>
+                                            <asp:DropDownList runat="server" ID="ActiveStatusDropDownList" CssClass="form-control form-control-sm">
+                                                <asp:ListItem Text="Select..." Value=""></asp:ListItem>
+                                                <asp:ListItem Text="Yes" Value="1"></asp:ListItem>
+                                                <asp:ListItem Text="No" Value="0"></asp:ListItem>
+                                            </asp:DropDownList>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Employee Name</label>
+                                          <asp:DropDownList  runat="server"   ID="ddlEmpInfo" class="form-control form-control-sm seleceeemm" />
+                                        </div>
+                                    </div>
+                                
+                                   <div class="col-2">
+                                                        <div class="form-group">
+                                                            <label>Employee Category</label>
+                                                          
+                                                            <asp:DropDownList runat="server"   ID="ddlEmpCategory" class="form-control form-control-sm"   />
+
+                                                        </div>
+                                                    </div>
+                                
+                                
+                                      <div class="col-2">
+                                                        <div class="form-group">
+                                                        
+                                                         <asp:CheckBox runat="server" ID="chkMange" Text="Management & Above"/>
+
+                                                        </div>
+                                                    </div>
+                                
+                                <div class="col-md-2" runat="server" Visible="False">
+                                        <div class="form-group">
+                                            <label>Month</label>
+                                            <asp:DropDownList  runat="server"   id="ddlmonth" class="form-control form-control-sm seleceeemm"></asp:DropDownList>
+                                        </div>
+                                    </div>
+                                
+                                
+                                     <div class="col-md-2" runat="server" Visible="False">
+                                        <div class="form-group">
+                                            <label>Year</label>
+                                            <asp:DropDownList  runat="server"   id="ddlYear" class="form-control form-control-sm seleceeemm"></asp:DropDownList>
+                                        </div>
+                                    </div>
+                                   <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label>Employment Status </label>
+
+                                                            <asp:DropDownList ID="empStatusDropDownList" AutoPostBack="True" OnSelectedIndexChanged="empStatusDropDownList_OnSelectedIndexChanged" class="form-control form-control-sm" runat="server">
+                                                                <asp:ListItem Value="0">All</asp:ListItem>
+                                                                <asp:ListItem Selected="True" Value="Yes">Active</asp:ListItem>
+                                                                <asp:ListItem Value="No">Inactive</asp:ListItem>
+                                                            </asp:DropDownList>
+                                                        </div>
+                                                    </div>
+                                
+                                    
+                          
+                                 <div class="col-md-3">
+                                    <div class="form-group" style="margin-top: 18px;">
+                                        
+                                         <asp:LinkButton runat="server" ID="Button1" OnClick="Button1_OnClick" ToolTip="Click To Search" Width="80" Text="Search" class="btn btn-info btn-sm" ><span aria-hidden="true" class="fa fa-search-plus"></span>  &nbsp; Search </asp:LinkButton>
+
+                                   &nbsp;&nbsp;
+
+                                            <asp:LinkButton runat="server" ID="btnReset" OnClick="btnReset_OnClick" ToolTip="Click To Reset" Text="Reset"   Width="80" CssClass="btn btn-warning   btn-sm"><span aria-hidden="true" class="fa fa-retweet"></span>  &nbsp; Reset </asp:LinkButton>
+
+                                         <%--<asp:Button runat="server" ID="Button1" Text=" Search  " OnClick="Button11_OnClick" />--%>
+                                        
+                                    </div>
+                                </div>
+                               
+                              
+                            </div>
+                            <br/>
+                            <br/>
+                           <div class="form-row" style="padding-right: 10px">
+
+                                <div class="col-md-6" style="padding-left: 2px">
+                                    <label style="font-size: 18px;">Details Information</label>
+                                </div>
+                                <div class="col-md-4">
+                                </div>
+                                <div class="col-md-2">
+                                    <%--  <asp:LinkButton ID="btnExportToExcel" runat="server" CssClass="btnexcel  pull-right" Style="padding-right: 10px;" OnClick="btnExportToExcel_Click"><span aria-hidden="true" style="font-size: 14px; color: #4CAF50;" class="fa fa-file-excel-o"></span> Download to xls</asp:LinkButton>--%>
+
+                         <button type="button" class="btn btn-success btn-sm pull-right" style="color: #fff; top: 10px; right: 0;" onclick="exportToExcel()"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp; Export to Excel </button>
+
+                                </div>
+
+
+                            </div>
+
+                            <hr />
+                             <div class="row" >
+                                  <div class="col-md-12">
+                                       <div id="gridContainer1" style="height: 600px; overflow: auto; width: auto; overflow-y: scroll; overflow-x: scroll;">
+                                 <div id="repotDiv" >
+                                <div class="col-md-12"  runat="server" id="data">
+                                </div>
+                                 </div>
+                                 </div>
+                                 
+                                </div>
+                                </div>
+                            </div>
+                            
+                     
+
+                            <div class="row" runat="server" Visible="False">
+                                
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <asp:Button ID="submitButton" Text=" Submit " CssClass="btn btn-sm btn-info"     runat="server" OnClick="submitButton_OnClick" />
+                                         
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                </div>
+
+                                <div class="col-md-4">
+                                </div>
+                            </div>
+                            
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+
+                                <%--</form>--%>
+                        </div>
+                        <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+
+                    </div>
+                    </div>
+              
+
+            </ContentTemplate>
+        </asp:UpdatePanel>
+              <style>
+         .btnexcel {
+           
+                  border-style: none;
+                      border-color: inherit;
+                      border-width: medium;
+                      padding: 8px 24px;
+                      color: #131313!important;
+           
+                      text-align: center!important;
+                      text-decoration: none!important;
+                      display: inline-block!important;
+                      font-size: 12px!important;
+                      margin: 4px 2px!important;
+                      cursor: pointer!important;
+                      background-position:center!important;
+                      background-repeat:no-repeat!important;
+                      box-shadow: 0 0 3px 1px rgba(0,0,0,.35)!important;
+                      background-color: transparent;
+                      background-image: url('../Assets/excel.png');
+                      background-attachment: scroll;
+                  }
+    </style>
+   
+        
+    <script>
+
+        function exportToExcel() {
+
+            var file = new Blob([$('#repotDiv').html()], { type: "application/vnd.ms-excel" });
+            var url = URL.createObjectURL(file);
+            var a = $("<a />", {
+                href: url,
+                download: "Lunch_Sheet_REPORT.xls"
+            }).appendTo("body").get(0).click();
+            e.preventDefault();
+
+        }
+
+        function exportTableToExcel(tableID, filename) {
+            var downloadLink;
+            var dataType = 'application/vnd.ms-excel';
+            var tableSelect = document.getElementById(tableID);
+            var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+
+            // Specify file name
+            filename = filename ? filename + '.xls' : 'excel_data.xls';
+
+            // Create download link element
+            downloadLink = document.createElement("a");
+
+            document.body.appendChild(downloadLink);
+
+            if (navigator.msSaveOrOpenBlob) {
+                var blob = new Blob(['\ufeff', tableHTML], {
+                    type: dataType
+                });
+                navigator.msSaveOrOpenBlob(blob, filename);
+            } else {
+                // Create a link to the file
+                downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+
+                // Setting the file name
+                downloadLink.download = filename;
+
+                //triggering the function
+                downloadLink.click();
+            }
+        }
+
+        function ExportToPdf() {
+
+
+            //alert('PDF');
+
+            //var doc = new jsPDF();
+
+            var doc = new jsPDF('p', 'pt', 'letter');
+            //pdf.addHTML($('#tableDetail')[0], function () {
+            //    pdf.save('Test.pdf');
+            //});
+
+            //var HTMLElement = $("#tableDetail").html();
+            var HTMLElement = document.querySelector("#html");
+
+            doc.fromHTML(HTMLElement);
+            ////doc.text("Hello world!", 10, 10);
+            doc.save("a4.pdf");
+            //var doc = new jsPDF('p', 'pt', 'letter');
+            //var htmlstring = '';
+            //var tempVarToCheckPageHeight = 0;
+            //var pageHeight = 0;
+            //pageHeight = doc.internal.pageSize.height;
+            //specialElementHandlers = {
+
+            //    '#bypassme': function (element, renderer) {
+
+            //        return true;
+            //    }
+            //};
+            //margins = {
+            //    top: 150,
+            //    bottom: 60,
+            //    left: 40,
+            //    right: 40,
+            //    width: 600
+            //};
+            //var y = 20;
+            //doc.setLineWidth(2);
+            //doc.text(200, y = y + 30, "TOTAL MARKS OF STUDENTS");
+            //doc.autoTable({
+            //    html: '#tableDetail',
+            //    startY: 70,
+            //    theme: 'grid',
+            //    columnStyles: {
+            //        0: {
+            //            cellWidth: 180,
+            //        },
+            //        1: {
+            //            cellWidth: 180,
+            //        },
+            //        2: {
+            //            cellWidth: 180,
+            //        }
+            //    },
+            //    styles: {
+            //        minCellHeight: 40
+            //    }
+            //})
+            //doc.save('Marks_Of_Students.pdf');
+        }
+
+    </script>
+  
+
+</asp:Content>
+

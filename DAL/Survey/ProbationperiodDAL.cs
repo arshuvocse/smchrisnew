@@ -1,0 +1,1367 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.UI.WebControls;
+using DAL.DataManager;
+using DAL.InternalCls;
+using DAO.HRIS_DAO;
+using Library.DAO.HRM_Entities;
+
+namespace DAL.Survey
+{
+    public class ProbationperiodDAL
+    {
+        private ClsCommonInternalDAL _aCommonInternalDal = new ClsCommonInternalDAL();
+        public DataTable GetContractInfoDetails(string masterId)
+        {
+            try
+            {
+                string query = @"select *  from tblContractualEvaluationDetails where ContractualEmpManageId=" + masterId;
+
+                return _aCommonInternalDal.DataContainerDataTable(query, DataBase.HRDB);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        public int SaveEmpContractAppLog(ContractualEmpManageAppLogDAO appLogDao)
+        {
+
+            try
+            {
+                int pk = 0;
+
+
+                {
+                    List<SqlParameter> aParameters = new List<SqlParameter>();
+                    aParameters.Add(new SqlParameter("@ContractualEmpManageId", appLogDao.ContractualEmpManageId));
+                    aParameters.Add(new SqlParameter("@PreEmpInfoId", appLogDao.PreEmpInfoId));
+                    aParameters.Add(new SqlParameter("@ForEmpInfoId", appLogDao.ForEmpInfoId));
+                    aParameters.Add(new SqlParameter("@Version", appLogDao.Version));
+                    aParameters.Add(new SqlParameter("@ApproveBy", appLogDao.ApproveBy));
+                    aParameters.Add(new SqlParameter("@ApproveDate", appLogDao.ApproveDate));
+                    aParameters.Add(new SqlParameter("@ActionStatus", appLogDao.ActionStatus));
+                    aParameters.Add(new SqlParameter("@Comments", appLogDao.Comments));
+                    aParameters.Add(new SqlParameter("@CommentId", appLogDao.CommentsId));
+
+
+                    string query = @"INSERT INTO dbo.tblContractualEmpManageAppLog
+                                    (
+                                    ContractualEmpManageId,
+                                    PreEmpInfoId,
+                                    ForEmpInfoId,
+                                    Version,
+                                    ApproveBy,
+                                    ApproveDate,
+                                    ActionStatus,Comments,CommentId
+                                    )
+                                    VALUES(
+                                    @ContractualEmpManageId,
+                                    @PreEmpInfoId,
+                                    @ForEmpInfoId,
+                                    (SELECT (COUNT(*)+1) FROM dbo.tblContractualEmpManageAppLog WHERE ContractualEmpManageId=@ContractualEmpManageId),
+                                    @ApproveBy,
+                                    @ApproveDate,
+                                    @ActionStatus,@Comments,@CommentId
+                                    )";
+
+                    pk = _aCommonInternalDal.SaveDataByInsertCommandById(query, aParameters, DataBase.HRDB);
+                }
+
+
+                return pk;
+            }
+            catch (Exception exception)
+            {
+
+                throw exception;
+            }
+        }
+        public bool UpdateContractural(ProbationEvaluationMasterDAO aMaster)
+        {
+
+            try
+            {
+                int pk = 0;
+
+                if (aMaster.ProbationEvaluationMasterId > 0)
+                {
+                    List<SqlParameter> aParameters = new List<SqlParameter>();
+                    aParameters.Add(new SqlParameter("@ProbationEvaluationMasterId", aMaster.ProbationEvaluationMasterId));
+                    aParameters.Add(new SqlParameter("@ActionStatus", aMaster.ActionStatus));
+
+
+                    string query =
+                        @"update tblProbationEvaluationMaster set ActionStatus=@ActionStatus  where ProbationEvaluationMasterId = @ProbationEvaluationMasterId";
+
+                    bool result = _aCommonInternalDal.UpdateDataByUpdateCommand(query, aParameters, DataBase.HRDB);
+                    return result;
+
+                }
+
+            }
+            catch (Exception exception)
+            {
+
+                throw exception;
+            }
+            return true;
+        }
+
+        public bool UpdateEmployeeProbitionExtendeddateInfo(EmpGeneralInfo aInfo)
+        {
+            List<SqlParameter> aSqlParameterlist = new List<SqlParameter>();
+
+            aSqlParameterlist.Add(new SqlParameter("@ExtProbationPeriodDate", aInfo.ExtProbationPeriodDate ?? (object)DBNull.Value));
+
+            aSqlParameterlist.Add(new SqlParameter("@EmpInfoId", aInfo.EmpInfoId ?? (object)DBNull.Value));
+
+            string query = @"UPDATE tblEmpGeneralInfo SET ExtProbationPeriodDate = @ExtProbationPeriodDate  WHERE EmpInfoId =  @EmpInfoId";
+            return _aCommonInternalDal.UpdateDataByUpdateCommand(query, aSqlParameterlist, DataBase.HRDB);
+        }
+
+        public bool UpdateEmployeeSeparationInfo(EmpGeneralInfo aInfo)
+        {
+            List<SqlParameter> aSqlParameterlist = new List<SqlParameter>();
+
+            aSqlParameterlist.Add(new SqlParameter("@IsProbationary", aInfo.IsProbationary ?? (object)DBNull.Value));
+
+            aSqlParameterlist.Add(new SqlParameter("@EmpInfoId", aInfo.EmpInfoId ?? (object)DBNull.Value));
+
+            string query = @"UPDATE tblEmpGeneralInfo SET IsActive = 1 WHERE EmpInfoId =  @EmpInfoId";
+            return _aCommonInternalDal.UpdateDataByUpdateCommand(query, aSqlParameterlist, DataBase.HRDB);
+        }
+
+
+        public bool UpdateEmployeeExitInfo(EmpGeneralInfo aInfo)
+        {
+            List<SqlParameter> aSqlParameterlist = new List<SqlParameter>();
+
+            aSqlParameterlist.Add(new SqlParameter("@IsActive", aInfo.IsActive));
+            aSqlParameterlist.Add(new SqlParameter("@InactiveReason", aInfo.InactiveReason));
+            aSqlParameterlist.Add(new SqlParameter("@EmployeeStatus", aInfo.EmployeeStatus));
+            aSqlParameterlist.Add(new SqlParameter("@EmpInfoId", aInfo.EmpInfoId));
+            aSqlParameterlist.Add(new SqlParameter("@Updateby", Convert.ToInt32(HttpContext.Current.Session["UserId"])));
+            string query = @"UPDATE dbo.tblEmpGeneralInfo SET IsActive = @IsActive,InactiveReason = @InactiveReason , EmployeeStatus = @EmployeeStatus , Updateby=@Updateby, UpdateDate=GETDATE() WHERE EmpInfoId = @EmpInfoId";
+
+            return _aCommonInternalDal.UpdateDataByUpdateCommand(query, aSqlParameterlist, DataBase.HRDB);
+        }
+        public bool UpdateEmployeeConfirmationdateInfo(EmpGeneralInfo aInfo)
+        {
+            List<SqlParameter> aSqlParameterlist = new List<SqlParameter>();
+
+            aSqlParameterlist.Add(new SqlParameter("@ConformationStatus", aInfo.ConformationStatus ?? (object)DBNull.Value));
+            aSqlParameterlist.Add(new SqlParameter("@DateOfConformation", aInfo.ConfirmationDate ?? (object)DBNull.Value));
+            aSqlParameterlist.Add(new SqlParameter("@DateOfConfirmation", aInfo.ConfirmationDate ?? (object)DBNull.Value));
+            aSqlParameterlist.Add(new SqlParameter("@EmpInfoId", aInfo.EmpInfoId ?? (object)DBNull.Value));
+            aSqlParameterlist.Add(new SqlParameter("@IsProbationary", false));
+
+            string query = @"UPDATE tblEmpGeneralInfo SET IsProbationary = @IsProbationary,ConformationStatus = @ConformationStatus, DateOfConformation=@DateOfConformation, DateOfConfirmation=@DateOfConformation  WHERE EmpInfoId =  @EmpInfoId";
+            return _aCommonInternalDal.UpdateDataByUpdateCommand(query, aSqlParameterlist, DataBase.HRDB);
+        }
+
+        public void LoadCompanyDropDownList(DropDownList ddl)
+        {
+            string queryStr = "SELECT CompanyId,CompanyName, ShortName FROM tblCompanyInfo WHERE CompanyId IN (SELECT CompanyId FROM dbo.tblUserCompanyMaping WHERE UserId='" + HttpContext.Current.Session["UserId"].ToString() + "')";
+            _aCommonInternalDal.LoadDropDownValue(ddl, "CompanyName", "CompanyId", queryStr, "HRDB");
+        }
+        public int SaveProbationMaster(ProbationEvaluationMasterDAO aProbationEvaluationMasterDao)
+        {
+            try
+            {
+                List<SqlParameter> aParameters = new List<SqlParameter>();
+
+                aParameters.Add(new SqlParameter("@EmpInfoId", aProbationEvaluationMasterDao.EmpInfoId));
+                aParameters.Add(new SqlParameter("@SupervisorObserv", aProbationEvaluationMasterDao.SupervisorObserv));
+                aParameters.Add(new SqlParameter("@DeptHeadObserv", aProbationEvaluationMasterDao.DeptHeadObserv));
+                aParameters.Add(new SqlParameter("@DivHeadOvserv", aProbationEvaluationMasterDao.DivHeadOvserv));
+                aParameters.Add(new SqlParameter("@ExProbation", aProbationEvaluationMasterDao.ExProbation));
+                aParameters.Add(new SqlParameter("@ProbationEnd", aProbationEvaluationMasterDao.ProbationEnd));
+                aParameters.Add(new SqlParameter("@ExProDate", (object)aProbationEvaluationMasterDao.ExProDate?? DBNull.Value));
+                aParameters.Add(new SqlParameter("@ProbationEndReason", (object)aProbationEvaluationMasterDao.ProbationEndReason ?? DBNull.Value));
+                aParameters.Add(new SqlParameter("@ConfirmDate", (object)aProbationEvaluationMasterDao.ConfirmDate ?? DBNull.Value));
+                aParameters.Add(new SqlParameter("@SeparationDate", (object)aProbationEvaluationMasterDao.SeparationDate ?? DBNull.Value));
+                aParameters.Add(new SqlParameter("@EntryBy", HttpContext.Current.Session["UserId"].ToString()));
+                aParameters.Add(new SqlParameter("@EntryDate",DateTime.Now));
+                aParameters.Add(new SqlParameter("@ActionStatus", "Drafted"));
+
+
+
+                string query = @"INSERT INTO dbo.tblProbationEvaluationMaster
+                                (
+                                    EmpInfoId,
+                                    SupervisorObserv,
+                                    DeptHeadObserv,
+                                    DivHeadOvserv,
+                                    ExProbation,
+                                    ProbationEnd,
+                                    ExProDate,
+                                    EntryBy,
+                                    EntryDate,ActionStatus,ProbationEndReason,ConfirmDate,SeparationDate
+                                )
+                                VALUES
+                                (  @EmpInfoId,
+                                    @SupervisorObserv,
+                                    @DeptHeadObserv,
+                                    @DivHeadOvserv,
+                                    @ExProbation,
+                                    @ProbationEnd,
+                                    @ExProDate,
+                                    @EntryBy,
+                                    @EntryDate,@ActionStatus,@ProbationEndReason,@ConfirmDate,@SeparationDate
+                                )";
+
+                int pk = _aCommonInternalDal.SaveDataByInsertCommandById(query, aParameters, DataBase.HRDB);
+                return pk;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+        public bool UpdateProbationMaster(ProbationEvaluationMasterDAO aProbationEvaluationMasterDao)
+        {
+            try
+            {
+                List<SqlParameter> aParameters = new List<SqlParameter>();
+
+                aParameters.Add(new SqlParameter("@ProbationEvaluationMasterId", aProbationEvaluationMasterDao.ProbationEvaluationMasterId));
+                aParameters.Add(new SqlParameter("@EmpInfoId", aProbationEvaluationMasterDao.EmpInfoId));
+                aParameters.Add(new SqlParameter("@SupervisorObserv", aProbationEvaluationMasterDao.SupervisorObserv));
+                aParameters.Add(new SqlParameter("@DeptHeadObserv", aProbationEvaluationMasterDao.DeptHeadObserv));
+                aParameters.Add(new SqlParameter("@DivHeadOvserv", aProbationEvaluationMasterDao.DivHeadOvserv));
+                aParameters.Add(new SqlParameter("@ExProbation", aProbationEvaluationMasterDao.ExProbation));
+                aParameters.Add(new SqlParameter("@ProbationEnd", aProbationEvaluationMasterDao.ProbationEnd));
+                aParameters.Add(new SqlParameter("@ExProDate", (object)aProbationEvaluationMasterDao.ExProDate ?? DBNull.Value));
+                aParameters.Add(new SqlParameter("@ProbationEndReason", (object)aProbationEvaluationMasterDao.ProbationEndReason ?? DBNull.Value));
+                aParameters.Add(new SqlParameter("@ConfirmDate", (object)aProbationEvaluationMasterDao.ConfirmDate ?? DBNull.Value));
+                aParameters.Add(new SqlParameter("@EntryBy", HttpContext.Current.Session["UserId"].ToString()));
+                aParameters.Add(new SqlParameter("@EntryDate", DateTime.Now));
+                aParameters.Add(new SqlParameter("@ActionStatus", "Drafted"));
+
+
+
+                string query = @"UPDATE dbo.tblProbationEvaluationMaster SET
+                                
+                                    EmpInfoId=@EmpInfoId,
+                                    SupervisorObserv=@SupervisorObserv,
+                                    DeptHeadObserv=@DeptHeadObserv,
+                                    DivHeadOvserv=@DivHeadOvserv,
+                                    ExProbation=@ExProbation,
+                                    ProbationEnd=@ProbationEnd,
+                                    ExProDate=@ExProDate,ActionStatus=@ActionStatus,ProbationEndReason=@ProbationEndReason,ConfirmDate=@ConfirmDate
+                                    where ProbationEvaluationMasterId=@ProbationEvaluationMasterId
+                                ";
+
+                bool pk = _aCommonInternalDal.UpdateDataByUpdateCommand(query, aParameters, DataBase.HRDB);
+                return pk;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+
+
+        public int SaveTrainingMaster(ProbationEvaluationMasterDAO aProbationEvaluationMasterDao)
+        {
+            try
+            {
+                List<SqlParameter> aParameters = new List<SqlParameter>();
+
+                aParameters.Add(new SqlParameter("@EmpInfoId", aProbationEvaluationMasterDao.EmpInfoId));
+                aParameters.Add(new SqlParameter("@SupervisorObserv", aProbationEvaluationMasterDao.SupervisorObserv));
+               
+                aParameters.Add(new SqlParameter("@EntryBy", HttpContext.Current.Session["UserId"].ToString()));
+                aParameters.Add(new SqlParameter("@EntryDate", DateTime.Now));
+                aParameters.Add(new SqlParameter("@ActionStatus", "Drafted"));
+
+
+
+                string query = @"INSERT INTO dbo.tblTrainingEvaluationMaster
+                                (
+                                    EmpInfoId,
+                                    SupervisorObserv,
+                                     EntryBy,
+                                    EntryDate,ActionStatus
+                                )
+                                VALUES
+                                (  @EmpInfoId,
+                                    @SupervisorObserv,
+                                     @EntryBy,
+                                    @EntryDate,@ActionStatus
+                                )";
+
+                int pk = _aCommonInternalDal.SaveDataByInsertCommandById(query, aParameters, DataBase.HRDB);
+                return pk;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+        public DataTable GetContractualDataInfo(string id)
+        {
+            //var aSqlParameterlist = new List<SqlParameter>();
+            //aSqlParameterlist.Add(new SqlParameter("@Parameter", Parameter));
+
+
+            string queryStr = @"SELECT *,CONVERT(BIT,(CASE WHEN IsSelfApp IS NULL THEN '0' ELSE '1' END ))IsSelfApp FROM dbo.tblProbationEvaluationMaster
+LEFT JOIN dbo.tblEmpGeneralInfo ON dbo.tblEmpGeneralInfo.EmpInfoId=dbo.tblProbationEvaluationMaster.EmpInfoId WHERE ProbationEvaluationMasterId='" + id + "'";
+
+            return _aCommonInternalDal.DataContainerDataTable(queryStr, DataBase.HRDB);
+        }
+        public DataTable GetProbationMaster(string id)
+        {
+            string queryStr = @"SELECT * FROM dbo.tblProbationEvaluationMaster WHERE ProbationEvaluationMasterId='"+id+"'";
+
+            return _aCommonInternalDal.DataContainerDataTable(queryStr, DataBase.HRDB);
+        }
+        public DataTable GetDataReviewEntryBy(string id,string entryby,string actionstatu)
+        {
+            //var aSqlParameterlist = new List<SqlParameter>();
+            //aSqlParameterlist.Add(new SqlParameter("@Parameter", Parameter));
+
+
+            string queryStr = @"SELECT * FROM dbo.tblProbationEvaluationMaster WHERE ActionStatus='" + actionstatu + "' AND EntryBy='" + entryby + "' AND ProbationEvaluationMasterId='"+id+"'";
+
+            return _aCommonInternalDal.DataContainerDataTable(queryStr, DataBase.HRDB);
+        }
+        public bool UpdateSelfApprove(int id, bool selfapp)
+        {
+
+            try
+            {
+                int pk = 0;
+
+                if (id > 0)
+                {
+                    List<SqlParameter> aParameters = new List<SqlParameter>();
+                    aParameters.Add(new SqlParameter("@ID", id));
+                    aParameters.Add(new SqlParameter("@IsSelfApp", selfapp));
+
+
+                    string query =
+                        @"update tblProbationEvaluationMaster set IsSelfApp=@IsSelfApp  where ProbationEvaluationMasterId = @ID";
+
+                    bool result = _aCommonInternalDal.UpdateDataByUpdateCommand(query, aParameters, DataBase.HRDB);
+                    return result;
+
+                }
+
+            }
+            catch (Exception exception)
+            {
+
+                throw exception;
+            }
+            return true;
+        }
+
+        public bool UpdateSuperVisorMaster(int id, int ReportinigID)
+        {
+
+            try
+            {
+                int pk = 0;
+
+                if (id > 0)
+                {
+                    List<SqlParameter> aParameters = new List<SqlParameter>();
+                    aParameters.Add(new SqlParameter("@ID", id));
+                    aParameters.Add(new SqlParameter("@SuperVisorEmpInfoId", ReportinigID));
+
+
+                    string query =
+                        @"update tblProbationEvaluationMaster set SuperVisorEmpInfoId=@SuperVisorEmpInfoId where ProbationEvaluationMasterId = @ID";
+
+                    bool result = _aCommonInternalDal.UpdateDataByUpdateCommand(query, aParameters, DataBase.HRDB);
+                    return result;
+
+                }
+
+            }
+            catch (Exception exception)
+            {
+
+                throw exception;
+            }
+            return true;
+        }
+        public int SaveProbatioRating(ProbationEvaluationRating aProbationEvaluationRating)
+        {
+            try
+            {
+                if (aProbationEvaluationRating.tblProbationEvaluationRatingId < 1)
+                {
+
+
+                    List<SqlParameter> aParameters = new List<SqlParameter>();
+
+                    aParameters.Add(new SqlParameter("@tblProbationEvaluationRatingId",
+                        aProbationEvaluationRating.tblProbationEvaluationRatingId));
+                    aParameters.Add(new SqlParameter("@ValueField", aProbationEvaluationRating.ValueField));
+                    aParameters.Add(new SqlParameter("@TextField", aProbationEvaluationRating.TextField));
+                    aParameters.Add(new SqlParameter("@IsActive", aProbationEvaluationRating.IsActive));
+                    aParameters.Add(new SqlParameter("@CompanyId", aProbationEvaluationRating.CompanyId));
+
+                    aParameters.Add(new SqlParameter("@EntryBy", HttpContext.Current.Session["UserId"].ToString()));
+                    aParameters.Add(new SqlParameter("@EntryDate", DateTime.Now));
+
+
+
+
+                    string query = @"INSERT INTO dbo.tblProbationEvaluationRating
+                                (
+                                    ValueField,
+                                    TextField,
+                                    IsActive,
+                                    CompanyId,
+                                    EntryBy,
+                                    EntryDate
+                                )
+                                VALUES
+                                (   @ValueField,
+                                    @TextField,
+                                    @IsActive,
+                                    @CompanyId,
+                                    @EntryBy,
+                                    @EntryDate
+                                )";
+
+                    int pk = _aCommonInternalDal.SaveDataByInsertCommandById(query, aParameters, DataBase.HRDB);
+                    return pk;
+                }
+                else
+                {
+                    List<SqlParameter> aParameters = new List<SqlParameter>();
+
+                    aParameters.Add(new SqlParameter("@tblProbationEvaluationRatingId",
+                        aProbationEvaluationRating.tblProbationEvaluationRatingId));
+                    aParameters.Add(new SqlParameter("@ValueField", aProbationEvaluationRating.ValueField));
+                    aParameters.Add(new SqlParameter("@TextField", aProbationEvaluationRating.TextField));
+                    aParameters.Add(new SqlParameter("@IsActive", aProbationEvaluationRating.IsActive));
+                    aParameters.Add(new SqlParameter("@CompanyId", aProbationEvaluationRating.CompanyId));
+
+                    aParameters.Add(new SqlParameter("@UpdateBy", HttpContext.Current.Session["UserId"].ToString()));
+                    aParameters.Add(new SqlParameter("@UpdateDate", DateTime.Now));
+
+
+
+
+                    string query = @"Update dbo.tblProbationEvaluationRating Set
+                               
+                                    ValueField=@ValueField,
+                                    TextField=@TextField,
+                                    IsActive=@IsActive,
+                                    CompanyId=@CompanyId,
+                                    UpdateBy=@UpdateBy,
+                                    UpdateDate=@UpdateDate WHERE tblProbationEvaluationRatingId=@tblProbationEvaluationRatingId
+                                ";
+
+                    _aCommonInternalDal.UpdateDataByUpdateCommand(query, aParameters, DataBase.HRDB);
+                    int pk = aProbationEvaluationRating.tblProbationEvaluationRatingId;
+                    return pk;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+        public bool UpdateJDAppLog(string status, string id)
+        {
+
+            try
+            {
+                int pk = 0;
+
+                //if (id.JdMasterId > 0)
+                {
+                    List<SqlParameter> aParameters = new List<SqlParameter>();
+                    aParameters.Add(new SqlParameter("@ProbationEvaluationAppLogId", id));
+                    aParameters.Add(new SqlParameter("@ActionStatus", status));
+
+
+                    string query =
+                        @"update tblProbationEvaluationAppLog set ActionStatus=@ActionStatus  where ProbationEvaluationAppLogId = @ProbationEvaluationAppLogId";
+
+                    bool result = _aCommonInternalDal.UpdateDataByUpdateCommand(query, aParameters, DataBase.HRDB);
+                    return result;
+
+                }
+
+            }
+            catch (Exception exception)
+            {
+
+                throw exception;
+            }
+        }
+        public bool UpdateContactAppLog(string status, string id)
+        {
+
+            try
+            {
+                int pk = 0;
+
+                //if (id.JdMasterId > 0)
+                {
+                    List<SqlParameter> aParameters = new List<SqlParameter>();
+                    aParameters.Add(new SqlParameter("@ProbationEvaluationAppLogId", id));
+                    aParameters.Add(new SqlParameter("@ActionStatus", status));
+
+
+                    string query =
+                        @"update tblProbationEvaluationAppLog set ActionStatus=@ActionStatus  where ProbationEvaluationAppLogId = @ProbationEvaluationAppLogId";
+
+                    bool result = _aCommonInternalDal.UpdateDataByUpdateCommand(query, aParameters, DataBase.HRDB);
+                    return result;
+
+                }
+
+            }
+            catch (Exception exception)
+            {
+
+                throw exception;
+            }
+        }
+        public int SaveEmpProbAppLog(ProbationEvaluationAppLogDAO appLogDao)
+        {
+
+            try
+            {
+                int pk = 0;
+
+
+                {
+                    List<SqlParameter> aParameters = new List<SqlParameter>();
+                    aParameters.Add(new SqlParameter("@ProbationEvaluationMasterId", appLogDao.ProbationEvaluationMasterId));
+                    aParameters.Add(new SqlParameter("@PreEmpInfoId", appLogDao.PreEmpInfoId));
+                    aParameters.Add(new SqlParameter("@ForEmpInfoId", appLogDao.ForEmpInfoId));
+                    aParameters.Add(new SqlParameter("@Version", appLogDao.Version));
+                    aParameters.Add(new SqlParameter("@ApproveBy", appLogDao.ApproveBy));
+                    aParameters.Add(new SqlParameter("@ApproveDate", appLogDao.ApproveDate));
+                    aParameters.Add(new SqlParameter("@ActionStatus", appLogDao.ActionStatus));
+                    aParameters.Add(new SqlParameter("@Comments", appLogDao.Comments));
+                    aParameters.Add(new SqlParameter("@CommentsId", appLogDao.CommentsId));
+
+
+                    string query = @"INSERT INTO dbo.tblProbationEvaluationAppLog
+                                    (
+                                    ProbationEvaluationMasterId,
+                                    PreEmpInfoId,
+                                    ForEmpInfoId,
+                                    Version,
+                                    ApproveBy,
+                                    ApproveDate,
+                                    ActionStatus,Comments,CommentId
+                                    )
+                                    VALUES(
+                                    @ProbationEvaluationMasterId,
+                                    @PreEmpInfoId,
+                                    @ForEmpInfoId,
+                                    (SELECT (COUNT(*)+1) FROM dbo.tblProbationEvaluationAppLog WHERE ProbationEvaluationMasterId=@ProbationEvaluationMasterId),
+                                    @ApproveBy,
+                                    @ApproveDate,
+                                    @ActionStatus,@Comments,@CommentsId
+                                    )";
+
+                    pk = _aCommonInternalDal.SaveDataByInsertCommandById(query, aParameters, DataBase.HRDB);
+                }
+
+
+                return pk;
+            }
+            catch (Exception exception)
+            {
+
+                throw exception;
+            }
+        }
+
+        public int SaveEmpTrainingAppLog(ProbationEvaluationAppLogDAO appLogDao)
+        {
+
+            try
+            {
+                int pk = 0;
+
+
+                {
+                    List<SqlParameter> aParameters = new List<SqlParameter>();
+                    aParameters.Add(new SqlParameter("@TrainingEvaluationMasterId", appLogDao.TrainingEvaluationMasterId));
+                    aParameters.Add(new SqlParameter("@PreEmpInfoId", appLogDao.PreEmpInfoId));
+                    aParameters.Add(new SqlParameter("@ForEmpInfoId", appLogDao.ForEmpInfoId));
+                    aParameters.Add(new SqlParameter("@Version", appLogDao.Version));
+                    aParameters.Add(new SqlParameter("@ApproveBy", appLogDao.ApproveBy));
+                    aParameters.Add(new SqlParameter("@ApproveDate", appLogDao.ApproveDate));
+                    aParameters.Add(new SqlParameter("@ActionStatus", appLogDao.ActionStatus));
+                    aParameters.Add(new SqlParameter("@Comments", appLogDao.Comments));
+
+
+                    string query = @"INSERT INTO dbo.tblTrainingEvaluationAppLog
+                                    (
+                                    TrainingEvaluationMasterId,
+                                    PreEmpInfoId,
+                                    ForEmpInfoId,
+                                    Version,
+                                    ApproveBy,
+                                    ApproveDate,
+                                    ActionStatus,Comments
+                                    )
+                                    VALUES(
+                                    @TrainingEvaluationMasterId,
+                                    @PreEmpInfoId,
+                                    @ForEmpInfoId,
+                                    (SELECT (COUNT(*)+1) FROM dbo.tblTrainingEvaluationAppLog WHERE TrainingEvaluationMasterId=@TrainingEvaluationMasterId),
+                                    @ApproveBy,
+                                    @ApproveDate,
+                                    @ActionStatus,@Comments
+                                    )";
+
+                    pk = _aCommonInternalDal.SaveDataByInsertCommandById(query, aParameters, DataBase.HRDB);
+                }
+
+
+                return pk;
+            }
+            catch (Exception exception)
+            {
+
+                throw exception;
+            }
+        }
+        public int SaveEmpProbHistory(string empinfoId)
+        {
+
+            try
+            {
+                int pk = 0;
+
+
+                {
+                    List<SqlParameter> aParameters = new List<SqlParameter>();
+                    aParameters.Add(new SqlParameter("@EmpInfoId", empinfoId));
+
+
+                    string query = @"INSERT INTO dbo.tblEmpProbationHistory
+                                    (
+                                        EmpInfoId,
+                                        EmpMasterCode,
+                                        CompanyId,
+                                        DivisionId,
+                                        DivisionWId,
+                                        DepartmentId,
+                                        SectionId,
+                                        SubSectionId,
+                                        EmpCategoryId,
+                                        SalaryGradeId,
+                                        SalaryStepId,
+                                        DesignationId,
+                                        SalaryLoationId,
+                                        JobLocationId,
+                                        IsProbationary,
+                                        ProbationEndDate,
+                                        ExtProbationPeriodDate,
+                                        ContractEndDate
+                                    )
+
+                                    SELECT EmpInfoId,
+                                           EmpMasterCode,
+                                           CompanyId,
+                                           DivisionId,
+                                           DivisionWId,
+                                           DepartmentId,
+                                           SectionId,
+                                           SubSectionId,
+                                           EmpCategoryId,
+                                           SalaryGradeId,
+                                           SalaryStepId,
+                                           DesignationId,
+       
+                                           SalaryLoationId,
+                                           JobLocationId,
+       
+                                           IsProbationary,
+                                           ProbationEndDate,
+                                           ExtProbationPeriodDate,
+                                           ContractEndDate
+                                            FROM dbo.tblEmpGeneralInfo WHERE EmpInfoId=@EmpInfoId";
+
+                    pk = _aCommonInternalDal.SaveDataByInsertCommandById(query, aParameters, DataBase.HRDB);
+                }
+
+
+                return pk;
+            }
+            catch (Exception exception)
+            {
+
+                throw exception;
+            }
+        }
+        public DataTable GetProbationInfo(string masterId)
+        {
+            try
+            {
+                string query = @"SELECT tblProbationEvaluationMaster.EmpInfoId as EmpID,  *,tblUser.EmpInfoId as UserEmpInfoId FROM dbo.tblProbationEvaluationMaster
+LEFT JOIN dbo.tblUser ON dbo.tblUser.UserId=dbo.tblProbationEvaluationMaster.EntryBy WHERE ProbationEvaluationMasterId='" + masterId + "'";
+
+                return _aCommonInternalDal.DataContainerDataTable(query, DataBase.HRDB);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        public DataTable GetContractTualEvulationInfo(string masterId)
+        {
+            try
+            {
+                string query = @"SELECT * FROM dbo.tblContractualEvaluationDetails  WHERE ContractualEmpManageId='" + masterId + "'";
+
+                return _aCommonInternalDal.DataContainerDataTable(query, DataBase.HRDB);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public DataTable GetSuperViesd(string masterId)
+        {
+            try
+            {
+                string query = @"select  ReportingEmpId from tblEmpGeneralInfo where EmpInfoId='" + masterId + "'";
+
+                return _aCommonInternalDal.DataContainerDataTable(query, DataBase.HRDB);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        public DataTable GetProbationInfoDetails(string masterId)
+        {
+            try
+            {
+                string query = @"select *  from tblProbationEvaluationDetails where ProbationEvaluationMasterId=" + masterId ;
+
+                return _aCommonInternalDal.DataContainerDataTable(query, DataBase.HRDB);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        public DataTable GetProbationRating(string companyid)
+        {
+            try
+            {
+                string query = @"SELECT * FROM dbo.tblProbationEvaluationRating WHERE CompanyId='" + companyid + "'";
+
+                return _aCommonInternalDal.DataContainerDataTable(query, DataBase.HRDB);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        public bool UpdateProbationEmpSuperVisor(int masterId, string supId)
+        {
+
+            try
+            {
+
+                List<SqlParameter> aParameters = new List<SqlParameter>();
+                aParameters.Add(new SqlParameter("@MID", masterId));
+                aParameters.Add(new SqlParameter("@SUPID", supId));
+
+
+                string query =
+                    @"UPDATE dbo.tblProbationEvaluationMaster SET SuperVisorEmpInfoId=@SUPID WHERE ProbationEvaluationMasterId=@MID ";
+
+                bool result = _aCommonInternalDal.UpdateDataByUpdateCommand(query, aParameters, DataBase.HRDB);
+                return result;
+
+
+
+            }
+            catch (Exception exception)
+            {
+
+                throw exception;
+            }
+            return true;
+        }
+        public bool UpdateProbationEmp(string empinfoId,string date)
+        {
+
+            try
+            {
+               
+                    List<SqlParameter> aParameters = new List<SqlParameter>();
+                    aParameters.Add(new SqlParameter("@EmpInfoId", empinfoId));
+                    aParameters.Add(new SqlParameter("@Date", date));
+
+
+                    string query =
+                        @"UPDATE dbo.tblEmpGeneralInfo SET ExtProbationPeriodDate=@Date WHERE EmpInfoId=@EmpInfoId ";
+
+                    bool result = _aCommonInternalDal.UpdateDataByUpdateCommand(query, aParameters, DataBase.HRDB);
+                    return result;
+
+                
+
+            }
+            catch (Exception exception)
+            {
+
+                throw exception;
+            }
+            return true;
+        }
+        public DataTable GetEmpInfo(string param)
+        {
+            try
+            {
+                string query = @"SELECT *FROM dbo.tblEmpGeneralInfo " + param + "";
+
+                return _aCommonInternalDal.DataContainerDataTable(query, DataBase.HRDB);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        public DataTable GetEmpInfoPrevious(string forempInfoid, string jdmasterId)
+        {
+            try
+            {
+                string query = @"SELECT * FROM dbo.tblProbationEvaluationAppLog WHERE ForEmpInfoId='" + forempInfoid + "' AND ProbationEvaluationMasterId='" + jdmasterId + "' AND ActionStatus NOT IN ('Review') ORDER BY ProbationEvaluationAppLogId DESC";
+
+                return _aCommonInternalDal.DataContainerDataTable(query, DataBase.HRDB);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        public DataTable GetSupervisorAppId(string url, string param)
+        {
+            try
+            {
+                string query = @"SELECT * FROM dbo.tblSupevisorMenuApproval
+LEFT JOIN dbo.tblMainMenu ON tblMainMenu.MainMenuId = tblSupevisorMenuApproval.MainMenuId WHERE URL='" + url + "' " + param + "";
+
+                return _aCommonInternalDal.DataContainerDataTable(query, DataBase.HRDB);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        public bool UpdateProbationEvuMaster(ProbationEvaluationMasterDAO aMaster)
+        {
+
+            try
+            {
+                int pk = 0;
+
+                if (aMaster.ProbationEvaluationMasterId > 0)
+                {
+                    List<SqlParameter> aParameters = new List<SqlParameter>();
+                    aParameters.Add(new SqlParameter("@ProbationEvaluationMasterId", aMaster.ProbationEvaluationMasterId));
+                    aParameters.Add(new SqlParameter("@ActionStatus", aMaster.ActionStatus));
+
+
+                    string query =
+                        @"update tblProbationEvaluationMaster set ActionStatus=@ActionStatus  where ProbationEvaluationMasterId = @ProbationEvaluationMasterId";
+
+                    bool result = _aCommonInternalDal.UpdateDataByUpdateCommand(query, aParameters, DataBase.HRDB);
+                    return result;
+
+                }
+
+            }
+            catch (Exception exception)
+            {
+
+                throw exception;
+            }
+            return true;
+        }
+        public bool DeleteEvalution(int aMaster)
+        {
+
+            try
+            {
+                int pk = 0;
+
+               // if (aMaster.ProbationEvaluationMasterId > 0)
+                {
+                    List<SqlParameter> aParameters = new List<SqlParameter>();
+                    aParameters.Add(new SqlParameter("@ProbationEvaluationMasterId", aMaster));
+
+
+                    string query =
+                        @"delete from [dbo].[tblProbationEvaluationDetails] where   ProbationEvaluationMasterId = @ProbationEvaluationMasterId";
+
+                    bool result = _aCommonInternalDal.DeleteDataByDeleteCommand(query, aParameters, DataBase.HRDB);
+                    return result;
+
+                }
+
+            }
+            catch (Exception exception)
+            {
+
+                throw exception;
+            }
+            return true;
+        }
+
+        public int SaveProbationDetail(ProbationEvaluationDetailsDAO aEvaluationDetailsDao)
+        {
+            try
+            {
+                List<SqlParameter> aParameters = new List<SqlParameter>();
+
+                aParameters.Add(new SqlParameter("@ProbationEvaluationMasterId", aEvaluationDetailsDao.ProbationEvaluationMasterId));
+                aParameters.Add(new SqlParameter("@ValueField", aEvaluationDetailsDao.ValueField));
+                aParameters.Add(new SqlParameter("@KeyRatingCri", aEvaluationDetailsDao.KeyRatingCri));
+                aParameters.Add(new SqlParameter("@IsExcellent", aEvaluationDetailsDao.IsExcellent));
+                aParameters.Add(new SqlParameter("@IsGood", aEvaluationDetailsDao.IsGood));
+                aParameters.Add(new SqlParameter("@IsSatisfactory", aEvaluationDetailsDao.IsSatisfactory));
+                aParameters.Add(new SqlParameter("@IsNotSatisfactory", aEvaluationDetailsDao.IsNotSatisfactory));
+
+
+
+
+                string query = @"INSERT INTO dbo.tblProbationEvaluationDetails
+                                    (
+                                        ProbationEvaluationMasterId,
+                                        ValueField,
+                                        KeyRatingCri,
+                                        IsExcellent,
+                                        IsGood,
+                                        IsSatisfactory,
+                                        IsNotSatisfactory
+                                    )
+                                    VALUES
+                                    (  @ProbationEvaluationMasterId,
+                                        @ValueField,
+                                        @KeyRatingCri,
+                                        @IsExcellent,
+                                        @IsGood,
+                                        @IsSatisfactory,
+                                        @IsNotSatisfactory
+                                    )";
+
+                int pk = _aCommonInternalDal.SaveDataByInsertCommandById(query, aParameters, DataBase.HRDB);
+                return pk;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+
+        public int SaveTrainingDetail(ProbationEvaluationDetailsDAO aEvaluationDetailsDao)
+        {
+            try
+            {
+                List<SqlParameter> aParameters = new List<SqlParameter>();
+
+                aParameters.Add(new SqlParameter("@TrainingEvaluationMasterId", aEvaluationDetailsDao.TrainingEvaluationMasterId));
+                aParameters.Add(new SqlParameter("@ValueField", aEvaluationDetailsDao.ValueField));
+                aParameters.Add(new SqlParameter("@KeyRatingCri", aEvaluationDetailsDao.KeyRatingCri));
+                aParameters.Add(new SqlParameter("@IsNochange", aEvaluationDetailsDao.IsNochange));
+                aParameters.Add(new SqlParameter("@IsMinorChange", aEvaluationDetailsDao.IsMinorChange));
+                aParameters.Add(new SqlParameter("@IsReasonableChange", aEvaluationDetailsDao.IsReasonableChange));
+                aParameters.Add(new SqlParameter("@IsSignificantChange", aEvaluationDetailsDao.IsSignificantChange));
+                aParameters.Add(new SqlParameter("@IsNotapplicable", aEvaluationDetailsDao.IsNotapplicable));
+
+
+
+
+                string query = @"INSERT INTO dbo.tblTrainingEvaluationDetails
+                                    (
+                                        TrainingEvaluationMasterId,
+                                        ValueField,
+                                        KeyRatingCri,
+                                        IsNochange,
+                                        IsMinorChange,
+                                        IsReasonableChange,
+                                        IsSignificantChange,
+                                        IsNotapplicable
+                                    )
+                                    VALUES
+                                    (  @TrainingEvaluationMasterId,
+                                        @ValueField,
+                                        @KeyRatingCri,
+                                         @IsNochange,
+                                        @IsMinorChange,
+                                        @IsReasonableChange,
+                                        @IsSignificantChange,
+                                        @IsNotapplicable
+                                    )";
+
+                int pk = _aCommonInternalDal.SaveDataByInsertCommandById(query, aParameters, DataBase.HRDB);
+                return pk;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+
+        public DataTable GetPreEmpData(string id)
+        {
+            var aSqlParameterlist = new List<SqlParameter>();
+            aSqlParameterlist.Add(new SqlParameter("@ID", id));
+            const string queryStr = @"SELECT * FROM dbo.tblProbationEvaluationMaster WHERE EmpInfoId=@ID";
+            return _aCommonInternalDal.DataContainerDataTable(queryStr, aSqlParameterlist, DataBase.HRDB);
+        }
+
+        public DataTable GetTrainingEmpData(string id)
+        {
+            var aSqlParameterlist = new List<SqlParameter>();
+            aSqlParameterlist.Add(new SqlParameter("@ID", id));
+            const string queryStr = @"SELECT * FROM dbo.tblTrainingEvaluationMaster WHERE EmpInfoId=@ID";
+            return _aCommonInternalDal.DataContainerDataTable(queryStr, aSqlParameterlist, DataBase.HRDB);
+        }
+        public DataTable LoadEmployeeInfo(string employeeId)
+        {
+            var aSqlParameterlist = new List<SqlParameter>();
+            aSqlParameterlist.Add(new SqlParameter("@EmployeeId", employeeId));
+
+
+            const string queryStr = @"SELECT  Jloc.Location, Sloc.SalaryLocation, R.EmpName AS ReportingToName, EGI.EmpInfoId,EGI.EmpMasterCode,EGI.EmpName, EGI.DateOfJoin, DSN.DivisionId,DSN.DivisionName,DPT.DepartmentId,DPT.DepartmentName,
+                                     DSG.DesignationId,DSG.Designation, SLG.SalaryGradeId, SLG.GradeName,EGI.CompanyId
+                                    FROM tblEmpGeneralInfo AS EGI 
+                                    LEFT JOIN dbo.tblCompanyInfo AS CI ON EGI.CompanyId = CI.CompanyId
+                                    LEFT JOIN dbo.tblDivision AS DSN ON EGI.DivisionId = DSN.DivisionId
+                                    LEFT JOIN dbo.tblDivisionWing AS DSNW ON EGI.DivisionWId = DSNW.DivisionWId
+                                    LEFT JOIN dbo.tblDepartment AS DPT ON EGI.DepartmentId = DPT.DepartmentId
+                                    LEFT JOIN dbo.tblSection AS SEC ON EGI.SectionId = SEC.SectionId
+                                    LEFT JOIN dbo.tblSubSection AS SSEC ON EGI.SubSectionId = SSEC.SubSectionId
+                                    LEFT JOIN dbo.tblDesignation AS DSG ON EGI.DesignationId = DSG.DesignationId
+									LEFT JOIN dbo.tblEmployeeType AS ETP ON EGI.EmpTypeId = ETP.EmpTypeId
+									LEFT JOIN dbo.tblSalaryGrade AS SLG ON EGI.SalaryGradeId = SLG.SalaryGradeId 
+									LEFT JOIN dbo.tblJobLocation AS Jloc ON EGI.JobLocationId = Jloc.JobLocationID
+									LEFT JOIN dbo.tblSalaryLocation AS Sloc ON EGI.SalaryLoationId = Sloc.SalaryLoationId
+									LEFT JOIN dbo.tblEmpGeneralInfo AS R ON EGI.ReportingEmpId = R.EmpInfoId WHERE EGI.EmpInfoId = @EmployeeId ";
+
+            return _aCommonInternalDal.DataContainerDataTable(queryStr, aSqlParameterlist, DataBase.HRDB);
+        }
+
+        public DataTable LoadEmployeeData(string parameter)
+        {
+
+
+            string queryStr = @"SELECT ISNULL(EGI.ExtProbationPeriodDate,ProbationEndDate)AS ProbationEndDate, EGI.EmpInfoId,EGI.EmpMasterCode,EGI.EmpName, EGI.DateOfJoin, DSN.DivisionId,DSN.DivisionName,DPT.DepartmentId,DPT.DepartmentName,
+                                     DSG.DesignationId,DSG.Designation, SLG.SalaryGradeId, SLG.GradeName,*
+                                    FROM tblEmpGeneralInfo AS EGI 
+                                    LEFT JOIN dbo.tblCompanyInfo AS CI ON EGI.CompanyId = CI.CompanyId
+                                    LEFT JOIN dbo.tblDivision AS DSN ON EGI.DivisionId = DSN.DivisionId
+                                    LEFT JOIN dbo.tblDivisionWing AS DSNW ON EGI.DivisionWId = DSNW.DivisionWId
+                                    LEFT JOIN dbo.tblDepartment AS DPT ON EGI.DepartmentId = DPT.DepartmentId
+                                    LEFT JOIN dbo.tblSection AS SEC ON EGI.SectionId = SEC.SectionId
+                                    LEFT JOIN dbo.tblSubSection AS SSEC ON EGI.SubSectionId = SSEC.SubSectionId
+                                    LEFT JOIN dbo.tblDesignation AS DSG ON EGI.DesignationId = DSG.DesignationId
+									LEFT JOIN dbo.tblEmployeeType AS ETP ON EGI.EmpTypeId = ETP.EmpTypeId
+									LEFT JOIN dbo.tblSalaryGrade AS SLG ON EGI.SalaryGradeId = SLG.SalaryGradeId WHERE IsProbationary=1 and EGI.IsActive=1   " + parameter + "";
+
+            return _aCommonInternalDal.DataContainerDataTable(queryStr,  DataBase.HRDB);
+        }
+
+
+        public DataTable LoadEmployeeCheckforProbition(string parameter)
+        {
+
+
+            string queryStr = @"SELECT * FROM dbo.tblProbationEvaluationMaster WHERE EmpInfoId=" + parameter + "";
+
+            return _aCommonInternalDal.DataContainerDataTable(queryStr, DataBase.HRDB);
+        }
+
+        public DataTable LoadEmployeeDataBySuperAdmin(string parameter)
+        {
+
+
+            string queryStr = @"SELECT ISNULL(EGI.ExtProbationPeriodDate,ProbationEndDate)AS ProbationEndDate, EGI.EmpInfoId,EGI.EmpMasterCode,EGI.EmpName, EGI.DateOfJoin, DSN.DivisionId,DSN.DivisionName,DPT.DepartmentId,DPT.DepartmentName,
+                                     DSG.DesignationId,DSG.Designation, SLG.SalaryGradeId, SLG.GradeName,*
+                                    FROM tblEmpGeneralInfo AS EGI 
+                                    LEFT JOIN dbo.tblCompanyInfo AS CI ON EGI.CompanyId = CI.CompanyId
+                                    LEFT JOIN dbo.tblDivision AS DSN ON EGI.DivisionId = DSN.DivisionId
+                                    LEFT JOIN dbo.tblDivisionWing AS DSNW ON EGI.DivisionWId = DSNW.DivisionWId
+                                    LEFT JOIN dbo.tblDepartment AS DPT ON EGI.DepartmentId = DPT.DepartmentId
+                                    LEFT JOIN dbo.tblSection AS SEC ON EGI.SectionId = SEC.SectionId
+                                    LEFT JOIN dbo.tblSubSection AS SSEC ON EGI.SubSectionId = SSEC.SubSectionId
+                                    LEFT JOIN dbo.tblDesignation AS DSG ON EGI.DesignationId = DSG.DesignationId
+									LEFT JOIN dbo.tblEmployeeType AS ETP ON EGI.EmpTypeId = ETP.EmpTypeId
+									LEFT JOIN dbo.tblSalaryGrade AS SLG ON EGI.SalaryGradeId = SLG.SalaryGradeId WHERE IsProbationary=1 and EGI.IsActive='1' " + parameter + "";
+
+            return _aCommonInternalDal.DataContainerDataTable(queryStr, DataBase.HRDB);
+        }
+        public DataTable LoadEmployeeDataProbation(string parameter)
+        {
+
+
+            string queryStr = @"SELECT EGI.EmpInfoId,EGI.EmpMasterCode,EGI.EmpName, EGI.DateOfJoin, DSN.DivisionId,DSN.DivisionName,DPT.DepartmentId,DPT.DepartmentName,
+                                     DSG.DesignationId,DSG.Designation, SLG.SalaryGradeId, SLG.GradeName,*,ProbationEndDate,(CASE WHEN PM.ExProbation=1 THEN 'Extend probation period' ELSE 'Probation End Request' END) Request
+                                    FROM tblEmpGeneralInfo AS EGI 
+                                    LEFT JOIN dbo.tblCompanyInfo AS CI ON EGI.CompanyId = CI.CompanyId
+                                    LEFT JOIN dbo.tblDivision AS DSN ON EGI.DivisionId = DSN.DivisionId
+                                    LEFT JOIN dbo.tblDivisionWing AS DSNW ON EGI.DivisionWId = DSNW.DivisionWId
+                                    LEFT JOIN dbo.tblDepartment AS DPT ON EGI.DepartmentId = DPT.DepartmentId
+                                    LEFT JOIN dbo.tblSection AS SEC ON EGI.SectionId = SEC.SectionId
+                                    LEFT JOIN dbo.tblSubSection AS SSEC ON EGI.SubSectionId = SSEC.SubSectionId
+                                    LEFT JOIN dbo.tblDesignation AS DSG ON EGI.DesignationId = DSG.DesignationId
+									LEFT JOIN dbo.tblEmployeeType AS ETP ON EGI.EmpTypeId = ETP.EmpTypeId
+									LEFT JOIN dbo.tblSalaryGrade AS SLG ON EGI.SalaryGradeId = SLG.SalaryGradeId
+									INNER JOIN dbo.tblProbationEvaluationMaster PM ON PM.EmpInfoId=EGI.EmpInfoId
+									INNER JOIN (SELECT ProbationEvaluationMasterId,MAX(Version)MaxVer FROM dbo.tblProbationEvaluationAppLog WHERE ActionStatus NOT IN
+								('Review') GROUP BY ProbationEvaluationMasterId) AS ProbLog ON ProbLog.ProbationEvaluationMasterId = PM.ProbationEvaluationMasterId
+								INNER JOIN dbo.tblProbationEvaluationAppLog ON tblProbationEvaluationAppLog.ProbationEvaluationMasterId = PM.ProbationEvaluationMasterId
+									
+									 WHERE EGI.IsActive='1' AND EGI.EmployeeStatus='Active' AND Version=ProbLog.MaxVer AND ForEmpInfoId = " + HttpContext.Current.Session["EmpInfoId"].ToString() + " AND EGI.EmpInfoId IN (SELECT EmpInfoId FROM tblProbationEvaluationMaster)  " + parameter + "";
+
+            return _aCommonInternalDal.DataContainerDataTable(queryStr, DataBase.HRDB);
+        }
+
+        public DataTable LoadEmployeeDataProbationCheck(string parameter)
+        {
+
+
+            string queryStr = @"SELECT EGI.EmpInfoId,EGI.EmpMasterCode,EGI.EmpName, EGI.DateOfJoin, DSN.DivisionId,DSN.DivisionName,DPT.DepartmentId,DPT.DepartmentName,
+                                     DSG.DesignationId,DSG.Designation, SLG.SalaryGradeId, SLG.GradeName,*,ProbationEndDate,(CASE WHEN PM.ExProbation=1 THEN 'Extend probation period' ELSE 'Probation End Request' END) Request
+                                    FROM tblEmpGeneralInfo AS EGI 
+                                    LEFT JOIN dbo.tblCompanyInfo AS CI ON EGI.CompanyId = CI.CompanyId
+                                    LEFT JOIN dbo.tblDivision AS DSN ON EGI.DivisionId = DSN.DivisionId
+                                    LEFT JOIN dbo.tblDivisionWing AS DSNW ON EGI.DivisionWId = DSNW.DivisionWId
+                                    LEFT JOIN dbo.tblDepartment AS DPT ON EGI.DepartmentId = DPT.DepartmentId
+                                    LEFT JOIN dbo.tblSection AS SEC ON EGI.SectionId = SEC.SectionId
+                                    LEFT JOIN dbo.tblSubSection AS SSEC ON EGI.SubSectionId = SSEC.SubSectionId
+                                    LEFT JOIN dbo.tblDesignation AS DSG ON EGI.DesignationId = DSG.DesignationId
+									LEFT JOIN dbo.tblEmployeeType AS ETP ON EGI.EmpTypeId = ETP.EmpTypeId
+									LEFT JOIN dbo.tblSalaryGrade AS SLG ON EGI.SalaryGradeId = SLG.SalaryGradeId
+									INNER JOIN dbo.tblProbationEvaluationMaster PM ON PM.EmpInfoId=EGI.EmpInfoId
+									INNER JOIN (SELECT ProbationEvaluationMasterId,MAX(Version)MaxVer FROM dbo.tblProbationEvaluationAppLog WHERE ActionStatus NOT IN
+								('Review') GROUP BY ProbationEvaluationMasterId) AS ProbLog ON ProbLog.ProbationEvaluationMasterId = PM.ProbationEvaluationMasterId
+								INNER JOIN dbo.tblProbationEvaluationAppLog ON tblProbationEvaluationAppLog.ProbationEvaluationMasterId = PM.ProbationEvaluationMasterId
+									
+									 WHERE EGI.IsActive='1' AND EGI.EmployeeStatus='Active' AND Version=ProbLog.MaxVer AND ForEmpInfoId = " + parameter + " AND EGI.EmpInfoId IN (SELECT EmpInfoId FROM tblProbationEvaluationMaster)  ";
+
+            return _aCommonInternalDal.DataContainerDataTable(queryStr, DataBase.HRDB);
+        }
+     
+        public DataTable GetQuestionGroupForSurveyForm(string cid = "1")
+        {
+            var aSqlParameterlist = new List<SqlParameter>();
+            aSqlParameterlist.Add(new SqlParameter("@CompanyId", cid));
+            const string queryStr = @"SELECT DISTINCT g.SurveyQuestionGroupId AS SerialNo, g.SurveyQuestionGroupId, g.SurveyQuestionGroup 
+FROM dbo.tblSurveyQuestionGroup g
+INNER JOIN dbo.tblSurveyQuestion sq ON sq.SurveyQuestionGroupId = g.SurveyQuestionGroupId
+INNER JOIN dbo.tblSurveyDetails sd ON sd.SurveyQuestionId = sq.SurveyQuestionId
+INNER JOIN dbo.tblSurveyMaster sm ON sm.SurveyMasterId = sd.SurveyMasterId
+WHERE sm.IsActive=1";
+            return _aCommonInternalDal.DataContainerDataTable(queryStr, aSqlParameterlist, DataBase.HRDB);
+        }
+
+        public DataTable GetQuestionByGroupId(int SurveyQuestionGroupId)
+        {
+            var aSqlParameterlist = new List<SqlParameter>();
+            aSqlParameterlist.Add(new SqlParameter("@SurveyQuestionGroupId", SurveyQuestionGroupId));
+            const string queryStr = @"SELECT sq.SurveyQuestionGroupId, sd.SurveyDetailsId,sq.SurveyQuestionId, sq.QuestionTitle ,sq.SurveyQuestionTypeId
+FROM dbo.tblSurveyQuestionGroup g
+INNER JOIN dbo.tblSurveyQuestion sq ON sq.SurveyQuestionGroupId = g.SurveyQuestionGroupId
+INNER JOIN dbo.tblSurveyDetails sd ON sd.SurveyQuestionId = sq.SurveyQuestionId
+INNER JOIN dbo.tblSurveyMaster sm ON sm.SurveyMasterId = sd.SurveyMasterId
+WHERE sm.IsActive=1 AND sq.SurveyQuestionGroupId=@SurveyQuestionGroupId";
+            return _aCommonInternalDal.DataContainerDataTable(queryStr, aSqlParameterlist, DataBase.HRDB);
+        }
+
+        public DataTable GetProbationEvaluationRating()
+        {
+            //var aSqlParameterlist = new List<SqlParameter>();
+            //aSqlParameterlist.Add(new SqlParameter("@SurveyQuestionGroupId", SurveyQuestionGroupId));
+            const string queryStr = @"SELECT r.ValueField,r.TextField FROM dbo.tblProbationEvaluationRating r WHERE r.IsActive=1";
+            return _aCommonInternalDal.DataContainerDataTable(queryStr, null, DataBase.HRDB);
+        }
+
+        public int SaveComment(string masterId, string empinfoId, string comments)
+        {
+
+            try
+            {
+                int pk = 0;
+
+
+                {
+                    List<SqlParameter> aParameters = new List<SqlParameter>();
+                    //aParameters.Add(new SqlParameter("@Id", masterId));
+                    aParameters.Add(new SqlParameter("@EmpInfoId", empinfoId));
+                    aParameters.Add(new SqlParameter("@Comments", comments));
+
+
+                    string query = @" INSERT INTO dbo.tblProbationEvaluationAppLogComnt
+                                    (
+                                        EmpInfoId,
+                                        Comments
+                                    )
+                                    VALUES
+                                    (   @EmpInfoId,
+                                        @Comments
+                                    )";
+
+                    pk = _aCommonInternalDal.SaveDataByInsertCommandById(query, aParameters, DataBase.HRDB);
+                }
+
+
+                return pk;
+            }
+            catch (Exception exception)
+            {
+
+                throw exception;
+            }
+        }
+
+        public bool UpdateJobReqStatus2(ProbationEvaluationMasterDAO aMaster)
+        {
+
+            try
+            {
+                int pk = 0;
+
+                if (aMaster.ProbationEvaluationMasterId > 0)
+                {
+                    List<SqlParameter> aParameters = new List<SqlParameter>();
+                    aParameters.Add(new SqlParameter("@ProbationEvaluationMasterId", aMaster.ProbationEvaluationMasterId));
+                    aParameters.Add(new SqlParameter("@ActionStatus", aMaster.ActionStatus));
+
+
+                    string query =
+                        @"update tblProbationEvaluationMaster set ActionStatus2=@ActionStatus  where ProbationEvaluationMasterId = @ProbationEvaluationMasterId";
+
+                    bool result = _aCommonInternalDal.UpdateDataByUpdateCommand(query, aParameters, DataBase.HRDB);
+                    return result;
+
+                }
+
+            }
+            catch (Exception exception)
+            {
+
+                throw exception;
+            }
+            return true;
+        }
+        public bool UpdateJobReqStatusAll(int id,string actionstatus,string actionstatus2)
+        {
+
+            try
+            {
+                int pk = 0;
+
+                if (id > 0)
+                {
+                    List<SqlParameter> aParameters = new List<SqlParameter>();
+                    aParameters.Add(new SqlParameter("@ProbationEvaluationMasterId", id));
+                    aParameters.Add(new SqlParameter("@ActionStatus", actionstatus));
+                    aParameters.Add(new SqlParameter("@ActionStatus2", actionstatus2));
+
+
+                    string query =
+                        @"update tblProbationEvaluationMaster set ActionStatus=@ActionStatus AND ActionStatus2=@ActionStatus2  where ProbationEvaluationMasterId = @ProbationEvaluationMasterId";
+
+                    bool result = _aCommonInternalDal.UpdateDataByUpdateCommand(query, aParameters, DataBase.HRDB);
+                    return result;
+
+                }
+
+            }
+            catch (Exception exception)
+            {
+
+                throw exception;
+            }
+            return true;
+        }
+
+        public DataTable GetSupervisorEmployeeAppId(string empinfoId, string fromempInfoId)
+        {
+            try
+            {
+                string query = @"SELECT * FROM dbo.tblSupevisorMenuApproval WHERE EmpInfoId='" + empinfoId + "' AND FromEmpInfoId='" + fromempInfoId + "'";
+
+                return _aCommonInternalDal.DataContainerDataTable(query, DataBase.HRDB);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        public DataTable GetHRAdminEmployeeAppId(string parameter)
+        {
+            try
+            {
+                string query = @"SELECT * FROM dbo.tblEmployeeApprovalByOpearationDetail
+            LEFT JOIN dbo.tblMainMenu ON dbo.tblEmployeeApprovalByOpearationDetail.Operation=dbo.tblMainMenu.MainMenuId " + parameter + "";
+
+                return _aCommonInternalDal.DataContainerDataTable(query, DataBase.HRDB);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        public DataTable GetApprovalComments(string id)
+        {
+            //var aSqlParameterlist = new List<SqlParameter>();
+            //aSqlParameterlist.Add(new SqlParameter("@Parameter", Parameter));
+
+
+            string queryStr = @"SELECT Alg.ProbationEvaluationAppLogId, us2.EmpName PreEmp, emp2.EmpName ForEmp, Version, Us.UserName ApproveBy, Alg.ActionStatus,
+ Alg.ApproveDate, Alg.ProbationEvaluationMasterId, Alg.Comments FROM dbo.tblProbationEvaluationAppLog Alg
+LEFT JOIN dbo.tblEmpGeneralInfo emp ON emp.EmpInfoId=Alg.PreEmpInfoId
+LEFT JOIN dbo.tblEmpGeneralInfo emp2 ON emp2.EmpInfoId=Alg.ForEmpInfoId
+LEFT JOIN dbo.tblUser Us ON Alg.ApproveBy=Us.UserId  
+LEFT JOIN dbo.tblEmpGeneralInfo us2 ON Us.EmpInfoId=us2.EmpInfoId
+WHERE Alg.ActionStatus<>'Drafted' and Alg.ProbationEvaluationMasterId='" + id + "'";
+
+            return _aCommonInternalDal.DataContainerDataTable(queryStr, DataBase.HRDB);
+        }
+
+    }
+}

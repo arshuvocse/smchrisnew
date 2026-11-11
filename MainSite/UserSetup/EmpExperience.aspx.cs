@@ -1,0 +1,820 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using DAL.COMMON_DAL;
+using DAL.Employee_DAL;
+using DAL.UserPermissions_DAL;
+using DAO.HRIS_DAO;
+using DAO.HRIS_DAO_EF;
+using HELPER_FUNCTIONS.HELPERS;
+
+public partial class UserSetup_EmpExperience : System.Web.UI.Page
+{
+    ShowMessage aShowMessage = new ShowMessage();
+    Messages aMessages = new Messages();
+    private CommonDataLoadDAL _commonDataLoad = new CommonDataLoadDAL();
+    private EmpExperienceDAL _EmpExperienceDAL = new EmpExperienceDAL();
+    private int mid = 0;
+    private string _userId;
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (Session["UserId"] != "")
+        {
+            _userId = Convert.ToString(Session["UserId"].ToString());
+        }
+        if (!IsPostBack)
+        {
+           
+
+            txt_ExpFromDate.Attributes.Add("readonly", "readonly");
+            txt_ExpToDate.Attributes.Add("readonly", "readonly");
+           
+        
+             
+           
+            if (!string.IsNullOrEmpty(Request.QueryString["mid"]))
+            {
+                mid = int.Parse(Request.QueryString["mid"]);
+                hdpk.Value = mid.ToString();
+                if (mid > 0)
+                {
+                    using (var db = new HRIS_SMCEntities())
+                    {
+                        var emp = (from j in db.tblEmpGeneralInfoes where j.EmpInfoId == mid select j).FirstOrDefault();
+                        empMasterCode.Text =
+                            emp.EmpMasterCode;
+                        using (DataTable dtdesignation = _commonDataLoad.GetDTDesignationByEmpId(mid))
+                        {
+                            lblDesignation.Text = dtdesignation.Rows[0]["Designation"].ToString();
+
+                        }
+                        lblEmpName.Text = emp.EmpName;
+                        using (DataTable dtExperience = _EmpExperienceDAL.GetDTEmpExperienceByEmpId(mid))
+                        {
+                            if (dtExperience.Rows.Count > 0)
+                            {
+                                ViewState["ExperienceTable"] = dtExperience;
+                                gv_Experience.DataSource = dtExperience;
+                                gv_Experience.DataBind();
+                            }
+
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+    protected void homeButton_OnClick(object sender, EventArgs e)
+    {
+        Response.Redirect("../DashBoard_UI/DashBoard.aspx");
+    }
+    protected void btnEditInfo_OnClick(object sender, EventArgs e)
+    {
+        Response.Redirect("EmployeeInfoList.aspx");
+    }
+    private void AddNewToGrid_Experience()
+    {
+        if (ViewState["ExperienceTable"] != null)
+        {
+            DataTable dtCurrentTable = (DataTable)ViewState["ExperienceTable"];
+            DataRow drCurrentRow = null;
+
+            if (dtCurrentTable.Rows.Count > 0)
+            {
+                drCurrentRow = dtCurrentTable.NewRow();
+
+                drCurrentRow["EmpExperienceId"] = DBNull.Value;
+                drCurrentRow["EmpInfoId"] = hdpk.Value;
+                drCurrentRow["ExpCompany"] = txt_ExpCompany.Text;
+                drCurrentRow["ExpContactPerson"] = txt_ExpContactPerson.Text;
+                drCurrentRow["ExpAddress"] = txt_ExpAddress.Text;
+                drCurrentRow["ExpNatureofBusiness"] = txt_ExpNatureofBusiness.Text;
+                drCurrentRow["ExpJobType"] = txt_ExpJobType.Text;
+                drCurrentRow["ExpFromDate"] = txt_ExpFromDate.Text;
+                drCurrentRow["ExpToDate"] = txt_ExpToDate.Text;
+                drCurrentRow["ExpLastJob"] = chk_ExpLastJob.Checked;
+                drCurrentRow["ExpDesignation"] = txt_ExpDesignation.Text;
+                drCurrentRow["ExpJobDescription"] = txt_ExpJobDescription.Text;
+                drCurrentRow["ExpTelNo"] = txt_ExpTelNo.Text;
+                drCurrentRow["ExpRemarks"] = txt_ExpRemarks.Text;
+                try
+                {
+                    drCurrentRow["ExpLeavingSalary"] = txt_ExpLeavingSalary.Text;
+                }
+                catch (Exception)
+                {
+
+                    //throw;
+                }
+                //add new row to DataTable   
+                dtCurrentTable.Rows.Add(drCurrentRow);
+                //Store the current data to ViewState for future reference   
+                ViewState["ExperienceTable"] = dtCurrentTable;
+
+                //Rebind the Grid with the current data to reflect changes   
+                gv_Experience.DataSource = dtCurrentTable;
+                gv_Experience.DataBind();
+            }
+        }
+        else
+        {
+            DataTable dt = new DataTable();
+            DataRow dr = null;
+            dt.Columns.Add(new DataColumn("EmpExperienceId", typeof(string)));
+            dt.Columns.Add(new DataColumn("EmpInfoId", typeof(string)));
+            dt.Columns.Add(new DataColumn("ExpCompany", typeof(string)));
+            dt.Columns.Add(new DataColumn("ExpContactPerson", typeof(string)));
+            dt.Columns.Add(new DataColumn("ExpAddress", typeof(string)));
+            dt.Columns.Add(new DataColumn("ExpNatureofBusiness", typeof(string)));
+            dt.Columns.Add(new DataColumn("ExpJobType", typeof(string)));
+            dt.Columns.Add(new DataColumn("ExpFromDate", typeof(string)));
+            dt.Columns.Add(new DataColumn("ExpToDate", typeof(string)));
+            dt.Columns.Add(new DataColumn("ExpLastJob", typeof(string)));
+            dt.Columns.Add(new DataColumn("ExpDesignation", typeof(string)));
+            dt.Columns.Add(new DataColumn("ExpJobDescription", typeof(string)));
+            dt.Columns.Add(new DataColumn("ExpTelNo", typeof(string)));
+            dt.Columns.Add(new DataColumn("ExpRemarks", typeof(string)));
+            dt.Columns.Add(new DataColumn("ExpLeavingSalary", typeof(string)));
+
+            dr = dt.NewRow();
+            dr["EmpExperienceId"] = "";
+            dr["EmpInfoId"] = hdpk.Value;
+            dr["ExpCompany"] = txt_ExpCompany.Text;
+            dr["ExpContactPerson"] = txt_ExpContactPerson.Text;
+            dr["ExpAddress"] = txt_ExpAddress.Text;
+            dr["ExpNatureofBusiness"] = txt_ExpNatureofBusiness.Text;
+            dr["ExpJobType"] = txt_ExpJobType.Text;
+            dr["ExpFromDate"] = txt_ExpFromDate.Text;
+            dr["ExpToDate"] = txt_ExpToDate.Text;
+            dr["ExpLastJob"] = chk_ExpLastJob.Checked;
+            dr["ExpDesignation"] = txt_ExpDesignation.Text;
+            dr["ExpJobDescription"] = txt_ExpJobDescription.Text;
+            dr["ExpTelNo"] = txt_ExpTelNo.Text;
+            dr["ExpRemarks"] = txt_ExpRemarks.Text;
+            dr["ExpLeavingSalary"] = txt_ExpLeavingSalary.Text;
+            dt.Rows.Add(dr);
+
+            //Store the DataTable in ViewState for future reference   
+            ViewState["ExperienceTable"] = dt;
+
+            //Bind the Gridview   
+            gv_Experience.DataSource = dt;
+            gv_Experience.DataBind();
+        }
+        //Set Previous Data on Postbacks   
+        SetPreviousData_Experience();
+        txt_ExpCompany.Text = string.Empty;
+        txt_ExpContactPerson.Text = string.Empty;
+        txt_ExpAddress.Text = string.Empty;
+        txt_ExpNatureofBusiness.Text = string.Empty;
+        txt_ExpJobType.Text = string.Empty;
+        txt_ExpFromDate.Text = string.Empty;
+        chk_ExpLastJob.Checked = false;
+        txt_ExpDesignation.Text = string.Empty;
+        txt_ExpJobDescription.Text = string.Empty;
+        txt_ExpTelNo.Text = string.Empty;
+        txt_ExpRemarks.Text = string.Empty;
+        txt_ExpLeavingSalary.Text = string.Empty;
+        txt_ExpToDate.Text = string.Empty;
+    }
+    private void SetPreviousData_Experience()
+    {
+        int rowIndex = 0;
+        if (ViewState["ExperienceTable"] != null)
+        {
+            DataTable dt = (DataTable)ViewState["ExperienceTable"];
+            if (dt.Rows.Count > 0)
+            {
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    HiddenField EmpExperienceId = (HiddenField)gv_Experience.Rows[rowIndex].FindControl("EmpExperienceId");
+                    Label lbl_ExpCompany = (Label)gv_Experience.Rows[rowIndex].FindControl("lbl_ExpCompany");
+                    Label lbl_ExpContactPerson = (Label)gv_Experience.Rows[rowIndex].FindControl("lbl_ExpContactPerson");
+                    Label lbl_ExpAddress = (Label)gv_Experience.Rows[rowIndex].FindControl("lbl_ExpAddress");
+                    Label lbl_ExpNatureofBusiness = (Label)gv_Experience.Rows[rowIndex].FindControl("lbl_ExpNatureofBusiness");
+                    Label lbl_ExpJobType = (Label)gv_Experience.Rows[rowIndex].FindControl("lbl_ExpJobType");
+                    Label lbl_ExpFromDate = (Label)gv_Experience.Rows[rowIndex].FindControl("lbl_ExpFromDate");
+                    Label lbl_ExpToDate = (Label)gv_Experience.Rows[rowIndex].FindControl("lbl_ExpToDate");
+                    Label lbl_ExpLastJob = (Label)gv_Experience.Rows[rowIndex].FindControl("lbl_ExpLastJob");
+                    Label lbl_ExpDesignation = (Label)gv_Experience.Rows[rowIndex].FindControl("lbl_ExpDesignation");
+                    Label lbl_ExpJobDescription = (Label)gv_Experience.Rows[rowIndex].FindControl("lbl_ExpJobDescription");
+                    Label lbl_ExpTelNo = (Label)gv_Experience.Rows[rowIndex].FindControl("lbl_ExpTelNo");
+                    Label lbl_ExpRemarks = (Label)gv_Experience.Rows[rowIndex].FindControl("lbl_ExpRemarks");
+                    Label lbl_ExpLeavingSalary = (Label)gv_Experience.Rows[rowIndex].FindControl("lbl_ExpLeavingSalary");
+
+                    if (i < dt.Rows.Count - 1)
+                    {
+                        //EmpExperienceId.Value = dt.Rows[i]["EmpExperienceId"].ToString();
+                        lbl_ExpCompany.Text = dt.Rows[i]["ExpCompany"].ToString();
+                        lbl_ExpContactPerson.Text = dt.Rows[i]["ExpContactPerson"].ToString();
+                        lbl_ExpAddress.Text = dt.Rows[i]["ExpAddress"].ToString();
+                        lbl_ExpNatureofBusiness.Text = dt.Rows[i]["ExpNatureofBusiness"].ToString();
+                        lbl_ExpJobType.Text = dt.Rows[i]["ExpJobType"].ToString();
+                        lbl_ExpFromDate.Text = dt.Rows[i]["ExpFromDate"].ToString();
+                        lbl_ExpToDate.Text = dt.Rows[i]["ExpToDate"].ToString();
+                        lbl_ExpLastJob.Text = dt.Rows[i]["ExpLastJob"].ToString();
+                        lbl_ExpDesignation.Text = dt.Rows[i]["ExpDesignation"].ToString();
+                        lbl_ExpJobDescription.Text = dt.Rows[i]["ExpJobDescription"].ToString();
+                        lbl_ExpTelNo.Text = dt.Rows[i]["ExpTelNo"].ToString();
+                        lbl_ExpRemarks.Text = dt.Rows[i]["ExpRemarks"].ToString();
+                        lbl_ExpLeavingSalary.Text = dt.Rows[i]["ExpLeavingSalary"].ToString();
+                    }
+
+                    rowIndex++;
+                }
+            }
+        }
+    }
+
+    protected void btnAddExperience_OnClick(object sender, EventArgs e)
+    {
+         if (CheckLastLabel())
+        {
+
+        AddNewToGrid_Experience();
+        }
+         else
+         {
+             aShowMessage.ShowMessageBox("Last Job Already Added", this);
+         }
+    }
+
+    public bool CheckLastLabel()
+    {
+        for (int i = 0; i < gv_Experience.Rows.Count; i++)
+        {
+            if (Convert.ToString(((Label)gv_Experience.Rows[i].FindControl("lbl_ExpLastJob")).Text) == "True" && chk_ExpLastJob.Checked)
+            {
+                return false;
+            }
+
+            //if (Convert.ToBoolean(((Label)gv_Experience.Rows[i].FindControl("lbl_ExpLastJob")).Text) == b chk_ExpLastJob.Checked)
+            //{
+            //    return false;
+            //}
+        }
+        return true;
+    }
+    protected void lb_EditExperience_OnClick(object sender, EventArgs e)
+    {
+
+        LinkButton lb = (LinkButton)sender;
+
+        GridViewRow row = (GridViewRow)lb.NamingContainer;
+        if (row != null)
+        {
+            //gets the row index selected
+            int index = row.RowIndex;
+
+            //gets the datakey
+            // int itemID = gv_Children.DataKeys(index).Value;
+
+            //access row values and assign it to your TextBox
+            //  txt_EmpChildrenName.Text = row.Cells[1].Text;
+            //  ddlEmpChildrenGender.SelectedValue = row.Cells[2].Text;
+            ////  ddlEmpChildrenOccupation.SelectedItem.Text = row.Cells[3].Text;
+            //  txt_EmpChildrenDOB.Text = row.Cells[4].Text;
+
+
+            //If you are using TemplateField then you can access them using FindControl() method
+
+
+
+
+            txt_ExpCompany.Text = ((Label)row.FindControl("lbl_ExpCompany")).Text;
+            txt_ExpContactPerson.Text = ((Label)row.FindControl("lbl_ExpContactPerson")).Text;
+            txt_ExpAddress.Text = ((Label)row.FindControl("lbl_ExpAddress")).Text;
+
+            txt_ExpNatureofBusiness.Text = ((Label)row.FindControl("lbl_ExpNatureofBusiness")).Text;
+            txt_ExpJobType.Text = ((Label)row.FindControl("lbl_ExpJobType")).Text;
+            txt_ExpLeavingSalary.Text = ((Label)row.FindControl("lbl_ExpLeavingSalary")).Text;
+
+
+            txt_ExpFromDate.Text = ((Label)row.FindControl("lbl_ExpFromDate")).Text;
+            txt_ExpToDate.Text = ((Label)row.FindControl("lbl_ExpToDate")).Text;
+            txt_ExpDesignation.Text = ((Label)row.FindControl("lbl_ExpDesignation")).Text;
+
+
+            txt_ExpJobDescription.Text = ((Label)row.FindControl("lbl_ExpJobDescription")).Text;
+            txt_ExpTelNo.Text = ((Label)row.FindControl("lbl_ExpTelNo")).Text;
+            txt_ExpRemarks.Text = ((Label)row.FindControl("lbl_ExpRemarks")).Text;
+
+            if (((Label)row.FindControl("lbl_ExpLastJob")).Text == "True")
+            {
+                chk_ExpLastJob.Checked = true;
+            }
+
+            if (((Label)row.FindControl("lbl_ExpLastJob")).Text == "False")
+            {
+                chk_ExpLastJob.Checked = false;
+            }
+
+
+
+            GridViewRow gvRow = (GridViewRow)lb.NamingContainer;
+            int rowID = gvRow.RowIndex;
+            if (ViewState["ExperienceTable"] != null)
+            {
+                DataTable dt = (DataTable)ViewState["ExperienceTable"];
+                dt.Rows.Remove(dt.Rows[rowID]);
+                if (dt.Rows.Count > 0)
+                {
+                    //Store the current data in ViewState for future reference  
+                    ViewState["ExperienceTable"] = dt;
+                    //Re bind the GridView for the updated data  
+                    gv_Experience.DataSource = dt;
+                    gv_Experience.DataBind();
+                }
+                else
+                {
+                    ViewState["ExperienceTable"] = null;
+                    //Re bind the GridView for the updated data  
+                    gv_Experience.DataSource = null;
+                    gv_Experience.DataBind();
+                }
+            }
+            //Set Previous Data on Postbacks  
+            SetPreviousData_Experience();
+        }
+    }
+
+    protected void lb_RemoveExperience_OnClick(object sender, EventArgs e)
+    {
+        LinkButton lb = (LinkButton)sender;
+        GridViewRow gvRow = (GridViewRow)lb.NamingContainer;
+        int rowID = gvRow.RowIndex;
+        if (ViewState["ExperienceTable"] != null)
+        {
+            DataTable dt = (DataTable)ViewState["ExperienceTable"];
+            dt.Rows.Remove(dt.Rows[rowID]);
+            if (dt.Rows.Count > 0)
+            {
+                //Store the current data in ViewState for future reference  
+                ViewState["ExperienceTable"] = dt;
+                //Re bind the GridView for the updated data  
+                gv_Experience.DataSource = dt;
+                gv_Experience.DataBind();
+            }
+            else
+            {
+                ViewState["ExperienceTable"] = null;
+                //Re bind the GridView for the updated data  
+                gv_Experience.DataSource = null;
+                gv_Experience.DataBind();
+            }
+        }
+        //Set Previous Data on Postbacks  
+        SetPreviousData_Experience();
+    }
+
+    protected void btn_Save_OnClick(object sender, EventArgs e)
+    {
+        #region fff
+
+        try
+        {
+            string EmpMasterCode = string.Empty;
+            mid = string.IsNullOrEmpty(hdpk.Value) ? 0 : int.Parse(hdpk.Value);
+            tblEmpGeneralInfo emp = null;
+            using (var db = new HRIS_SMCEntities())
+            {
+                if (mid > 0)
+                {
+                    emp = (from j in db.tblEmpGeneralInfoes where j.EmpInfoId == mid select j).FirstOrDefault();
+                    EmpMasterCode = emp.EmpMasterCode;
+
+
+                    if (gv_Experience.Rows.Count == 0)
+                    {
+                        //making previous inactive
+                        db.Database.ExecuteSqlCommand("UPDATE dbo.tblEmpExperience SET IsActive=0 WHERE EmpInfoId={0}",
+                            emp.EmpInfoId);
+                    }
+                    #region 6. Experience
+
+                    if (gv_Experience.Rows.Count > 0)
+                    {
+                        //making previous inactive
+                        db.Database.ExecuteSqlCommand("UPDATE dbo.tblEmpExperience SET IsActive=0 WHERE EmpInfoId={0}",
+                            emp.EmpInfoId);
+                        for (int i = 0; i < gv_Experience.Rows.Count; i++)
+                        {
+
+
+                            tblEmpExperience empExperience = new tblEmpExperience();
+
+                            HiddenField EmpExperienceId =
+                                (HiddenField) gv_Experience.Rows[i].FindControl("EmpExperienceId");
+                            Label lbl_ExpCompany = (Label) gv_Experience.Rows[i].FindControl("lbl_ExpCompany");
+                            Label lbl_ExpContactPerson =
+                                (Label) gv_Experience.Rows[i].FindControl("lbl_ExpContactPerson");
+                            Label lbl_ExpAddress = (Label) gv_Experience.Rows[i].FindControl("lbl_ExpAddress");
+                            Label lbl_ExpNatureofBusiness =
+                                (Label) gv_Experience.Rows[i].FindControl("lbl_ExpNatureofBusiness");
+                            Label lbl_ExpJobType = (Label) gv_Experience.Rows[i].FindControl("lbl_ExpJobType");
+                            Label lbl_ExpLeavingSalary =
+                                (Label) gv_Experience.Rows[i].FindControl("lbl_ExpLeavingSalary");
+
+                            Label lbl_ExpFromDate = (Label) gv_Experience.Rows[i].FindControl("lbl_ExpFromDate");
+                            Label lbl_ExpToDate = (Label) gv_Experience.Rows[i].FindControl("lbl_ExpToDate");
+                            Label lbl_ExpLastJob = (Label) gv_Experience.Rows[i].FindControl("lbl_ExpLastJob");
+                            Label lbl_ExpDesignation = (Label) gv_Experience.Rows[i].FindControl("lbl_ExpDesignation");
+                            Label lbl_ExpJobDescription =
+                                (Label) gv_Experience.Rows[i].FindControl("lbl_ExpJobDescription");
+                            Label lbl_ExpTelNo = (Label) gv_Experience.Rows[i].FindControl("lbl_ExpTelNo");
+                            Label lbl_ExpRemarks = (Label) gv_Experience.Rows[i].FindControl("lbl_ExpRemarks");
+
+                            
+                                
+
+                                empExperience.EmpInfoId = emp.EmpInfoId;
+                                empExperience.ExpCompany = string.IsNullOrEmpty(lbl_ExpCompany.Text)
+                                    ? null
+                                    : lbl_ExpCompany.Text;
+                                empExperience.ExpContactPerson = string.IsNullOrEmpty(lbl_ExpContactPerson.Text)
+                                    ? null
+                                    : lbl_ExpContactPerson.Text;
+                                empExperience.ExpAddress = string.IsNullOrEmpty(lbl_ExpAddress.Text)
+                                    ? null
+                                    : lbl_ExpAddress.Text;
+                                empExperience.ExpNatureofBusiness = string.IsNullOrEmpty(lbl_ExpNatureofBusiness.Text)
+                                    ? null
+                                    : lbl_ExpNatureofBusiness.Text;
+                                empExperience.ExpJobType = string.IsNullOrEmpty(lbl_ExpJobType.Text)
+                                    ? null
+                                    : lbl_ExpJobType.Text;
+                                empExperience.ExpLeavingSalary = string.IsNullOrEmpty(lbl_ExpLeavingSalary.Text)
+                                    ? (decimal?) null
+                                    : decimal.Parse(lbl_ExpLeavingSalary.Text);
+                                empExperience.ExpFromDate = string.IsNullOrEmpty(lbl_ExpFromDate.Text)
+                                    ? (DateTime?) null
+                                    : DateTime.Parse(lbl_ExpFromDate.Text).Date;
+                                empExperience.ExpToDate = string.IsNullOrEmpty(lbl_ExpToDate.Text)
+                                    ? (DateTime?) null
+                                    : DateTime.Parse(lbl_ExpToDate.Text).Date;
+                                empExperience.ExpLastJob = string.IsNullOrEmpty(lbl_ExpLastJob.Text)
+                                    ? (bool?) null
+                                    : bool.Parse(lbl_ExpLastJob.Text);
+                                empExperience.ExpDesignation = string.IsNullOrEmpty(lbl_ExpDesignation.Text)
+                                    ? null
+                                    : lbl_ExpDesignation.Text;
+                                empExperience.ExpJobDescription = string.IsNullOrEmpty(lbl_ExpJobDescription.Text)
+                                    ? null
+                                    : lbl_ExpJobDescription.Text;
+                                empExperience.ExpTelNo = string.IsNullOrEmpty(lbl_ExpTelNo.Text)
+                                    ? null
+                                    : lbl_ExpTelNo.Text;
+                                empExperience.ExpRemarks = string.IsNullOrEmpty(lbl_ExpRemarks.Text)
+                                    ? null
+                                    : lbl_ExpRemarks.Text;
+                                empExperience.IsActive = true;
+
+                                _EmpExperienceDAL.SaveJobReqKeyRespon(empExperience);
+                               
+                        }
+                    }  
+
+                    #endregion end 6. Experience
+                }
+                
+                 ScriptManager.RegisterStartupScript(this, this.GetType(),
+                    "alert",
+                    "alert('Operation Successful...! Employee Master Code: " + EmpMasterCode + "');window.location ='EmployeeInfoList.aspx';",
+                    true);
+            }
+        
+        }
+        catch (Exception ex)
+        {
+            AlertMessageBoxShow(ex.Message);
+        }
+        #endregion
+    }
+    private void AlertMessageBoxShow(string message)
+    {
+        string sScript;
+        message = message.Replace("'", "\'");
+        sScript = String.Format("alert('{0}');", message);
+        ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", sScript, true);
+        //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert", message, true);
+
+    }
+
+    protected void btn_Next_OnClick(object sender, EventArgs e)
+    {
+        #region fff
+
+        try
+        {
+            string MasterId = string.Empty;
+            string EmpMasterCode = string.Empty;
+            mid = string.IsNullOrEmpty(hdpk.Value) ? 0 : int.Parse(hdpk.Value);
+            tblEmpGeneralInfo emp = null;
+            using (var db = new HRIS_SMCEntities())
+            {
+                if (mid > 0)
+                {
+                    emp = (from j in db.tblEmpGeneralInfoes where j.EmpInfoId == mid select j).FirstOrDefault();
+                    EmpMasterCode = emp.EmpMasterCode;
+
+                    MasterId = emp.EmpInfoId.ToString();
+
+                    #region 6. Experience
+                    if (gv_Experience.Rows.Count == 0)
+                    {
+                        //making previous inactive
+                        db.Database.ExecuteSqlCommand("UPDATE dbo.tblEmpExperience SET IsActive=0 WHERE EmpInfoId={0}",
+                            emp.EmpInfoId);
+                    }
+                    if (gv_Experience.Rows.Count > 0)
+                    {
+                        //making previous inactive
+                        db.Database.ExecuteSqlCommand("UPDATE dbo.tblEmpExperience SET IsActive=0 WHERE EmpInfoId={0}",
+                            emp.EmpInfoId);
+                        for (int i = 0; i < gv_Experience.Rows.Count; i++)
+                        {
+                            HiddenField EmpExperienceId =
+                                (HiddenField)gv_Experience.Rows[i].FindControl("EmpExperienceId");
+                            Label lbl_ExpCompany = (Label)gv_Experience.Rows[i].FindControl("lbl_ExpCompany");
+                            Label lbl_ExpContactPerson =
+                                (Label)gv_Experience.Rows[i].FindControl("lbl_ExpContactPerson");
+                            Label lbl_ExpAddress = (Label)gv_Experience.Rows[i].FindControl("lbl_ExpAddress");
+                            Label lbl_ExpNatureofBusiness =
+                                (Label)gv_Experience.Rows[i].FindControl("lbl_ExpNatureofBusiness");
+                            Label lbl_ExpJobType = (Label)gv_Experience.Rows[i].FindControl("lbl_ExpJobType");
+                            Label lbl_ExpLeavingSalary =
+                                (Label)gv_Experience.Rows[i].FindControl("lbl_ExpLeavingSalary");
+
+                            Label lbl_ExpFromDate = (Label)gv_Experience.Rows[i].FindControl("lbl_ExpFromDate");
+                            Label lbl_ExpToDate = (Label)gv_Experience.Rows[i].FindControl("lbl_ExpToDate");
+                            Label lbl_ExpLastJob = (Label)gv_Experience.Rows[i].FindControl("lbl_ExpLastJob");
+                            Label lbl_ExpDesignation = (Label)gv_Experience.Rows[i].FindControl("lbl_ExpDesignation");
+                            Label lbl_ExpJobDescription =
+                                (Label)gv_Experience.Rows[i].FindControl("lbl_ExpJobDescription");
+                            Label lbl_ExpTelNo = (Label)gv_Experience.Rows[i].FindControl("lbl_ExpTelNo");
+                            Label lbl_ExpRemarks = (Label)gv_Experience.Rows[i].FindControl("lbl_ExpRemarks");
+
+                            if (string.IsNullOrEmpty(EmpExperienceId.Value))
+                            {
+                                tblEmpExperience empExperience = new tblEmpExperience();
+                                empExperience.EmpInfoId = emp.EmpInfoId;
+                                empExperience.ExpCompany = string.IsNullOrEmpty(lbl_ExpCompany.Text)
+                                    ? null
+                                    : lbl_ExpCompany.Text;
+                                empExperience.ExpContactPerson = string.IsNullOrEmpty(lbl_ExpContactPerson.Text)
+                                    ? null
+                                    : lbl_ExpContactPerson.Text;
+                                empExperience.ExpAddress = string.IsNullOrEmpty(lbl_ExpAddress.Text)
+                                    ? null
+                                    : lbl_ExpAddress.Text;
+                                empExperience.ExpNatureofBusiness = string.IsNullOrEmpty(lbl_ExpNatureofBusiness.Text)
+                                    ? null
+                                    : lbl_ExpNatureofBusiness.Text;
+                                empExperience.ExpJobType = string.IsNullOrEmpty(lbl_ExpJobType.Text)
+                                    ? null
+                                    : lbl_ExpJobType.Text;
+                                empExperience.ExpLeavingSalary = string.IsNullOrEmpty(lbl_ExpLeavingSalary.Text)
+                                    ? (decimal?)null
+                                    : decimal.Parse(lbl_ExpLeavingSalary.Text);
+                                empExperience.ExpFromDate = string.IsNullOrEmpty(lbl_ExpFromDate.Text)
+                                    ? (DateTime?)null
+                                    : DateTime.Parse(lbl_ExpFromDate.Text).Date;
+                                empExperience.ExpToDate = string.IsNullOrEmpty(lbl_ExpToDate.Text)
+                                    ? (DateTime?)null
+                                    : DateTime.Parse(lbl_ExpToDate.Text).Date;
+                                empExperience.ExpLastJob = string.IsNullOrEmpty(lbl_ExpLastJob.Text)
+                                    ? (bool?)null
+                                    : bool.Parse(lbl_ExpLastJob.Text);
+                                empExperience.ExpDesignation = string.IsNullOrEmpty(lbl_ExpDesignation.Text)
+                                    ? null
+                                    : lbl_ExpDesignation.Text;
+                                empExperience.ExpJobDescription = string.IsNullOrEmpty(lbl_ExpJobDescription.Text)
+                                    ? null
+                                    : lbl_ExpJobDescription.Text;
+                                empExperience.ExpTelNo = string.IsNullOrEmpty(lbl_ExpTelNo.Text)
+                                    ? null
+                                    : lbl_ExpTelNo.Text;
+                                empExperience.ExpRemarks = string.IsNullOrEmpty(lbl_ExpRemarks.Text)
+                                    ? null
+                                    : lbl_ExpRemarks.Text;
+                                empExperience.IsActive = true;
+                                db.tblEmpExperiences.Add(empExperience);
+                            }
+                            else
+                            {
+
+                                 
+                                int u_EmpExperienceId = int.Parse(EmpExperienceId.Value);
+                                tblEmpExperience empExperience =
+                                    (from j in db.tblEmpExperiences
+                                     where j.EmpExperienceId == u_EmpExperienceId
+                                     select j).FirstOrDefault();
+                                empExperience.EmpInfoId = emp.EmpInfoId;
+                                empExperience.ExpCompany = string.IsNullOrEmpty(lbl_ExpCompany.Text)
+                                    ? null
+                                    : lbl_ExpCompany.Text;
+                                empExperience.ExpContactPerson = string.IsNullOrEmpty(lbl_ExpContactPerson.Text)
+                                    ? null
+                                    : lbl_ExpContactPerson.Text;
+                                empExperience.ExpAddress = string.IsNullOrEmpty(lbl_ExpAddress.Text)
+                                    ? null
+                                    : lbl_ExpAddress.Text;
+                                empExperience.ExpNatureofBusiness = string.IsNullOrEmpty(lbl_ExpNatureofBusiness.Text)
+                                    ? null
+                                    : lbl_ExpNatureofBusiness.Text;
+                                empExperience.ExpJobType = string.IsNullOrEmpty(lbl_ExpJobType.Text)
+                                    ? null
+                                    : lbl_ExpJobType.Text;
+                                empExperience.ExpLeavingSalary = string.IsNullOrEmpty(lbl_ExpLeavingSalary.Text)
+                                    ? (decimal?)null
+                                    : decimal.Parse(lbl_ExpLeavingSalary.Text);
+                                empExperience.ExpFromDate = string.IsNullOrEmpty(lbl_ExpFromDate.Text)
+                                    ? (DateTime?)null
+                                    : DateTime.Parse(lbl_ExpFromDate.Text).Date;
+                                empExperience.ExpToDate = string.IsNullOrEmpty(lbl_ExpToDate.Text)
+                                    ? (DateTime?)null
+                                    : DateTime.Parse(lbl_ExpToDate.Text).Date;
+                                empExperience.ExpLastJob = string.IsNullOrEmpty(lbl_ExpLastJob.Text)
+                                    ? (bool?)null
+                                    : bool.Parse(lbl_ExpLastJob.Text);
+                                empExperience.ExpDesignation = string.IsNullOrEmpty(lbl_ExpDesignation.Text)
+                                    ? null
+                                    : lbl_ExpDesignation.Text;
+                                empExperience.ExpJobDescription = string.IsNullOrEmpty(lbl_ExpJobDescription.Text)
+                                    ? null
+                                    : lbl_ExpJobDescription.Text;
+                                empExperience.ExpTelNo = string.IsNullOrEmpty(lbl_ExpTelNo.Text)
+                                    ? null
+                                    : lbl_ExpTelNo.Text;
+                                empExperience.ExpRemarks = string.IsNullOrEmpty(lbl_ExpRemarks.Text)
+                                    ? null
+                                    : lbl_ExpRemarks.Text;
+                                empExperience.IsActive = true;
+                            }
+                            db.SaveChanges();
+                        }
+                    } ////End Experience
+
+                    #endregion end 6. Experience
+                }
+                else
+                {
+                    ////Start New Mode
+                    //emp = new tblEmpGeneralInfo();
+                    //if (gv_Experience.Rows.Count == 0)
+                    //{
+                    //    //making previous inactive
+                    //    db.Database.ExecuteSqlCommand("UPDATE dbo.tblEmpExperience SET IsActive=0 WHERE EmpInfoId={0}",
+                    //        emp.EmpInfoId);
+                    //}
+                    //#region 6. Experience
+                    //if (gv_Experience.Rows.Count > 0)
+                    //{
+                    //    //making previous inactive
+                    //    db.Database.ExecuteSqlCommand("UPDATE dbo.tblEmpExperience SET IsActive=0 WHERE EmpInfoId={0}",
+                    //        emp.EmpInfoId);
+                    //    for (int i = 0; i < gv_Experience.Rows.Count; i++)
+                    //    {
+
+
+                    //        tblEmpExperience empExperience = new tblEmpExperience();
+
+                    //        HiddenField EmpExperienceId =
+                    //            (HiddenField)gv_Experience.Rows[i].FindControl("EmpExperienceId");
+                    //        Label lbl_ExpCompany = (Label)gv_Experience.Rows[i].FindControl("lbl_ExpCompany");
+                    //        Label lbl_ExpContactPerson =
+                    //            (Label)gv_Experience.Rows[i].FindControl("lbl_ExpContactPerson");
+                    //        Label lbl_ExpAddress = (Label)gv_Experience.Rows[i].FindControl("lbl_ExpAddress");
+                    //        Label lbl_ExpNatureofBusiness =
+                    //            (Label)gv_Experience.Rows[i].FindControl("lbl_ExpNatureofBusiness");
+                    //        Label lbl_ExpJobType = (Label)gv_Experience.Rows[i].FindControl("lbl_ExpJobType");
+                    //        Label lbl_ExpLeavingSalary =
+                    //            (Label)gv_Experience.Rows[i].FindControl("lbl_ExpLeavingSalary");
+
+                    //        Label lbl_ExpFromDate = (Label)gv_Experience.Rows[i].FindControl("lbl_ExpFromDate");
+                    //        Label lbl_ExpToDate = (Label)gv_Experience.Rows[i].FindControl("lbl_ExpToDate");
+                    //        Label lbl_ExpLastJob = (Label)gv_Experience.Rows[i].FindControl("lbl_ExpLastJob");
+                    //        Label lbl_ExpDesignation = (Label)gv_Experience.Rows[i].FindControl("lbl_ExpDesignation");
+                    //        Label lbl_ExpJobDescription =
+                    //            (Label)gv_Experience.Rows[i].FindControl("lbl_ExpJobDescription");
+                    //        Label lbl_ExpTelNo = (Label)gv_Experience.Rows[i].FindControl("lbl_ExpTelNo");
+                    //        Label lbl_ExpRemarks = (Label)gv_Experience.Rows[i].FindControl("lbl_ExpRemarks");
+
+
+
+
+                    //        empExperience.EmpInfoId = emp.EmpInfoId;
+                    //        empExperience.ExpCompany = string.IsNullOrEmpty(lbl_ExpCompany.Text)
+                    //            ? null
+                    //            : lbl_ExpCompany.Text;
+                    //        empExperience.ExpContactPerson = string.IsNullOrEmpty(lbl_ExpContactPerson.Text)
+                    //            ? null
+                    //            : lbl_ExpContactPerson.Text;
+                    //        empExperience.ExpAddress = string.IsNullOrEmpty(lbl_ExpAddress.Text)
+                    //            ? null
+                    //            : lbl_ExpAddress.Text;
+                    //        empExperience.ExpNatureofBusiness = string.IsNullOrEmpty(lbl_ExpNatureofBusiness.Text)
+                    //            ? null
+                    //            : lbl_ExpNatureofBusiness.Text;
+                    //        empExperience.ExpJobType = string.IsNullOrEmpty(lbl_ExpJobType.Text)
+                    //            ? null
+                    //            : lbl_ExpJobType.Text;
+                    //        empExperience.ExpLeavingSalary = string.IsNullOrEmpty(lbl_ExpLeavingSalary.Text)
+                    //            ? (decimal?)null
+                    //            : decimal.Parse(lbl_ExpLeavingSalary.Text);
+                    //        empExperience.ExpFromDate = string.IsNullOrEmpty(lbl_ExpFromDate.Text)
+                    //            ? (DateTime?)null
+                    //            : DateTime.Parse(lbl_ExpFromDate.Text).Date;
+                    //        empExperience.ExpToDate = string.IsNullOrEmpty(lbl_ExpToDate.Text)
+                    //            ? (DateTime?)null
+                    //            : DateTime.Parse(lbl_ExpToDate.Text).Date;
+                    //        empExperience.ExpLastJob = string.IsNullOrEmpty(lbl_ExpLastJob.Text)
+                    //            ? (bool?)null
+                    //            : bool.Parse(lbl_ExpLastJob.Text);
+                    //        empExperience.ExpDesignation = string.IsNullOrEmpty(lbl_ExpDesignation.Text)
+                    //            ? null
+                    //            : lbl_ExpDesignation.Text;
+                    //        empExperience.ExpJobDescription = string.IsNullOrEmpty(lbl_ExpJobDescription.Text)
+                    //            ? null
+                    //            : lbl_ExpJobDescription.Text;
+                    //        empExperience.ExpTelNo = string.IsNullOrEmpty(lbl_ExpTelNo.Text)
+                    //            ? null
+                    //            : lbl_ExpTelNo.Text;
+                    //        empExperience.ExpRemarks = string.IsNullOrEmpty(lbl_ExpRemarks.Text)
+                    //            ? null
+                    //            : lbl_ExpRemarks.Text;
+                    //        empExperience.IsActive = true;
+
+                    //        _EmpExperienceDAL.SaveJobReqKeyRespon(empExperience);
+
+                    //    }
+                    //}////End Experience
+                    //MasterId = emp.EmpInfoId.ToString();
+                    //EmployeeInfoListReportDAL _empdal = new EmployeeInfoListReportDAL();
+                    //////Below stored procedure will generate Emp Master Code based on condition, update on database and return the value
+                    //using (DataTable dtEmpCode = _empdal.GetEmpMasterCode(emp.EmpInfoId))
+                    //{
+                    //    if (dtEmpCode.Rows.Count > 0)
+                    //    {
+                    //        EmpMasterCode = dtEmpCode.Rows[0]["EmpMasterCode"].ToString();
+                    //    }
+
+                    //}
+                    //#endregion end 6. Experience
+
+                }
+                ScriptManager.RegisterStartupScript(this, this.GetType(),
+                 "alert",
+                 "alert('Operation Successful...! Employee Master Code: " + EmpMasterCode + "');window.location ='EmpTraining.aspx?mid=" + MasterId + "';",
+                 true);
+            }
+           
+        }
+        catch (Exception ex)
+        {
+            AlertMessageBoxShow(ex.Message);
+        }
+        #endregion
+    }
+
+    protected void cancelButton_OnClick(object sender, EventArgs e)
+    {
+       Response.Redirect("EmployeeInfoList.aspx");
+    }
+
+    protected void detailsViewButton_OnClick(object sender, EventArgs e)
+    {
+        Response.Redirect("EmployeeInfoListUpdate.aspx");
+    }
+
+    protected void lblNext_OnClick(object sender, EventArgs e)
+    {
+        string EmpId = Request.QueryString["mid"];
+        if (Convert.ToInt32(EmpId) > 0)
+        {
+            Response.Redirect("EmpTraining?mid=" + EmpId);
+        }
+        else
+        {
+            Response.Redirect("EmployeeInfoListUpdate.aspx");
+        }
+    }
+
+    protected void lbPrevious_OnClick(object sender, EventArgs e)
+    {
+        string EmpId = Request.QueryString["mid"];
+        if (Convert.ToInt32(EmpId) > 0)
+        {
+            Response.Redirect("EmpEducation?mid=" + EmpId);
+        }
+        else
+        {
+            Response.Redirect("EmployeeInfoListUpdate.aspx");
+        }
+    }
+}

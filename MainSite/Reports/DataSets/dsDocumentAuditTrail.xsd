@@ -1,0 +1,151 @@
+<?xml version="1.0" standalone="yes"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dtDocumentAuditTrail">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DeleteBy" type="xs:string" minOccurs="0" />
+              <xs:element name="ShortName" type="xs:string" minOccurs="0" />
+              <xs:element name="AuditLog_MiscellaneousInfoId" type="xs:int" minOccurs="0" />
+              <xs:element name="MiscellaneousInfoId" type="xs:int" minOccurs="0" />
+              <xs:element name="CompanyId" type="xs:int" minOccurs="0" />
+              <xs:element name="Title" type="xs:string" minOccurs="0" />
+              <xs:element name="Purpose" type="xs:string" minOccurs="0" />
+              <xs:element name="CreateBy" type="xs:int" minOccurs="0" />
+              <xs:element name="CreateDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="UpdateBy" type="xs:int" minOccurs="0" />
+              <xs:element name="UpdateDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="KeySearch" type="xs:string" minOccurs="0" />
+              <xs:element name="Isapproved" type="xs:boolean" minOccurs="0" />
+              <xs:element name="ActionStatus" type="xs:string" minOccurs="0" />
+              <xs:element name="RefEmpId" type="xs:int" minOccurs="0" />
+              <xs:element name="RefSeqNo" type="xs:int" minOccurs="0" />
+              <xs:element name="RefMinAppCount" type="xs:int" minOccurs="0" />
+              <xs:element name="RefMinAppCountCheck" type="xs:int" minOccurs="0" />
+              <xs:element name="StatusMode" type="xs:string" minOccurs="0" />
+              <xs:element name="DeleteBy1" type="xs:int" minOccurs="0" />
+              <xs:element name="DeleteDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="AuditLog_MiscellaneousInfoDetailId" type="xs:int" minOccurs="0" />
+              <xs:element name="AuditLog_MiscellaneousInfoId1" type="xs:int" minOccurs="0" />
+              <xs:element name="MiscellaneousInfoDetailId" type="xs:int" minOccurs="0" />
+              <xs:element name="MiscellaneousInfoId1" type="xs:int" minOccurs="0" />
+              <xs:element name="Type" type="xs:string" minOccurs="0" />
+              <xs:element name="EmpInfoId" type="xs:int" minOccurs="0" />
+              <xs:element name="EmpMasterCode" type="xs:string" minOccurs="0" />
+              <xs:element name="EmpName" type="xs:string" minOccurs="0" />
+              <xs:element name="Designation" type="xs:string" minOccurs="0" />
+              <xs:element name="StatusMode3" type="xs:string" minOccurs="0" />
+              <xs:element name="UserTypeId" type="xs:int" minOccurs="0" />
+              <xs:element name="UserName" type="xs:string" minOccurs="0" />
+              <xs:element name="Designation1" type="xs:string" minOccurs="0" />
+              <xs:element name="ContactNo" type="xs:string" minOccurs="0" />
+              <xs:element name="Email" type="xs:string" minOccurs="0" />
+              <xs:element name="Password" type="xs:string" minOccurs="0" />
+              <xs:element name="Remarks" type="xs:string" minOccurs="0" />
+              <xs:element name="UserCategoryId" type="xs:int" minOccurs="0" />
+              <xs:element name="IsActive" type="xs:boolean" minOccurs="0" />
+              <xs:element name="ActiveDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="InActiveDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="EmpInfoId1" type="xs:int" minOccurs="0" />
+              <xs:element name="UserDataPermissionId" type="xs:int" minOccurs="0" />
+              <xs:element name="EntryBy" type="xs:string" minOccurs="0" />
+              <xs:element name="EntryDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="UpdateBy1" type="xs:string" minOccurs="0" />
+              <xs:element name="UpdateDate1" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="JobLocationID" type="xs:int" minOccurs="0" />
+              <xs:element name="IsmainDasboard" type="xs:boolean" minOccurs="0" />
+              <xs:element name="UserId" type="xs:int" minOccurs="0" />
+              <xs:element name="CompanyId1" type="xs:int" minOccurs="0" />
+              <xs:element name="CompanyName" type="xs:string" minOccurs="0" />
+              <xs:element name="ShortName1" type="xs:string" minOccurs="0" />
+              <xs:element name="Address" type="xs:string" minOccurs="0" />
+              <xs:element name="ContactNo1" type="xs:string" minOccurs="0" />
+              <xs:element name="FaxNumber" type="xs:string" minOccurs="0" />
+              <xs:element name="Pabx" type="xs:string" minOccurs="0" />
+              <xs:element name="EmailAdress" type="xs:string" minOccurs="0" />
+              <xs:element name="Hotline" type="xs:string" minOccurs="0" />
+              <xs:element name="Description" type="xs:string" minOccurs="0" />
+              <xs:element name="Remarks1" type="xs:string" minOccurs="0" />
+              <xs:element name="EntryBy1" type="xs:string" minOccurs="0" />
+              <xs:element name="EntryDate1" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="UpdateBy2" type="xs:string" minOccurs="0" />
+              <xs:element name="UpdateDate2" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dtDocumentFile">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DeleteBy" type="xs:string" minOccurs="0" />
+              <xs:element name="ShortName" type="xs:string" minOccurs="0" />
+              <xs:element name="AuditLog_MiscellaneousInfoId" type="xs:int" minOccurs="0" />
+              <xs:element name="MiscellaneousInfoId" type="xs:int" minOccurs="0" />
+              <xs:element name="CompanyId" type="xs:int" minOccurs="0" />
+              <xs:element name="Title" type="xs:string" minOccurs="0" />
+              <xs:element name="Purpose" type="xs:string" minOccurs="0" />
+              <xs:element name="CreateBy" type="xs:int" minOccurs="0" />
+              <xs:element name="CreateDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="UpdateBy" type="xs:int" minOccurs="0" />
+              <xs:element name="UpdateDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="KeySearch" type="xs:string" minOccurs="0" />
+              <xs:element name="Isapproved" type="xs:boolean" minOccurs="0" />
+              <xs:element name="ActionStatus" type="xs:string" minOccurs="0" />
+              <xs:element name="RefEmpId" type="xs:int" minOccurs="0" />
+              <xs:element name="RefSeqNo" type="xs:int" minOccurs="0" />
+              <xs:element name="RefMinAppCount" type="xs:int" minOccurs="0" />
+              <xs:element name="RefMinAppCountCheck" type="xs:int" minOccurs="0" />
+              <xs:element name="StatusMode" type="xs:string" minOccurs="0" />
+              <xs:element name="DeleteBy1" type="xs:int" minOccurs="0" />
+              <xs:element name="DeleteDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="AuditLog_MiscellaneousInfoDocumentID" type="xs:int" minOccurs="0" />
+              <xs:element name="AuditLog_MiscellaneousInfoId1" type="xs:int" minOccurs="0" />
+              <xs:element name="MiscellaneousInfoDocumentID" type="xs:int" minOccurs="0" />
+              <xs:element name="MiscellaneousInfoId1" type="xs:int" minOccurs="0" />
+              <xs:element name="DocumentLink" type="xs:string" minOccurs="0" />
+              <xs:element name="DocumentNote" type="xs:string" minOccurs="0" />
+              <xs:element name="FileName" type="xs:string" minOccurs="0" />
+              <xs:element name="StatusMode2" type="xs:string" minOccurs="0" />
+              <xs:element name="UserTypeId" type="xs:int" minOccurs="0" />
+              <xs:element name="UserName" type="xs:string" minOccurs="0" />
+              <xs:element name="Designation" type="xs:string" minOccurs="0" />
+              <xs:element name="ContactNo" type="xs:string" minOccurs="0" />
+              <xs:element name="Email" type="xs:string" minOccurs="0" />
+              <xs:element name="Password" type="xs:string" minOccurs="0" />
+              <xs:element name="Remarks" type="xs:string" minOccurs="0" />
+              <xs:element name="UserCategoryId" type="xs:int" minOccurs="0" />
+              <xs:element name="IsActive" type="xs:boolean" minOccurs="0" />
+              <xs:element name="ActiveDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="InActiveDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="EmpInfoId" type="xs:int" minOccurs="0" />
+              <xs:element name="UserDataPermissionId" type="xs:int" minOccurs="0" />
+              <xs:element name="EntryBy" type="xs:string" minOccurs="0" />
+              <xs:element name="EntryDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="UpdateBy1" type="xs:string" minOccurs="0" />
+              <xs:element name="UpdateDate1" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="JobLocationID" type="xs:int" minOccurs="0" />
+              <xs:element name="IsmainDasboard" type="xs:boolean" minOccurs="0" />
+              <xs:element name="UserId" type="xs:int" minOccurs="0" />
+              <xs:element name="CompanyId1" type="xs:int" minOccurs="0" />
+              <xs:element name="CompanyName" type="xs:string" minOccurs="0" />
+              <xs:element name="ShortName1" type="xs:string" minOccurs="0" />
+              <xs:element name="Address" type="xs:string" minOccurs="0" />
+              <xs:element name="ContactNo1" type="xs:string" minOccurs="0" />
+              <xs:element name="FaxNumber" type="xs:string" minOccurs="0" />
+              <xs:element name="Pabx" type="xs:string" minOccurs="0" />
+              <xs:element name="EmailAdress" type="xs:string" minOccurs="0" />
+              <xs:element name="Hotline" type="xs:string" minOccurs="0" />
+              <xs:element name="Description" type="xs:string" minOccurs="0" />
+              <xs:element name="Remarks1" type="xs:string" minOccurs="0" />
+              <xs:element name="EntryBy1" type="xs:string" minOccurs="0" />
+              <xs:element name="EntryDate1" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="UpdateBy2" type="xs:string" minOccurs="0" />
+              <xs:element name="UpdateDate2" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

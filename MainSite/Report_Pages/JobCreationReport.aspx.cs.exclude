@@ -1,0 +1,502 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using BLL.SINV_BLL;
+
+public partial class CSTL_SINV_UI_JobCreationReport : System.Web.UI.Page
+{
+    ItemInformationReportBLL aInformationReportBll = new ItemInformationReportBLL();
+    ItemDescriptionBLL aItemDescriptionBLL = new ItemDescriptionBLL();
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            LoadDropdownList();
+        }
+    }
+
+    public void LoadDropdownList()
+    {
+        aItemDescriptionBLL.CreateConnection_UA_DB();
+        aItemDescriptionBLL.LoadItemGroup(itemGroupDropDownList);
+        aItemDescriptionBLL.LoadItemBrand(itembrandDropDownList);
+        aItemDescriptionBLL.LoadItemColor(itemcolorDropDownList);
+        aItemDescriptionBLL.LoadItemManufacture(itemManufactureDropDownList);
+        //aItemDescriptionBLL.LoadItemCountry(countryDropDownList);
+        aItemDescriptionBLL.LoadItemSizeMaster(itemSizeMasterDropDownList);
+        aItemDescriptionBLL.LoadUomMaster(stockUnitDropDownList);
+        //aItemDescriptionBLL.LoadItemBrand(itembrandDropDownList);
+        //aItemDescriptionBLL.LoadItemColor(itemcolorDropDownList);
+        //aItemDescriptionBLL.LoadItemManufacture(itemManufactureDropDownList);
+        //aItemDescriptionBLL.LoadItemCountry(countryDropDownList);
+        //aItemDescriptionBLL.LoadItemSizeMaster(itemSizeMasterDropDownList);
+        //aItemDescriptionBLL.LoadUomMaster(stockUnitDropDownList);
+        //  aItemDescriptionBLL.LoadFA(FADropDownList);
+        aItemDescriptionBLL.CloseAllConnection();
+    }
+    protected void stockUnitDropDownList_OnSelectedIndexChanged(object sender, EventArgs e)
+    {
+        aItemDescriptionBLL.CreateConnection_UA_DB();
+        aItemDescriptionBLL.LoadUomDetail(defaultUnitDropDownList, stockUnitDropDownList.SelectedValue);
+        aItemDescriptionBLL.CloseAllConnection();
+    }
+    protected void itemSizeMasterDropDownList_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        aItemDescriptionBLL.CreateConnection_UA_DB();
+        aItemDescriptionBLL.LoadItemSize(itemSizeDropDownList, itemSizeMasterDropDownList.SelectedValue);
+        aItemDescriptionBLL.CloseAllConnection();
+    }
+    public void CreateGridColumn(DataTable aDataTable)
+    {
+        if (aDataTable.Columns.Count>0)
+        {
+            itemsGridView.Columns.Clear();
+        }
+        for (int i = 0; i < aDataTable.Columns.Count; i++)
+        {
+            BoundField col = new BoundField();
+            col.DataField = aDataTable.Columns[i].ColumnName;
+            col.HeaderText = aDataTable.Columns[i].ColumnName;
+            itemsGridView.Columns.Add(col);
+        }
+        itemsGridView.DataSource = aDataTable;
+        itemsGridView.DataBind();
+    }
+
+    public void CreateGroupGrid(DataTable aDataTable)
+    {
+        BoundField col = null;
+        col = new BoundField();
+        col.DataField = "ItemGroupCode";
+        col.HeaderText = "Code";
+        itemsGridView.Columns.Add(col);
+        col= new BoundField();
+        col.DataField = "ItemGroupName";
+        col.HeaderText = "Item Group Name";
+        itemsGridView.Columns.Add(col);
+        col = new BoundField();
+        col.DataField = "ShortName";
+        col.HeaderText = "Short Name";
+        itemsGridView.Columns.Add(col);
+        col = new BoundField();
+        col.DataField = "EntryBy";
+        col.HeaderText = "Create By";
+        itemsGridView.Columns.Add(col);
+        col = new BoundField();
+        col.DataField = "EntryDate";
+        col.HeaderText = "Create Date";
+        col.DataFormatString = "{0:f}";
+        itemsGridView.Columns.Add(col);
+        itemsGridView.DataSource = aDataTable;
+        itemsGridView.DataBind();
+
+
+    }
+    public void CreateTypeGrid(DataTable aDataTable)
+    {
+        BoundField col = null;
+        col = new BoundField();
+        col.DataField = "ItemTypeCode";
+        col.HeaderText = "Code";
+        itemsGridView.Columns.Add(col);
+        col = new BoundField();
+        col.DataField = "ItemGroupName";
+        col.HeaderText = "Item Group Name";
+        itemsGridView.Columns.Add(col);
+        col = new BoundField();
+        col.DataField = "ItemTypeName";
+        col.HeaderText = "Item Type Name";
+        itemsGridView.Columns.Add(col);
+        col = new BoundField();
+        col.DataField = "ShortName";
+        col.HeaderText = "Short Name";
+        itemsGridView.Columns.Add(col);
+        col = new BoundField();
+        col.DataField = "EntryBy";
+        col.HeaderText = "Entry By";
+        itemsGridView.Columns.Add(col);
+        col = new BoundField();
+        col.DataField = "EntryDate";
+        col.HeaderText = "Create Date";
+        col.DataFormatString = "{0:f}";
+        itemsGridView.Columns.Add(col);
+        
+        itemsGridView.DataSource = aDataTable;
+        itemsGridView.DataBind();
+
+
+    }
+    public void CreateCategoryGrid(DataTable aDataTable)
+    {
+        BoundField col = null;
+        col = new BoundField();
+        col.DataField = "ItemCategoryCode";
+        col.HeaderText = "Code";
+        itemsGridView.Columns.Add(col);
+        col = new BoundField();
+        col.DataField = "ItemGroupName";
+        col.HeaderText = "Item Group Name";
+        itemsGridView.Columns.Add(col);
+        col = new BoundField();
+        col.DataField = "ItemTypeName";
+        col.HeaderText = "Item Type Name";
+        itemsGridView.Columns.Add(col);
+        col = new BoundField();
+        col.DataField = "ItemCategoryName";
+        col.HeaderText = "Item Category";
+        itemsGridView.Columns.Add(col);
+        col = new BoundField();
+        col.DataField = "ShortName";
+        col.HeaderText = "Short Name";
+        itemsGridView.Columns.Add(col);
+        col = new BoundField();
+        col.DataField = "EntryBy";
+        col.HeaderText = "Entry By";
+        itemsGridView.Columns.Add(col);
+        col = new BoundField();
+        col.DataField = "EntryDate";
+        col.HeaderText = "Entry Date";
+        col.DataFormatString = "{0:f}";
+        itemsGridView.Columns.Add(col);
+        itemsGridView.DataSource = aDataTable;
+        itemsGridView.DataBind();
+
+
+    }
+    public void CreateNameGrid(DataTable aDataTable)
+    {
+        BoundField col = null;
+        col = new BoundField();
+        col.DataField = "ItemNameCode";
+        col.HeaderText = "Code";
+        itemsGridView.Columns.Add(col);
+        col = new BoundField();
+        col.DataField = "ItemGroupName";
+        col.HeaderText = "Item Group Name";
+        itemsGridView.Columns.Add(col);
+        col = new BoundField();
+        col.DataField = "ItemTypeName";
+        col.HeaderText = "Item Type Name";
+        itemsGridView.Columns.Add(col);
+        col = new BoundField();
+        col.DataField = "ItemCategoryName";
+        col.HeaderText = "Item Category";
+        itemsGridView.Columns.Add(col);
+        col = new BoundField();
+        col.DataField = "ItemName";
+        col.HeaderText = "Item Name";
+        itemsGridView.Columns.Add(col);
+        col = new BoundField();
+        col.DataField = "EntryBy";
+        col.HeaderText = "Entry By";
+        itemsGridView.Columns.Add(col);
+        col = new BoundField();
+        col.DataField = "EntryDate";
+        col.HeaderText = "Entry Date";
+        col.DataFormatString = "{0:f}";
+        itemsGridView.Columns.Add(col);
+        itemsGridView.DataSource = aDataTable;
+        itemsGridView.DataBind();
+
+
+    }
+    public void CreateDescGrid(DataTable aDataTable)
+    {
+        BoundField col = null;
+        col = new BoundField();
+        col.DataField = "ItemNameCode";
+        col.HeaderText = "Code";
+        itemsGridView.Columns.Add(col);
+        col = new BoundField();
+        col.DataField = "ItemGroupName";
+        col.HeaderText = "Item Group Name";
+        itemsGridView.Columns.Add(col);
+        col = new BoundField();
+        col.DataField = "ItemTypeName";
+        col.HeaderText = "Item Type Name";
+        itemsGridView.Columns.Add(col);
+        col = new BoundField();
+        col.DataField = "ItemCategoryName";
+        col.HeaderText = "Item Category";
+        itemsGridView.Columns.Add(col);
+        col = new BoundField();
+        col.DataField = "ItemName";
+        col.HeaderText = "Item Name";
+        itemsGridView.Columns.Add(col);
+        col = new BoundField();
+        col.DataField = "ItemDescriptionCode";
+        col.HeaderText = "Code";
+        itemsGridView.Columns.Add(col);
+        col = new BoundField();
+        col.DataField = "ItemDescription";
+        col.HeaderText = "Description";
+        itemsGridView.Columns.Add(col);
+        col = new BoundField();
+        col.DataField = "EntryBy";
+        col.HeaderText = "Entry By";
+        itemsGridView.Columns.Add(col);
+        col = new BoundField();
+        col.DataField = "EntryDate";
+        col.HeaderText = "Entry Date";
+        col.DataFormatString = "{0:f}";
+        itemsGridView.Columns.Add(col);
+        itemsGridView.DataSource = aDataTable;
+        itemsGridView.DataBind();
+
+
+    }
+
+    public string Parameter()
+    {
+        string param = "";
+        if (itemGroupDropDownList.SelectedIndex >0)
+        {
+            param = param + " AND tblItemGroup.ItemGroupId='"+itemGroupDropDownList.SelectedValue+"'";
+        }
+        if (itemTypeDropDownList.SelectedIndex > 0)
+        {
+            param = param + " AND tblItemType.ItemTypeId='" + itemTypeDropDownList.SelectedValue + "'";
+        }
+        if (itemCatagoryDropDownList.SelectedIndex > 0)
+        {
+            param = param + " AND tblItemCategory.ItemCategoryId='" + itemCatagoryDropDownList.SelectedValue + "'";
+        }
+        if (itemNameDropDownList.SelectedIndex > 0)
+        {
+            param = param + " AND tblItemName.ItemNameId='" + itemNameDropDownList.SelectedValue + "'";
+        }
+        if (itemDescDropDownList.SelectedIndex > 0)
+        {
+            param = param + " AND tblItemDescription.ItemDescriptionId='" + itemDescDropDownList.SelectedValue + "'";
+        }
+        if (reportDropDownList1.SelectedValue == "ID")
+        {
+            if (itembrandDropDownList.SelectedIndex>0)
+            {
+                param = param + " AND tblItemBrand.BrandId='" + itembrandDropDownList.SelectedValue + "'";
+            }
+            if (itemSizeDropDownList.SelectedIndex > 0)
+            {
+                param = param + " AND tblItemSizeDetail.SizeDetailId='" + itemSizeDropDownList.SelectedValue + "'";
+            }
+            if (itemcolorDropDownList.SelectedIndex > 0)
+            {
+                param = param + " AND tblItemColour.ColourId='" + itemcolorDropDownList.SelectedValue + "'";
+            }
+            if (itemManufactureDropDownList.SelectedIndex > 0)
+            {
+                param = param + " AND tblItemManufacturer.ManufacturerId='" + itemManufactureDropDownList.SelectedValue + "'";
+            }
+            if (stockUnitDropDownList.SelectedIndex > 0)
+            {
+                param = param + " AND StockUnitId='" + stockUnitDropDownList.SelectedValue + "'";
+            }
+            if (defaultUnitDropDownList.SelectedIndex > 0)
+            {
+                param = param + " AND DefaultUnitId='" + defaultUnitDropDownList.SelectedValue + "'";
+            }
+        }
+        return param;
+    }
+    protected void submitButton_Click(object sender, EventArgs e)
+    {
+        Session["ReportParameter"] = "";
+        if (reportDropDownList1.SelectedValue=="IG")
+        {
+            Session["ReportParameter"] = "";
+            PopUp();
+        }
+        if (reportDropDownList1.SelectedValue == "IT")
+        {
+            Session["ReportParameter"] = "";
+        }
+        if (reportDropDownList1.SelectedValue == "ICA")
+        {
+            Session["ReportParameter"] = "";
+        }
+        if (reportDropDownList1.SelectedValue == "IN")
+        {
+            Session["ReportParameter"] = "";
+
+        }
+        if (reportDropDownList1.SelectedValue == "ID")
+        {
+            Session["ReportParameter"] = "";
+
+        }
+        if (reportDropDownList1.SelectedValue == "IB")
+        {
+            Session["ReportParameter"] = "";
+
+        }
+        if (reportDropDownList1.SelectedValue == "IC")
+        {
+            Session["ReportParameter"] = "";
+
+        }
+        if (reportDropDownList1.SelectedValue == "IM")
+        {
+            Session["ReportParameter"] = "";
+
+        }
+        if (reportDropDownList1.SelectedValue == "IS")
+        {
+            Session["ReportParameter"] = "";
+
+        }
+        if (reportDropDownList1.SelectedValue == "UOM")
+        {
+            Session["ReportParameter"] = "";
+
+        }
+        if (reportDropDownList1.SelectedValue == "IP")
+        {
+            Session["ReportParameter"] = "";
+
+        }
+        PopUp();
+    }
+
+    private void PopUp()
+    {
+        string url = "../Report_UI/ItemInformationReportViewer.aspx?rptType=" + reportDropDownList1.SelectedValue;
+        string fullURL = "window.open('" + url + "', '_blank', 'height=600,width=900,status=yes,toolbar=no,menubar=no,location=no,scrollbars=yes,resizable=no,titlebar=no' );";
+        ScriptManager.RegisterStartupScript(this, typeof(string), "OPEN_WINDOW", fullURL, true);
+    }
+    protected void SearchButton_Click(object sender, EventArgs e)
+    {
+        if (itemsGridView.Columns.Count > 0)
+        {
+            itemsGridView.Columns.Clear();
+        }
+        //DivGroup.Visible = false;
+        //divcat.Visible = false;
+        //divname.Visible = false;
+        //divtype.Visible = false;
+        if (reportDropDownList1.SelectedValue == "IG")
+        {
+            aInformationReportBll.CreateConnection_DAL();
+            CreateGroupGrid(aInformationReportBll.GetItemGroupDatabyId(Parameter()));
+            //itemsGridView.DataSource = aInformationReportBll.GetItemGroupDataBll();
+            //itemsGridView.DataBind();
+            aInformationReportBll.CloseAllConnection();
+            //DivGroup.Visible = true;
+        }
+        if (reportDropDownList1.SelectedValue == "IT")
+        {
+            aInformationReportBll.CreateConnection_DAL();
+            CreateTypeGrid(aInformationReportBll.GetItemTypeDatabyId(Parameter()));
+            //itemsGridView.DataSource = aInformationReportBll.GetItemGroupDataBll();
+            //itemsGridView.DataBind();
+            aInformationReportBll.CloseAllConnection();
+        }
+        if (reportDropDownList1.SelectedValue == "ICA")
+        {
+            aInformationReportBll.CreateConnection_DAL();
+            CreateCategoryGrid(aInformationReportBll.GetItemCategoryDatabyId(Parameter()));
+            //itemsGridView.DataSource = aInformationReportBll.GetItemGroupDataBll();
+            //itemsGridView.DataBind();
+            aInformationReportBll.CloseAllConnection();
+        }
+        if (reportDropDownList1.SelectedValue == "IN")
+        {
+            aInformationReportBll.CreateConnection_DAL();
+            CreateNameGrid(aInformationReportBll.GetItemNameDatabyId(Parameter()));
+            //itemsGridView.DataSource = aInformationReportBll.GetItemGroupDataBll();
+            //itemsGridView.DataBind();
+            aInformationReportBll.CloseAllConnection();
+        }
+        if (reportDropDownList1.SelectedValue == "ID")
+        {
+            aInformationReportBll.CreateConnection_DAL();
+            CreateDescGrid(aInformationReportBll.GetItemDescDatabyId(Parameter()));
+            //itemsGridView.DataSource = aInformationReportBll.GetItemGroupDataBll();
+            //itemsGridView.DataBind();
+            aInformationReportBll.CloseAllConnection();
+        }
+      
+    }
+    protected void reportDropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        DivGroup.Visible = false;
+        divcat.Visible = false;
+        divname.Visible = false;
+        divtype.Visible = false;
+        divdesc.Visible = false;
+        if (reportDropDownList1.SelectedValue == "IG")
+        {
+            //aInformationReportBll.CreateConnection_DAL();
+            //itemsGridView.DataSource = aInformationReportBll.GetItemGroupDataBll();
+            //itemsGridView.DataBind();
+            //aInformationReportBll.CloseAllConnection();
+            DivGroup.Visible = true;
+        }
+        if (reportDropDownList1.SelectedValue == "IT")
+        {
+            DivGroup.Visible = true;
+            divtype.Visible = true;
+        }
+        if (reportDropDownList1.SelectedValue == "ICA")
+        {
+            DivGroup.Visible = true;
+            divtype.Visible = true;
+            divcat.Visible = true;
+        }
+        if (reportDropDownList1.SelectedValue == "IN")
+        {
+            DivGroup.Visible = true;
+            divtype.Visible = true;
+            divcat.Visible = true;
+            divname.Visible = true;
+        }
+        if (reportDropDownList1.SelectedValue == "IN")
+        {
+            DivGroup.Visible = true;
+            divtype.Visible = true;
+            divcat.Visible = true;
+            divname.Visible = true;
+        }
+        if (reportDropDownList1.SelectedValue == "ID")
+        {
+            DivGroup.Visible = true;
+            divtype.Visible = true;
+            divcat.Visible = true;
+            divname.Visible = true;
+            divdesc.Visible = true;
+            divdesother.Visible = true;
+            divdesother2.Visible = true;
+
+        }
+    }
+
+    protected void itemGroupDropDownList_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        aItemDescriptionBLL.CreateConnection_UA_DB();
+        aItemDescriptionBLL.LoadItemType(itemTypeDropDownList, itemGroupDropDownList.SelectedValue);
+        aItemDescriptionBLL.CloseAllConnection();
+    }
+    protected void itemTypeDropDownList_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        aItemDescriptionBLL.CreateConnection_UA_DB();
+        aItemDescriptionBLL.LoadItemCatagory(itemCatagoryDropDownList, itemTypeDropDownList.SelectedValue);
+        aItemDescriptionBLL.CloseAllConnection();
+    }
+    protected void itemCatagoryDropDownList_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        aItemDescriptionBLL.CreateConnection_UA_DB();
+        aItemDescriptionBLL.LoadItemName(itemNameDropDownList, itemCatagoryDropDownList.SelectedValue);
+        aItemDescriptionBLL.CloseAllConnection();
+    }
+
+    protected void itemNameDropDownList_OnSelectedIndexChanged(object sender, EventArgs e)
+    {
+        aInformationReportBll.CreateConnection_DAL();
+        aInformationReportBll.GetItemDescriptionDatabyId(itemDescDropDownList,itemNameDropDownList.SelectedValue);
+        aInformationReportBll.CloseAllConnection();
+
+    }
+}

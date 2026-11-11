@@ -1,0 +1,206 @@
+<?xml version="1.0" standalone="yes"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="MemoJobCreationDataTable">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="PositionNewRep" type="xs:string" minOccurs="0" />
+              <xs:element name="ReplaceEmpId" type="xs:int" minOccurs="0" />
+              <xs:element name="ShortName" type="xs:string" minOccurs="0" />
+              <xs:element name="FinancialYearId" type="xs:int" minOccurs="0" />
+              <xs:element name="FinancialYearDesc" type="xs:string" minOccurs="0" />
+              <xs:element name="DepartmentName" type="xs:string" minOccurs="0" />
+              <xs:element name="ReqDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Note" type="xs:string" minOccurs="0" />
+              <xs:element name="JobTitle" type="xs:string" minOccurs="0" />
+              <xs:element name="GradeName" type="xs:string" minOccurs="0" />
+              <xs:element name="Nos" type="xs:int" minOccurs="0" />
+              <xs:element name="ExpDateOfJoining" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="EmpType" type="xs:string" minOccurs="0" />
+              <xs:element name="ReportingTo" type="xs:string" minOccurs="0" />
+              <xs:element name="SalaryLocation" type="xs:string" minOccurs="0" />
+              <xs:element name="Location" type="xs:string" minOccurs="0" />
+              <xs:element name="ReplacementEmployee" type="xs:string" minOccurs="0" />
+              <xs:element name="repGradeCode" type="xs:string" minOccurs="0" />
+              <xs:element name="RepSalaryStepName" type="xs:string" minOccurs="0" />
+              <xs:element name="InternalContact" type="xs:string" minOccurs="0" />
+              <xs:element name="ExternalContact" type="xs:string" minOccurs="0" />
+              <xs:element name="Justification" type="xs:string" minOccurs="0" />
+              <xs:element name="JobSummery" type="xs:string" minOccurs="0" />
+              <xs:element name="Experience" type="xs:string" minOccurs="0" />
+              <xs:element name="Skills" type="xs:string" minOccurs="0" />
+              <xs:element name="Age" type="xs:string" minOccurs="0" />
+              <xs:element name="OtherExperience" type="xs:string" minOccurs="0" />
+              <xs:element name="IsManagementApproved" type="xs:boolean" minOccurs="0" />
+              <xs:element name="EmpCategoryName" type="xs:string" minOccurs="0" />
+              <xs:element name="IsBudgeted" type="xs:boolean" minOccurs="0" />
+              <xs:element name="ProjectName" type="xs:string" minOccurs="0" />
+              <xs:element name="MonthContractual" type="xs:string" minOccurs="0" />
+              <xs:element name="FundContractual" type="xs:string" minOccurs="0" />
+              <xs:element name="Remarks" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ReqEducationDataTable">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="JobReqEducationId" type="xs:int" minOccurs="0" />
+              <xs:element name="Education" type="xs:string" minOccurs="0" />
+              <xs:element name="JobReqId" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="KeyResponseDataTable">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="JobReqKeyResId" type="xs:int" minOccurs="0" />
+              <xs:element name="KeyResId" type="xs:int" minOccurs="0" />
+              <xs:element name="JobReqFormId" type="xs:int" minOccurs="0" />
+              <xs:element name="JobReqKeyResName" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="JobEduReqDataTable">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ERID" type="xs:int" minOccurs="0" />
+              <xs:element name="EducationRequirements" type="xs:string" minOccurs="0" />
+              <xs:element name="EduRequirJobId" type="xs:int" minOccurs="0" />
+              <xs:element name="JobReqFormId" type="xs:int" minOccurs="0" />
+              <xs:element name="EduRequirId" type="xs:int" minOccurs="0" />
+              <xs:element name="Major" type="xs:string" minOccurs="0" />
+              <xs:element name="JobReqId" type="xs:int" minOccurs="0" />
+              <xs:element name="CompanyId" type="xs:int" minOccurs="0" />
+              <xs:element name="JobTitleId" type="xs:int" minOccurs="0" />
+              <xs:element name="GradeId" type="xs:int" minOccurs="0" />
+              <xs:element name="ReqDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="FinYearId" type="xs:int" minOccurs="0" />
+              <xs:element name="Note" type="xs:string" minOccurs="0" />
+              <xs:element name="Nos" type="xs:int" minOccurs="0" />
+              <xs:element name="PlaceOfPosting" type="xs:string" minOccurs="0" />
+              <xs:element name="ReportingTo" type="xs:string" minOccurs="0" />
+              <xs:element name="DivisionId" type="xs:int" minOccurs="0" />
+              <xs:element name="WingId" type="xs:int" minOccurs="0" />
+              <xs:element name="DeptId" type="xs:int" minOccurs="0" />
+              <xs:element name="ExpDateOfJoining" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="IsReplacement" type="xs:boolean" minOccurs="0" />
+              <xs:element name="ReplaceEmpId" type="xs:int" minOccurs="0" />
+              <xs:element name="IsBudgeted" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Justification" type="xs:string" minOccurs="0" />
+              <xs:element name="SeparationDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Experience" type="xs:string" minOccurs="0" />
+              <xs:element name="Skills" type="xs:string" minOccurs="0" />
+              <xs:element name="Age" type="xs:string" minOccurs="0" />
+              <xs:element name="Others" type="xs:string" minOccurs="0" />
+              <xs:element name="IsInternalCir" type="xs:boolean" minOccurs="0" />
+              <xs:element name="IsOnlineCir" type="xs:boolean" minOccurs="0" />
+              <xs:element name="IsSMCWeb" type="xs:boolean" minOccurs="0" />
+              <xs:element name="IsNewsPaper" type="xs:boolean" minOccurs="0" />
+              <xs:element name="IsHeadHuntFirm" type="xs:boolean" minOccurs="0" />
+              <xs:element name="OtherCircula" type="xs:string" minOccurs="0" />
+              <xs:element name="IsOtherCircula" type="xs:boolean" minOccurs="0" />
+              <xs:element name="EmpTypeId" type="xs:int" minOccurs="0" />
+              <xs:element name="OtherExperience" type="xs:string" minOccurs="0" />
+              <xs:element name="BudgetId" type="xs:int" minOccurs="0" />
+              <xs:element name="Remarks" type="xs:string" minOccurs="0" />
+              <xs:element name="ReqCode" type="xs:string" minOccurs="0" />
+              <xs:element name="EmployeeId" type="xs:int" minOccurs="0" />
+              <xs:element name="JobSummery" type="xs:string" minOccurs="0" />
+              <xs:element name="JobTitle" type="xs:string" minOccurs="0" />
+              <xs:element name="ProjectId" type="xs:int" minOccurs="0" />
+              <xs:element name="SupervisorId" type="xs:int" minOccurs="0" />
+              <xs:element name="OfficeId" type="xs:int" minOccurs="0" />
+              <xs:element name="PlaceId" type="xs:int" minOccurs="0" />
+              <xs:element name="InternalContact" type="xs:string" minOccurs="0" />
+              <xs:element name="ExternalContact" type="xs:string" minOccurs="0" />
+              <xs:element name="ProfCertification" type="xs:string" minOccurs="0" />
+              <xs:element name="CmpSkill" type="xs:string" minOccurs="0" />
+              <xs:element name="ActionStatus" type="xs:string" minOccurs="0" />
+              <xs:element name="ApproveBy" type="xs:string" minOccurs="0" />
+              <xs:element name="ApproveDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="EntryBy" type="xs:int" minOccurs="0" />
+              <xs:element name="EntryDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="UpdateBy" type="xs:int" minOccurs="0" />
+              <xs:element name="UpdateDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="DeleteBy" type="xs:int" minOccurs="0" />
+              <xs:element name="DeleteDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="IsDelete" type="xs:boolean" minOccurs="0" />
+              <xs:element name="MonthContractual" type="xs:string" minOccurs="0" />
+              <xs:element name="FundContractual" type="xs:string" minOccurs="0" />
+              <xs:element name="EmployeeCategoryId" type="xs:int" minOccurs="0" />
+              <xs:element name="IsManagementApproved" type="xs:boolean" minOccurs="0" />
+              <xs:element name="PlaceOffice" type="xs:string" minOccurs="0" />
+              <xs:element name="ActionStatus2" type="xs:string" minOccurs="0" />
+              <xs:element name="Description" type="xs:string" minOccurs="0" />
+              <xs:element name="EducationNameID" type="xs:int" minOccurs="0" />
+              <xs:element name="Code" type="xs:string" minOccurs="0" />
+              <xs:element name="EducationLevelID" type="xs:int" minOccurs="0" />
+              <xs:element name="EntryBy1" type="xs:int" minOccurs="0" />
+              <xs:element name="EntryDate1" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="UpdateBy1" type="xs:int" minOccurs="0" />
+              <xs:element name="UpdateDate1" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="EducationRequirementsDetailDataTable">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="MasterId" type="xs:int" minOccurs="0" />
+              <xs:element name="WayId" type="xs:int" minOccurs="0" />
+              <xs:element name="Designation" type="xs:string" minOccurs="0" />
+              <xs:element name="Nos" type="xs:string" minOccurs="0" />
+              <xs:element name="EducationRequirementsDetailId" type="xs:int" minOccurs="0" />
+              <xs:element name="MasterId1" type="xs:int" minOccurs="0" />
+              <xs:element name="WayId1" type="xs:int" minOccurs="0" />
+              <xs:element name="Nos1" type="xs:string" minOccurs="0" />
+              <xs:element name="DesignationId" type="xs:int" minOccurs="0" />
+              <xs:element name="SalaryGradeId" type="xs:int" minOccurs="0" />
+              <xs:element name="Designation1" type="xs:string" minOccurs="0" />
+              <xs:element name="Description" type="xs:string" minOccurs="0" />
+              <xs:element name="Remarks" type="xs:string" minOccurs="0" />
+              <xs:element name="IsActive" type="xs:boolean" minOccurs="0" />
+              <xs:element name="EntryBy" type="xs:string" minOccurs="0" />
+              <xs:element name="EntryDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="UpdateBy" type="xs:string" minOccurs="0" />
+              <xs:element name="UpdateDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ApprovalStatus" type="xs:string" minOccurs="0" />
+              <xs:element name="ApproveBy" type="xs:string" minOccurs="0" />
+              <xs:element name="ApproveDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="CompanyId" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="OtherRequirementsDataTable">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="MasterId" type="xs:int" minOccurs="0" />
+              <xs:element name="OtherRequirementsName" type="xs:string" minOccurs="0" />
+              <xs:element name="OtherRequirementDetailsId" type="xs:int" minOccurs="0" />
+              <xs:element name="MasterId1" type="xs:int" minOccurs="0" />
+              <xs:element name="OtherRequirement" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="PreferedWayOfCircularDataTable">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="WayId" type="xs:int" minOccurs="0" />
+              <xs:element name="CirculationWay" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="OfficeDataTable">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SalaryLocation" type="xs:string" minOccurs="0" />
+              <xs:element name="SalaryLoationId" type="xs:string" minOccurs="0" />
+              <xs:element name="SalaryLocationMainId" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

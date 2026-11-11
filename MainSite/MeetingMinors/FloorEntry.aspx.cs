@@ -1,0 +1,524 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Globalization;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using DAL.DataManager;
+using DAL.MasterSetup_DAL;
+using DAL.MeetingMinorsDAL;
+using DAO.HRIS_DAO;
+using DAO.MeetingMinorsDAO;
+using HELPER_FUNCTIONS.HELPERS;
+
+public partial class MeetingMinors_FloorEntry : System.Web.UI.Page
+{
+    ValidationDeleteCommonDAL aValidationDeleteCommonDAL = new ValidationDeleteCommonDAL();
+
+    FloorDal aEntryDaL = new FloorDal();
+    ManageUserOperationCredentials aOperationCredentials = new ManageUserOperationCredentials();
+    ShowMessage aShowMessage = new ShowMessage();
+    Messages aMessages = new Messages();
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+
+
+             ButtonVisible();
+
+
+             Dropdownlist();
+
+
+            if (Session["MId"] != null)
+            {
+                GetOneRecord(Session["MId"].ToString());
+                Session["MId"] = null;
+            }
+        }
+    }
+    public void ButtonVisible()
+    {
+        if (Session["Status"] != null)
+        {
+            if (Session["Status"].ToString() == "Add")
+            {
+                submit_Button.Visible = true;
+            }
+            else if (Session["Status"].ToString() == "Edit")
+            {
+                editButton.Visible = true;
+            }
+            else if (Session["Status"].ToString() == "Delete")
+            {
+                delButton.Visible = true;
+            }
+            Session["Status"] = null;
+        }
+        else
+        {
+            Response.Redirect("~/MeetingMinors/FloorView.aspx");
+        }
+
+    }
+
+
+
+
+    private void GetOneRecord(string id)
+    {
+        DataTable dataTable = aEntryDaL.GetInformationById(id);
+
+        const int rowIndex = 0;
+
+        if (dataTable.Rows.Count > 0)
+        {
+            MeetingRoomIdHiddenField.Value = dataTable.Rows[rowIndex].Field<Int32>("FloorId").ToString(CultureInfo.InvariantCulture);
+            ddlOffice.SelectedValue = dataTable.Rows[rowIndex].Field<int>("OfficeId").ToString();
+            ddlOffice_OnSelectedIndexChanged(null, null);
+            ddlLocation.SelectedValue = dataTable.Rows[rowIndex].Field<int>("LocationId").ToString();
+            
+            txtMeetingRoom.Text = dataTable.Rows[rowIndex].Field<string>("FloorName").ToString();
+            
+
+        }
+ 
+
+      
+
+    }
+
+
+
+    private void Dropdownlist()
+    {
+
+        using (DataTable dt = aEntryDaL.GetDDLCompany())
+        {
+            ddlCompany.DataSource = dt;
+            ddlCompany.DataValueField = "Value";
+            ddlCompany.DataTextField = "TextField";
+            ddlCompany.DataBind();
+            ddlCompany.SelectedIndex = 1;
+            ddlCompany_OnSelectedIndexChanged(null, null);
+        }
+
+        using (DataTable dt = aEntryDaL.GetDDLSalaryLocation())
+        {
+            ddlOffice.DataSource = dt;
+            ddlOffice.DataValueField = "Value";
+            ddlOffice.DataTextField = "TextField";
+            ddlOffice.DataBind();
+        }
+
+
+      
+
+    }
+
+
+    protected void ddlCompany_OnSelectedIndexChanged(object sender, EventArgs e)
+    {
+
+    }
+
+
+    protected void ddlOffice_OnSelectedIndexChanged(object sender, EventArgs e)
+    {
+
+        if (ddlOffice.SelectedIndex > 0)
+        {
+            using (DataTable dt = aEntryDaL.GetDDLJobLocation(ddlOffice.SelectedValue))
+            {
+                ddlLocation.DataSource = dt;
+                ddlLocation.DataValueField = "Value";
+                ddlLocation.DataTextField = "TextField";
+                ddlLocation.DataBind();
+            }
+        }
+    }
+
+
+    
+
+
+    private bool Validation()
+    {
+
+        if (ddlCompany.Text == "")
+        {
+            aShowMessage.ShowMessageBox(aMessages.VArea, this);
+            return false;
+        }
+
+
+        if (ddlOffice.Text == "")
+        {
+            aShowMessage.ShowMessageBox(aMessages.VArea, this);
+            return false;
+        }
+
+        if (ddlLocation.Text == "")
+        {
+            aShowMessage.ShowMessageBox(aMessages.VArea, this);
+            return false;
+        }
+
+      
+
+
+        if (txtMeetingRoom.Text == "")
+        {
+            aShowMessage.ShowMessageBox(aMessages.VArea, this);
+            return false;
+        }
+
+
+
+
+        //using (DataTable dt = aEntryDaL.GetCheckOffice(ddlOffice.SelectedValue))
+        //{
+        //    if (MeetingRoomIdHiddenField.Value == "")
+        //    {
+        //        if (dt.Rows.Count > 0)
+        //        {
+
+        //            ScriptManager.RegisterStartupScript(this, this.GetType(),
+        //                "alert",
+        //                "alert('Office Already Exist!!!');",
+        //                true);
+
+        //            ddlOffice.Focus();
+
+        //            return false;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        DataTable dt2 = aEntryDaL.GetCheckOffice2(ddlOffice.SelectedValue, MeetingRoomIdHiddenField.Value);
+        //        if (dt2.Rows.Count > 0)
+        //        {
+
+        //            ScriptManager.RegisterStartupScript(this, this.GetType(),
+        //                "alert",
+        //                "alert('Location Already Exist!!!');",
+        //                true);
+
+        //            ddlOffice.Focus();
+        //            return false;
+        //        }
+        //    }
+        //}
+
+
+        //using (DataTable dt = aEntryDaL.GetCheckLocation(ddlLocation.SelectedValue))
+        //{
+        //    if (MeetingRoomIdHiddenField.Value == "")
+        //    {
+        //        if (dt.Rows.Count > 0)
+        //        {
+
+        //            ScriptManager.RegisterStartupScript(this, this.GetType(),
+        //                "alert",
+        //                "alert('Floor Already Exist!!!');",
+        //                true);
+
+        //            ddlOffice.Focus();
+
+        //            return false;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        DataTable dt2 = aEntryDaL.GetCheckLocation2(ddlLocation.SelectedValue, MeetingRoomIdHiddenField.Value);
+        //        if (dt2.Rows.Count > 0)
+        //        {
+
+        //            ScriptManager.RegisterStartupScript(this, this.GetType(),
+        //                "alert",
+        //                "alert('Already Exist!!!');",
+        //                true);
+
+        //            ddlOffice.Focus();
+        //            return false;
+        //        }
+        //    }
+        //}
+
+
+        //using (DataTable dt = aEntryDaL.GetCheckFloor(ddlFloor.SelectedValue))
+        //{
+        //    if (MeetingRoomIdHiddenField.Value == "")
+        //    {
+        //        if (dt.Rows.Count > 0)
+        //        {
+
+        //            ScriptManager.RegisterStartupScript(this, this.GetType(),
+        //                "alert",
+        //                "alert('Already Exist!!!');",
+        //                true);
+
+        //            ddlLocation.Focus();
+
+        //            return false;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        DataTable dt2 = aEntryDaL.GetCheckFloor2(ddlFloor.SelectedValue, MeetingRoomIdHiddenField.Value);
+        //        if (dt2.Rows.Count > 0)
+        //        {
+
+        //            ScriptManager.RegisterStartupScript(this, this.GetType(),
+        //                "alert",
+        //                "alert('Already Exist!!!');",
+        //                true);
+
+        //            ddlFloor.Focus();
+        //            return false;
+        //        }
+        //    }
+        //}
+
+
+        //using (DataTable dt = aEntryDaL.GetCheckMeetingRoom(txtMeetingRoom.Text.Trim().ToUpper()))
+        //{
+        //    if (MeetingRoomIdHiddenField.Value == "")
+        //    {
+        //        if (dt.Rows.Count > 0)
+        //        {
+
+        //            ScriptManager.RegisterStartupScript(this, this.GetType(),
+        //                "alert",
+        //                "alert('Meeting Room Already Exist!!!');",
+        //                true);
+
+        //            ddlLocation.Focus();
+
+        //            return false;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        DataTable dt2 = aEntryDaL.GetCheckMeetingRoom2(txtMeetingRoom.Text.ToUpper(), MeetingRoomIdHiddenField.Value);
+        //        if (dt2.Rows.Count > 0)
+        //        {
+
+        //            ScriptManager.RegisterStartupScript(this, this.GetType(),
+        //                "alert",
+        //                "alert('Meeting Room Already Exist!!!');",
+        //                true);
+
+                    
+        //            return false;
+        //        }
+        //    }
+        //}
+
+
+        return true;
+    }
+
+
+
+
+    protected void submitButton_Click(object sender, EventArgs e)
+    {
+        if (Validation())
+        {
+            if (    MeetingRoomIdHiddenField.Value == "")
+            {
+                try
+                {
+                    Int32 areaId = SaveVacancyEntry();
+
+                    if (areaId > 0)
+                    {
+                        
+                        ScriptManager.RegisterStartupScript(this, this.GetType(),
+                          "alert",
+                          "alert('Data Saved Successfully...');window.location ='FloorView.aspx';",
+                          true);
+                    }
+                }
+                catch (Exception)
+                {
+                    aShowMessage.ShowMessageBox(aMessages.ErrorMessage, this);
+                }
+            }
+
+
+        }
+    }
+    private bool Updateformation(FloorDAO prepareDataForUpdate)
+    {
+        bool retVal;
+        try
+        {
+            retVal = aEntryDaL.UpdateEntryInfo(PrepareDataForUpdate());
+        }
+        catch (Exception)
+        {
+            retVal = false;
+        }
+
+        return retVal;
+    }
+    private FloorDAO PrepareDataForUpdate()
+    {
+        var aEntryDao = new FloorDAO();
+        aEntryDao.FloorId = Convert.ToInt32(MeetingRoomIdHiddenField.Value);
+        aEntryDao.OfficeId = Convert.ToInt32(ddlOffice.SelectedValue);
+        aEntryDao.LocationId = Convert.ToInt32(ddlLocation.SelectedValue);
+        
+        aEntryDao.FloorName = txtMeetingRoom.Text.ToString();
+       
+        aEntryDao.UpdateBy = Convert.ToInt32(Session["UserId"]);
+        aEntryDao.UpdateDate = DateTime.Now;
+        return aEntryDao;
+    }
+    private Int32 SaveVacancyEntry()
+    {
+        Int32 retVal;
+        try
+        {
+            retVal = aEntryDaL.SaveEntryInfo(PrepareDataForSave());
+        }
+        catch (Exception)
+        {
+            retVal = 0;
+        }
+
+        return retVal;
+    }
+    private FloorDAO PrepareDataForSave()
+    {
+        var EntryDao = new FloorDAO();
+        EntryDao.OfficeId = Convert.ToInt32(ddlOffice.SelectedValue);
+        EntryDao.LocationId = Convert.ToInt32(ddlLocation.SelectedValue);
+    
+        EntryDao.FloorName = txtMeetingRoom.Text.ToString();
+        
+        EntryDao.CreateBy = Convert.ToInt32(Session["UserId"]);
+        EntryDao.CreateDate = DateTime.Now;
+        return EntryDao;
+    }
+
+
+    protected void cancelButton_OnClick(object sender, EventArgs e)
+    {
+        
+    }
+    
+    protected void areaCodeTextBox_OnTextChanged(object sender, EventArgs e)
+    {
+
+    }
+
+    protected void detailsViewButton_OnClick(object sender, EventArgs e)
+    {
+        Response.Redirect("~/MeetingMinors/FloorView.aspx");
+    }
+    protected void Button1_OnClick(object sender, EventArgs e)
+    {
+        Response.Redirect("~/MasterSetup_UI/AreaInformationView.aspx");
+    }
+
+    protected void editButton_OnClick(object sender, EventArgs e)
+    {
+        if (Validation())
+        {
+
+     
+         if ( MeetingRoomIdHiddenField.Value != "")
+         {
+             try
+             {
+               
+                bool area = Updateformation(PrepareDataForUpdate());
+
+                if (area)
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(),
+                        "alert",
+                        "alert('Data Updated Successfully...');window.location ='FloorView.aspx';",
+                        true);
+                }
+
+             }
+            
+             catch 
+                 (Exception ex)
+            {
+                aShowMessage.ShowMessageBox(aMessages.UpdateFailedMessage, this);
+                throw;
+            }
+         }
+
+        }
+    }
+
+
+    
+
+    protected void delButton_OnClick(object sender, EventArgs e)
+    {
+
+        if (aEntryDaL.DeleteEntryfoById(MeetingRoomIdHiddenField.Value))
+        {
+          //  Int32 departmentId = SaveInformationDEL();
+
+            //if (departmentId > 0)
+            //{
+                ScriptManager.RegisterStartupScript(this, this.GetType(),
+                    "alert",
+                    "alert('Operation Successfull Done...');window.location ='FloorView.aspx';",
+                    true);
+            //}
+
+        }
+
+
+    }
+
+
+    private Int32 SaveInformationDEL()
+    {
+        Int32 retVal;
+        try
+        {
+            retVal = aEntryDaL.SaveInfoDEL(PrepareDataForSaveDEL());
+
+        }
+        catch (Exception)
+        {
+            retVal = 0;
+        }
+
+        return retVal;
+    }
+    private FloorDAO PrepareDataForSaveDEL()
+    {
+        var EntryDao = new FloorDAO();
+        EntryDao.FloorId = Convert.ToInt32(MeetingRoomIdHiddenField.Value);
+        EntryDao.OfficeId = Convert.ToInt32(ddlOffice.SelectedValue);
+        EntryDao.LocationId = Convert.ToInt32(ddlLocation.SelectedValue);
+        
+        EntryDao.FloorName = txtMeetingRoom.Text.ToString();
+       
+    
+        EntryDao.CreateBy = Convert.ToInt32(Session["UserId"]);
+        EntryDao.CreateDate = DateTime.Now;
+        return EntryDao;
+    }
+
+    protected void HomeButton_OnClick(object sender, EventArgs e)
+    {
+        Response.Redirect("../DashBoard_UI/DashBoard.aspx");
+    }
+
+
+}

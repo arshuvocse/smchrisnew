@@ -1,0 +1,112 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using DAL.MasterSetup_DAL;
+using DAL.Transfer_DAL;
+using DAO.HRIS_DAO;
+using HELPER_FUNCTIONS.HELPERS;
+
+public partial class MasterSetup_UI_EmployeeTypeChange : System.Web.UI.Page
+{
+    EmployeeTypeChangeDAO atblEmployeePromotionEntryDAO = new EmployeeTypeChangeDAO();
+    EmployeeTypeChangeDAL atblEmployeePromotionEntryDAL = new EmployeeTypeChangeDAL();
+
+    ManageUserOperationCredentials aOperationCredentials = new ManageUserOperationCredentials();
+    ShowMessage aShowMessage = new ShowMessage();
+    Messages aMessages = new Messages();
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            LoadDropDownList();
+
+           
+        }
+    }
+
+    private void LoadDropDownList()
+    {
+        atblEmployeePromotionEntryDAL.LoadCompanyDropDownList(companyDropDownList);
+
+    }
+
+    protected void companyDropDownList_OnSelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (companyDropDownList.SelectedValue != "")
+        {
+            Session["CompanyId"] = companyDropDownList.SelectedValue;
+        }
+    }
+
+    protected void SearchEmployeeNameTextBoxTextBox_OnTextChanged(object sender, EventArgs e)
+    {
+        string empName = SearchEmployeeNameTextBoxTextBox.Text.Trim();
+
+        if (empName.Contains(':'))
+        {
+            string[] emp = empName.Split(':');
+
+            SearchEmployeeNameTextBoxTextBox.Text = emp[2];
+            repEmpIdHiddenField.Value = emp[0];
+
+          LoadData(Convert.ToInt32(repEmpIdHiddenField.Value));
+            
+        }
+        else
+        {
+
+            SearchEmployeeNameTextBoxTextBox.Text = "";
+            repEmpIdHiddenField.Value = "";
+            aShowMessage.ShowMessageBox("Input Correct Data !!", this);
+        }
+    }
+
+    private void LoadData(int id)
+    {
+        DataTable dtdata = new DataTable();
+        dtdata = atblEmployeePromotionEntryDAL.LoadEmpJInfoInTextBoxById(id);
+        if (dtdata.Rows.Count > 0)
+        {
+
+            lblEmp.Text = dtdata.Rows[0]["EmpName"].ToString();
+
+            lblComName.Text = dtdata.Rows[0]["CompanyName"].ToString();
+            lblEmployeeCode.Text = dtdata.Rows[0]["EmpMasterCode"].ToString();
+            lblJdate.Text = Convert.ToDateTime(dtdata.Rows[0]["DateOfJoin"]).ToString("dd-MMM-yyyy");
+            lblDesignation.Text = dtdata.Rows[0]["Designation"].ToString();
+
+            //    PReportingBodyDropDownList.SelectedValue = 1.ToString();
+
+            lblSalaryGrade.Text = dtdata.Rows[0]["SalaryGrade"].ToString();
+            lblDivision.Text = dtdata.Rows[0]["DivisionName"].ToString();
+            lblWing.Text = dtdata.Rows[0]["DivisionWingName"].ToString();
+            lblDepartment.Text = dtdata.Rows[0]["DepartmentName"].ToString();
+            lblSection.Text = dtdata.Rows[0]["SectionName"].ToString();
+            lblSubSection.Text = dtdata.Rows[0]["SubSectionName"].ToString();
+           
+
+
+
+        }
+    }
+
+
+    protected void submitButton_Click(object sender, EventArgs e)
+    {
+      
+    }
+
+    protected void cancelButton_OnClick(object sender, EventArgs e)
+    {
+        
+    }
+
+    protected void detailsViewButton_OnClick(object sender, EventArgs e)
+    {
+        
+    }
+}

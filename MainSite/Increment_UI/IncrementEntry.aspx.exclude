@@ -1,0 +1,314 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPages/MainMasterPage.master" AutoEventWireup="true" CodeFile="IncrementEntry.aspx.cs" Inherits="Increment_UI_IncrementEntry" %>
+
+<%--<%@ Register TagPrefix="cc1" Namespace="AjaxControlToolkit" Assembly="AjaxControlToolkit, Version=16.1.0.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e" %>--%>
+<%@ Register TagPrefix="asp" Namespace="AjaxControlToolkit" Assembly="AjaxControlToolkit, Version=16.1.0.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="cpFormBody" runat="Server">
+    <div class="content" id="content">
+
+        <style type="text/css">
+            /*AutoComplete flyout */
+            .autocomplete_completionListElement {
+                margin: 0px !important;
+                background-color: White;
+                color: windowtext;
+                border: buttonshadow;
+                border-width: 1px;
+                border-style: solid;
+                cursor: 'default';
+                overflow: auto;
+                font-family: Calibri;
+                font-size: 12px;
+                text-align: left;
+                list-style-type: none;
+                margin-left: 0px;
+                padding-left: 0px;
+                max-height: 150px;
+                width: 130% !important;
+            }
+
+
+
+            .autocomplete_highlightedListItem {
+                background-color: yellow;
+                color: black;
+                padding: 1px;
+            }
+
+
+
+            .autocomplete_listItem {
+                background-color: white;
+                color: blue;
+                padding: 0px;
+            }
+        </style>
+
+        <style>
+            fieldset.for-panel {
+                background-color: #fcfcfc;
+                border: 1px solid #999;
+                padding: 15px 10px;
+                background-color: white;
+                margin-bottom: 12px;
+            }
+
+                fieldset.for-panel legend {
+                    background-color: #fafafa;
+                    border: 1px solid #ddd;
+                    border-radius: 1px;
+                    font-size: 12px;
+                    font-weight: bold;
+                    line-height: 10px;
+                    margin: inherit;
+                    padding: 7px;
+                    width: auto;
+                    margin-bottom: 0;
+                    color: black;
+                }
+        </style>
+        <asp:UpdatePanel ID="upFormBody" runat="server">
+
+
+
+
+            <ContentTemplate>
+
+
+
+               <%-- <asp:UpdateProgress ID="progress" runat="server" ClientIDMode="Static" DisplayAfter="0" DynamicLayout="true">
+                    <ProgressTemplate>
+                        <div class="divWaiting">
+                            <asp:Image ID="imgWait" CssClass="position-set" runat="server" ImageAlign="Middle" ImageUrl="~/Assets/img/progress-bar-opt.gif" Width="120px" Height="120px" />
+                        </div>
+                    </ProgressTemplate>
+                </asp:UpdateProgress>--%>
+
+
+
+
+                <div class="page-heading">
+                    <div class="page-heading__container">
+                        <h1 class="title" style="font-size: 18px; padding-top: 0px;">Increment Entry </h1>
+                    </div>
+                    <div class="page-heading__container float-right d-none d-sm-block">
+                        <asp:Button ID="HomeButton" Text="Home" CssClass="btn btn-sm btn-outline-secondary " runat="server" OnClick="HomeButton_OnClick" />
+                        <asp:Button ID="detailsViewButton" Text="View" CssClass="btn btn-sm btn-outline-secondary " runat="server" OnClick="detailsViewButton_OnClick" />
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="form-row">
+
+
+
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label>Company</label><span style="color: red">&nbsp;*</span>
+                                        <asp:DropDownList runat="server" AutoPostBack="True" ID="ddlCompany" OnSelectedIndexChanged="ddlCompany_SelectedIndexChanged" class="form-control form-control-sm" />
+                                    </div>
+                                </div>
+
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label>Financial Year</label>
+                                        <span style="color: red">&nbsp;*</span>
+                                        <asp:DropDownList OnSelectedIndexChanged="companyDropDownList_OnSelectedIndexChanged" runat="server" AutoPostBack="True" ID="ddlFinYear" CssClass="form-control form-control-sm" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <asp:Label runat="server" ID="Label4">Effective Date </asp:Label>
+                                        <span style="color: red">&nbsp;*</span>
+                                        <asp:HiddenField ID="areaHiddenField" runat="server" />
+                                        <asp:HiddenField ID="areaCodeHiddenField" runat="server" />
+                                        <asp:TextBox ID="EffectiveDateTextBox" AutoCompleteType="Disabled" OnTextChanged="EffectiveDateTextBox_Changed" AutoPostBack="True" runat="server" CssClass="form-control form-control-sm"></asp:TextBox>
+
+                                        <asp:CalendarExtender ID="CalendarExtender1" runat="server" PopupPosition="TopLeft"
+                                            Format="dd-MMM-yyyy" PopupButtonID="EffectiveDateTextBox" CssClass="MyCalendar"
+                                            TargetControlID="EffectiveDateTextBox" />
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <fieldset class="for-panel">
+                                        <legend>Searching Criteria</legend>
+                                        <div class="form-row">
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <label>Employee Category</label>
+                                                    <asp:DropDownList runat="server" ID="ddlCategory" CssClass="form-control form-control-sm" />
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <label>Division</label>
+                                                    <asp:DropDownList runat="server" ID="ddlDivision" CssClass="form-control form-control-sm" />
+                                                </div>
+                                            </div>
+
+
+                                            <%--  <div class="col-2">
+                                        <div class="form-group">
+                                            <label>Division</label> 
+                                            <asp:DropDownList runat="server" ID="DropDownList1" CssClass="form-control form-control-sm" />
+                                        </div>
+                                    </div>--%>
+
+                                            <div class="col-md-3">
+
+                                                <div class="form-group">
+                                                    <label>Search Employee: </label>
+                                                    <asp:TextBox ID="SearchEmployeeNameTextBoxTextBox" AutoPostBack="True" runat="server" class="form-control form-control-sm" OnTextChanged="SearchEmployeeNameTextBoxTextBox_OnTextChanged"></asp:TextBox>
+                                                    <asp:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server" DelimiterCharacters=""
+                                                        EnableCaching="true" Enabled="True" MinimumPrefixLength="1" CompletionSetCount="10"
+                                                        ServiceMethod="GetCompanyWiseEmployeeInfoOnlyForPromotion" ServicePath="~/WebService.asmx" TargetControlID="SearchEmployeeNameTextBoxTextBox"
+                                                        UseContextKey="True" CompletionListCssClass="autocomplete_completionListElement"
+                                                        CompletionListItemCssClass="autocomplete_listItem" CompletionListHighlightedItemCssClass="autocomplete_highlightedListItem"
+                                                        ShowOnlyCurrentWordInCompletionListItem="true">
+                                                    </asp:AutoCompleteExtender>
+
+
+                                                    <%--<asp:AutoCompleteExtender
+                                                            ID="at_txt_JobCirculation"
+                                                            TargetControlID="EmployeeNameTextBox"
+                                                            runat="server"
+                                                            ServiceMethod="GetParticipantList"
+                                                            ServicePath="~/WebService.asmx"
+                                                            MinimumPrefixLength="2"
+                                                            CompletionInterval="10"
+                                                            EnableCaching="false"
+                                                            CompletionSetCount="1"
+                                                            FirstRowSelected="false">
+                                                        </asp:AutoCompleteExtender>--%>
+                                                    <asp:HiddenField ID="EmployeeIdHiddenField" runat="server" />
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-2 " style="margin-top: 17px;">
+                                                <div class="form-group">
+                                                    <asp:Button ID="btnSearch" Text="Search" OnClick="btnSearch_OnClick" CssClass="btn btn-sm btn-success" runat="server" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+
+
+
+
+                            <div id="gridContainer1" style="height: auto; overflow: auto; width: auto;">
+                                <asp:GridView ID="loadGridView" runat="server" AutoGenerateColumns="False"
+                                    CssClass="table table-sm table-bordered  text-center thead-dark" DataKeyNames="EmpInfoId,  DivisionId, DivisionWId, DepartmentId,  SectionId, SubSectionId, DesignationId,SalaryLoationId, JobLocationId , EmpTypeId"
+                                  >
+                                    <Columns>
+                                        <asp:TemplateField>
+                                            <HeaderTemplate>
+                                                <asp:CheckBox ID="chkSelectAll" runat="server" CssClass="form-control-sm" AutoPostBack="True" OnCheckedChanged="chkSelectAll_CheckedChanged" />
+                                            </HeaderTemplate>
+                                            <ItemTemplate>
+                                                <asp:CheckBox ID="chkSelect" CssClass="form-control-sm" AutoPostBack="True" runat="server" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="SL">
+                                            <ItemTemplate>
+                                                <asp:Label ID="LabelSL" Text='<%# Container.DataItemIndex + 1 %>' runat="server"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+
+                                        <asp:BoundField DataField="EmpMasterCode" HeaderText="Employee Code" />
+                                        <asp:BoundField DataField="EmpName" HeaderText="Employee Name" />
+
+                                        <asp:TemplateField HeaderText="Designation">
+                                            <ItemTemplate>
+                                                <asp:DropDownList ID="designationDropDownList" Enabled="False" runat="server" CssClass="form-control form-control-sm">
+                                                </asp:DropDownList>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Department">
+                                            <ItemTemplate>
+                                                <asp:DropDownList ID="departmentDropDownList" Enabled="False" runat="server" CssClass="form-control form-control-sm">
+                                                </asp:DropDownList>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:BoundField DataField="DateOfJoin" HeaderText="Date Of Joining" DataFormatString="{0:dd-MMM-yyyy}" />
+                                        <asp:BoundField DataField="ServiceLength" HeaderText="Service Length(Dayes)" runat="server" Visible="False" />
+
+                                        <asp:TemplateField HeaderText="Salary Grade">
+                                            <ItemTemplate>
+                                                <asp:DropDownList ID="salaryGradeDropDownList" Enabled="False" runat="server" CssClass="form-control form-control-sm">
+                                                </asp:DropDownList>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Current Salary Step">
+                                            <ItemTemplate>
+                                                <asp:DropDownList ID="salaryStepDropDownList" Enabled="False" runat="server" CssClass="form-control form-control-sm">
+                                                </asp:DropDownList>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Incremental Step">
+                                            <ItemTemplate>
+                                                <asp:DropDownList ID="incrementalStepDropDownList" runat="server" CssClass="form-control form-control-sm" AutoPostBack="True"
+                                                    OnTextChanged="incrementalStepDropDownList_OnTextChanged">
+                                                </asp:DropDownList>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Feed Salary (%)">
+                                            <ItemTemplate>
+                                                <asp:TextBox ID="feedSalaryTextBox" runat="server" CssClass="form-control form-control-sm"></asp:TextBox>
+                                                <asp:FilteredTextBoxExtender ID="FilteredTextBoxExtenderconvRate" runat="server"
+                                                    Enabled="True" TargetControlID="feedSalaryTextBox" FilterType="Custom" ValidChars="0123456789"></asp:FilteredTextBoxExtender>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                    </Columns>
+                                </asp:GridView>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="col-12 ">
+                                    <asp:CheckBox ID="manualUpdateCheckBox" runat="server" /> <span>&nbsp; Manually Update to Employee Information</span>
+                                </div>
+                            </div>
+                            
+                            <br />
+
+                            <div class="form-row">
+                                <div class="col-3 ">
+                                    <div class="form-group">
+                                        <asp:Button ID="submitButton" Text="Submit" OnClick="submitButton_OnClick" Visible="False" CssClass="btn btn-sm btn-info" runat="server" />
+                                        <asp:Button ID="clearButton" Text="Cancel" Visible="False" OnClick="clearButton_OnClick" CssClass="btn btn-sm btn-warning" runat="server" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </ContentTemplate>
+        </asp:UpdatePanel>
+    </div>
+
+
+
+</asp:Content>
+

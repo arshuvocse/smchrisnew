@@ -1,0 +1,27 @@
+.vs/
+*.vsidx
+[Bb]in/
+!MainSite/Bin/
+MainSite/Bin/BLL.*
+MainSite/Bin/DAL.*
+MainSite/Bin/DAO.*
+obj/
+*.user
+*.suo
+
+# Local tool configs (contain secrets/tokens)
+.mcp.json
+.vscode/
+.claude/
+--sql-server
+
+# Build, precompiled, logs, and runtime upload artifacts
+PrecompiledWeb/
+.tmp_precompile/
+build.log
+graphify-out/
+MainSite/App_Data/error_log.txt
+MainSite/UploadHealthCareDoc/
+MainSite/UploadMeetingDocument/
+MainSite/UploadImg/
+DAL/MAIN_FUNCTION/exceldocs/backup_before_delete/

@@ -1,0 +1,26 @@
+﻿.radio.radiobuttonlist input[type="radio"],
+.checkbox.checkboxlist input[type="checkbox"]
+{
+	margin-left: 0;
+}
+
+.radio.radiobuttonlist label,
+.checkbox.checkboxlist label
+{
+	margin-bottom: 4px;
+	margin-left: 0;
+}
+
+fieldset legend
+{
+	border: 0;
+	font-size: inherit;
+	font-weight: 700;
+	margin-bottom: 0;
+}
+
+fieldset .radio,
+fieldset .checkbox
+{
+	margin-top: 4px;
+}

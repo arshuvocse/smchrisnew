@@ -1,0 +1,175 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.Services;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using DAL.COMMON_DAL;
+using DAL.Inverview_DAL;
+using DAL.MPBudget;
+using DAO.HRIS_DAO;
+using DAO.HRIS_DAO_EF;
+
+public partial class Inverview_InterviewCandidateGrading : System.Web.UI.Page
+{
+    private CommonDataLoadDAL _commonDataLoad = new CommonDataLoadDAL();
+    private InterviewCommonDAL _interviewCommonDAL = new InterviewCommonDAL();
+    private static string _userId;
+    private DropDownList ddlCompany;
+    private TextBox txt_JobCirculation;
+    //private TextBox txt_JobTitle;
+    private HiddenField hfJobID;
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        ddlCompany = (DropDownList)IVSearchControl.FindControl("ddlCompany");
+        txt_JobCirculation = (TextBox)IVSearchControl.FindControl("txt_JobCirculation");
+        //txt_JobTitle = (TextBox)IVSearchControl.FindControl("txt_JobTitle");
+        hfJobID = (HiddenField)IVSearchControl.FindControl("hfJobID");
+        if (Session["UserId"] != null)
+        {
+            _userId = Session["UserId"].ToString();
+        }
+        if (!IsPostBack)
+        {
+            LoadInitialDDL();
+        }
+    }
+    private void LoadInitialDDL()
+    {
+        //using (DataTable dt = _commonDataLoad.GetCompanyDDL())
+        //{
+
+        //    ddlCompany.DataSource = dt;
+        //    ddlCompany.DataValueField = "Value";
+        //    ddlCompany.DataTextField = "TextField";
+        //    ddlCompany.DataBind();
+        //}
+        
+    }
+    //protected void ddlCompany_SelectedIndexChanged(object sender, EventArgs e)
+    //{
+    //    Session["cid"] = ddlCompany.SelectedValue;
+    //}
+    [WebMethod(EnableSession = true)]
+    public static List<InterviewCandidateViewModel> LoadInterviewCandidateGrading(string CompanyId, string JobID)
+    {
+        InterviewCommonDAL _interviewCommonDAL = new InterviewCommonDAL();
+        return _interviewCommonDAL.LoadInterviewCandidateGrading(CompanyId, JobID);
+    }
+    //protected void txt_JobCirculation_OnTextChanged(object sender, EventArgs e)
+    //{
+    //    var scid = HttpContext.Current.Session["cid"].ToString();
+
+    //    using (var db = new HRIS_SMCEntities())
+    //    {
+    //        tblJobCreation job = (from j in db.tblJobCreations where j.JobCode.Equals(txt_JobCirculation.Text) select j).FirstOrDefault();
+    //        if (job != null)
+    //        {
+    //            txt_JobTitle.Text = job.Position;
+    //            hfJobID.Value = job.JobID.ToString();
+    //        }
+
+    //    }
+
+    //}
+
+    [WebMethod(EnableSession = true)]
+    public static int RIsRecommended(InterviewCandidateViewModel CandidateGrading)
+    {
+        int InterviewCandidateGradingId = 0;
+        try
+        {
+            using (var db = new HRIS_SMCEntities())
+            {
+                tblInterviewCandidateGrading grading = null;
+                if (CandidateGrading.InterviewCandidateGradingId > 0)////Edit Mode
+                {
+                    grading = (from j in db.tblInterviewCandidateGradings 
+                               where j.InterviewCandidateGradingId == CandidateGrading.InterviewCandidateGradingId select j).FirstOrDefault();
+
+                    if (grading!=null)
+                    {
+
+                        grading.JobID = CandidateGrading.JobID;
+                        grading.CandidateID = CandidateGrading.CandidateID;
+                        grading.IsRecommended = CandidateGrading.IsRecommended;
+
+                        grading.Attitude = CandidateGrading.Attitude;
+                        grading.Language = CandidateGrading.Language;
+                        grading.TechnicalSkill = CandidateGrading.TechnicalSkill;
+                        grading.IQ = CandidateGrading.IQ;
+                        grading.GeneralKnowledge = CandidateGrading.GeneralKnowledge;
+                        grading.Others = CandidateGrading.Others;
+                        grading.TimeSence = CandidateGrading.TimeSence;
+                        grading.TotalMarks = CandidateGrading.TotalMarks;
+                        grading.Grade = CandidateGrading.LetterGrade;
+                        grading.IsActive = true;
+
+                        grading.UpdateBy = _userId;
+                        grading.UpdateDate = DateTime.Now;
+
+                        db.SaveChanges();
+                        InterviewCandidateGradingId = grading.InterviewCandidateGradingId;
+                    }
+                    else
+                    {////New Mode
+                        grading = new tblInterviewCandidateGrading();
+                        grading.JobID = CandidateGrading.JobID;
+                        grading.CandidateID = CandidateGrading.CandidateID;
+                        grading.IsRecommended = CandidateGrading.IsRecommended;
+
+                        grading.Attitude = CandidateGrading.Attitude;
+                        grading.Language = CandidateGrading.Language;
+                        grading.TechnicalSkill = CandidateGrading.TechnicalSkill;
+                        grading.IQ = CandidateGrading.IQ;
+                        grading.GeneralKnowledge = CandidateGrading.GeneralKnowledge;
+                        grading.Others = CandidateGrading.Others;
+                        grading.TimeSence = CandidateGrading.TimeSence;
+                        grading.TotalMarks = CandidateGrading.TotalMarks;
+                        grading.Grade = CandidateGrading.LetterGrade;
+                        grading.IsActive = true;
+
+                        grading.EntryBy = _userId;
+                        grading.EntryDate = DateTime.Now;
+                        db.tblInterviewCandidateGradings.Add(grading);
+                        db.SaveChanges();
+                        InterviewCandidateGradingId = grading.InterviewCandidateGradingId;
+                    }
+
+                }
+                else
+                {////New Mode
+                    grading = new tblInterviewCandidateGrading();
+                    grading.JobID = CandidateGrading.JobID;
+                    grading.CandidateID = CandidateGrading.CandidateID;
+                    grading.IsRecommended = CandidateGrading.IsRecommended;
+
+                    grading.Attitude = CandidateGrading.Attitude;
+                    grading.Language = CandidateGrading.Language;
+                    grading.TechnicalSkill = CandidateGrading.TechnicalSkill;
+                    grading.IQ = CandidateGrading.IQ;
+                    grading.GeneralKnowledge = CandidateGrading.GeneralKnowledge;
+                    grading.Others = CandidateGrading.Others;
+                    grading.TimeSence = CandidateGrading.TimeSence;
+                    grading.TotalMarks = CandidateGrading.TotalMarks;
+                    grading.Grade = CandidateGrading.LetterGrade;
+                    grading.IsActive = true;
+
+                    grading.EntryBy = _userId;
+                    grading.EntryDate = DateTime.Now;
+                    db.tblInterviewCandidateGradings.Add(grading);
+                    db.SaveChanges();
+                    InterviewCandidateGradingId = grading.InterviewCandidateGradingId;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            InterviewCandidateGradingId=0;
+        }
+
+        return InterviewCandidateGradingId;
+    }
+}

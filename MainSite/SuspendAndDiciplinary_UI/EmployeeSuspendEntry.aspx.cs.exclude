@@ -1,0 +1,281 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Globalization;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using DAL.SuspendAndDiciplinary_Dal;
+using DAO.HRIS_DAO;
+using HELPER_FUNCTIONS.HELPERS;
+
+public partial class SuspendAndDiciplinary_UI_EmployeeSuspendEntry : System.Web.UI.Page
+{
+
+    EmployeeSuspendDal aSuspendDal = new EmployeeSuspendDal();
+    ManageUserOperationCredentials aOperationCredentials = new ManageUserOperationCredentials();
+    ShowMessage aShowMessage = new ShowMessage();
+    Messages aMessages = new Messages();
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            if (Session["suspendId"] != null)
+            {
+                GetOneRecord(Session["suspendId"].ToString());
+                Session["suspendId"] = null;
+            }
+        }
+    }
+
+    private void GetOneRecord(string suspendId)
+    {
+        DataTable aSuspend = new DataTable();
+
+        aSuspend = aSuspendDal.EmpSuspendInformation(suspendId);
+
+        const int rowIndex = 0;
+
+        if (aSuspend.Rows.Count > 0)
+        {
+
+            suspendHiddenField.Value = suspendId;
+            effectDateTexBox.Text = aSuspend.Rows[rowIndex].Field<DateTime>("EffectiveDate").ToString("dd-MMM-yyyy");
+            comIdHiddenField.Value = aSuspend.Rows[rowIndex].Field<Int32>("CompanyInfoId").ToString(CultureInfo.InvariantCulture);
+            unitIdHiddenField.Value = aSuspend.Rows[rowIndex].Field<Int32>("UnitId").ToString(CultureInfo.InvariantCulture);
+
+            divIdHiddenField.Value = aSuspend.Rows[rowIndex].Field<Int32>("DivisionId").ToString(CultureInfo.InvariantCulture);
+            deptIdHiddenField.Value = aSuspend.Rows[rowIndex].Field<Int32>("DeptId").ToString(CultureInfo.InvariantCulture);
+
+            secIdHiddenField.Value = aSuspend.Rows[rowIndex].Field<Int32>("SectionId").ToString(CultureInfo.InvariantCulture);
+            desigIdHiddenField.Value = aSuspend.Rows[rowIndex].Field<Int32>("DesigId").ToString(CultureInfo.InvariantCulture);
+
+            empGradeIdHiddenField.Value = aSuspend.Rows[rowIndex].Field<Int32>("GradeId").ToString(CultureInfo.InvariantCulture);
+            empTypeIdHiddenField.Value = aSuspend.Rows[rowIndex].Field<Int32>("EmpTypeId").ToString(CultureInfo.InvariantCulture);
+
+            empTypeIdHiddenField.Value = aSuspend.Rows[rowIndex].Field<Int32>("EmpInfoId").ToString(CultureInfo.InvariantCulture);
+        }
+
+        
+
+
+        GetEmpMasterCode(EmpInfoIdHiddenField.Value);
+        //GetNames(comIdHiddenField.Value, unitIdHiddenField.Value, divIdHiddenField.Value, deptIdHiddenField.Value, desigIdHiddenField.Value, secIdHiddenField.Value, empGradeIdHiddenField.Value, empTypeIdHiddenField.Value);
+    }
+
+    public void GetEmpMasterCode(string EmpInfoId)
+    {
+        if (!string.IsNullOrEmpty(EmpInfoId))
+        {
+            DataTable aTable = new DataTable();
+           // aTable = _aSuspendBLL.LoadEmpInfoCode(EmpInfoId);
+
+            if (aTable.Rows.Count > 0)
+            {
+                EmpMasterCodeTextBox.Text = aTable.Rows[0]["EmpMasterCode"].ToString().Trim();
+                empNameTexBox.Text = aTable.Rows[0]["EmpName"].ToString().Trim();
+            }
+        }
+    }
+
+    private void Clear()
+    {
+        EmpMasterCodeTextBox.Text = string.Empty;
+        empNameTexBox.Text = string.Empty;
+        effectDateTexBox.Text = string.Empty;
+        comIdHiddenField.Value = null;
+        unitIdHiddenField.Value = null;
+        divIdHiddenField.Value = null;
+        deptIdHiddenField.Value = null;
+        secIdHiddenField.Value = null;
+        desigIdHiddenField.Value = null;
+        empGradeIdHiddenField.Value = null;
+        empTypeIdHiddenField.Value = null;
+        comNameLabel.Text = string.Empty;
+        unitNameLabel.Text = string.Empty;
+        divNameLabel.Text = string.Empty;
+        deptNameLabel.Text = string.Empty;
+        secNameLabel.Text = string.Empty;
+        desigNameLabel.Text = string.Empty;
+        empGradeLabel.Text = string.Empty;
+        empTypeLabel.Text = string.Empty;
+
+        joiningDateTextBox.Text = "";
+        descriptionTexBox.Text = "";
+        remarksTextBox.Text = "";
+        typeTextBox.Text = "";
+
+        EmpInfoIdHiddenField.Value = "";
+        suspendHiddenField.Value = "";
+
+    }
+    private bool Validation()
+    {
+
+        if (effectDateTexBox.Text == "")
+        {
+            aShowMessage.ShowMessageBox("Effective date is required!!", this);
+            return false;
+        }
+
+        if (EmpMasterCodeTextBox.Text == "")
+        {
+            aShowMessage.ShowMessageBox("Employee Code is required!!", this);
+            return false;
+        }
+        if (empNameTexBox.Text == "")
+        {
+            aShowMessage.ShowMessageBox("Employee Name is required!!", this);
+            return false;
+        }
+        if (EffectDate() == false)
+        {
+             aShowMessage.ShowMessageBox("Please enter Valid Date!!", this);
+            return false;
+        }
+
+        return true;
+    }
+
+    private bool EffectDate()
+    {
+        try
+        {
+            var aDateTime = new DateTime();
+            aDateTime = Convert.ToDateTime(effectDateTexBox.Text);
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    protected void submitButton_Click(object sender, EventArgs e)
+    {
+        if (Validation())
+        {
+            if (suspendHiddenField.Value == "")
+            {
+                var aSuspend = new EmployeeSuspendDao();
+
+                aSuspend.EmpInfoId = Convert.ToInt32(EmpInfoIdHiddenField.Value);
+                aSuspend.EffectiveDate = Convert.ToDateTime(effectDateTexBox.Text.Trim());
+                aSuspend.Status = "Inactive";
+                aSuspend.CompanyInfoId = Convert.ToInt32(comIdHiddenField.Value);
+                aSuspend.UnitId = Convert.ToInt32(unitIdHiddenField.Value);
+                aSuspend.DivisionId = Convert.ToInt32(divIdHiddenField.Value);
+                aSuspend.DeptId = Convert.ToInt32(deptIdHiddenField.Value);
+                aSuspend.SectionId = Convert.ToInt32(secIdHiddenField.Value);
+                aSuspend.DesigId = Convert.ToInt32(desigIdHiddenField.Value);
+                aSuspend.GradeId = Convert.ToInt32(empGradeIdHiddenField.Value);
+                aSuspend.EmpTypeId = Convert.ToInt32(empTypeIdHiddenField.Value);
+
+                aSuspend.EntryBy = Session["LoginName"].ToString();
+                aSuspend.EntryDate = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+                aSuspend.ActionStatus = "Posted";
+
+                aSuspend.JoiningDate = Convert.ToDateTime(joiningDateTextBox.Text.Trim());
+                aSuspend.Description = descriptionTexBox.Text.Trim();
+                aSuspend.Remarks = remarksTextBox.Text.Trim();
+                aSuspend.Type = typeTextBox.Text.Trim();
+
+                aSuspend.IsActive = true;
+
+                if (aSuspendDal.SaveDataForSuspend(aSuspend) > 0)
+                {
+                    aShowMessage.ShowMessageBox(aMessages.SaveSuccessMessage, this);
+                    Clear();
+                }
+            }
+
+            if (suspendHiddenField.Value != "")
+            {
+                var aSuspend = new EmployeeSuspendDao();
+
+                aSuspend.SuspendId = Convert.ToInt32(empGradeIdHiddenField.Value);
+                aSuspend.EmpInfoId = Convert.ToInt32(EmpInfoIdHiddenField.Value);
+                aSuspend.EffectiveDate = Convert.ToDateTime(effectDateTexBox.Text);
+                aSuspend.Status = "Inactive";
+                aSuspend.CompanyInfoId = Convert.ToInt32(comIdHiddenField.Value);
+                aSuspend.UnitId = Convert.ToInt32(unitIdHiddenField.Value);
+                aSuspend.DivisionId = Convert.ToInt32(divIdHiddenField.Value);
+                aSuspend.DeptId = Convert.ToInt32(deptIdHiddenField.Value);
+                aSuspend.SectionId = Convert.ToInt32(secIdHiddenField.Value);
+                aSuspend.DesigId = Convert.ToInt32(desigIdHiddenField.Value);
+                aSuspend.GradeId = Convert.ToInt32(empGradeIdHiddenField.Value);
+                aSuspend.EmpTypeId = Convert.ToInt32(empTypeIdHiddenField.Value);
+
+                aSuspend.EntryBy = Session["LoginName"].ToString();
+                aSuspend.EntryDate = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+                aSuspend.ActionStatus = "Posted";
+
+                aSuspend.IsActive = true;
+
+                aSuspend.JoiningDate = Convert.ToDateTime(joiningDateTextBox.Text);
+                aSuspend.Description = descriptionTexBox.Text;
+                aSuspend.Remarks = remarksTextBox.Text;
+                aSuspend.Type = typeTextBox.Text;
+
+                if (aSuspendDal.UpdateDataForEmpSuspend(aSuspend))
+                {
+                    aShowMessage.ShowMessageBox(aMessages.UpdateSuccessMessage, this);
+                    Clear();
+                }
+            }
+        }
+        else
+        {
+            aShowMessage.ShowMessageBox("Please input data to alll required field!!", this);
+        }
+    }
+    protected void departmentListImageButton_Click(object sender, EventArgs eventArgs)
+    {
+        Response.Redirect("SuspendView.aspx");
+    }
+    protected void searchButton_Click(object sender, EventArgs e)
+    {
+        if (!string.IsNullOrEmpty(EmpMasterCodeTextBox.Text.Trim()))
+        {
+            var aTable = new DataTable();
+            aTable = aSuspendDal.LoadEmpInfo(EmpMasterCodeTextBox.Text);
+
+            if (aTable.Rows.Count > 0)
+            {
+                EmpInfoIdHiddenField.Value = aTable.Rows[0]["EmpInfoId"].ToString().Trim();
+                empNameTexBox.Text = aTable.Rows[0]["EmpName"].ToString().Trim();
+                comNameLabel.Text = aTable.Rows[0]["CompanyName"].ToString().Trim();
+                unitNameLabel.Text = aTable.Rows[0]["UnitName"].ToString().Trim();
+                divNameLabel.Text = aTable.Rows[0]["DivisionName"].ToString().Trim();
+                deptNameLabel.Text = aTable.Rows[0]["DepartmentName"].ToString().Trim();
+                secNameLabel.Text = aTable.Rows[0]["SectionName"].ToString().Trim();
+                desigNameLabel.Text = aTable.Rows[0]["Designation"].ToString().Trim();
+                empGradeLabel.Text = aTable.Rows[0]["GradeName"].ToString().Trim();
+                empTypeLabel.Text = aTable.Rows[0]["EmpType"].ToString().Trim();
+                comIdHiddenField.Value = aTable.Rows[0]["CompanyInfoId"].ToString().Trim();
+                unitIdHiddenField.Value = aTable.Rows[0]["UnitId"].ToString().Trim();
+                divIdHiddenField.Value = aTable.Rows[0]["DivisionId"].ToString().Trim();
+                deptIdHiddenField.Value = aTable.Rows[0]["DepartmentId"].ToString().Trim();
+                secIdHiddenField.Value = aTable.Rows[0]["SectionId"].ToString().Trim();
+                desigIdHiddenField.Value = aTable.Rows[0]["DesignationId"].ToString().Trim();
+                empGradeIdHiddenField.Value = aTable.Rows[0]["GradeId"].ToString().Trim();
+                empTypeIdHiddenField.Value = aTable.Rows[0]["EmpTypeId"].ToString().Trim();
+            }
+            else
+            {
+                aShowMessage.ShowMessageBox("Employee not Active", this);
+            }
+        }
+        else
+        {
+            aShowMessage.ShowMessageBox("Please Input Employee Code", this);
+        }
+    }
+
+    protected void cancelButton_OnClick(object sender, EventArgs e)
+    {
+        Clear();
+    }
+}

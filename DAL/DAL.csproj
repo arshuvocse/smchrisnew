@@ -1,0 +1,346 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A9254E50-049A-4721-976E-0111D5371C03}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DAL</RootNamespace>
+    <AssemblyName>DAL</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AjaxControlToolkit">
+      <HintPath>..\..\..\Mecca GROUP\ERP\BLL\bin\Release\AjaxControlToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="HELPER_FUNCTIONS">
+      <HintPath>..\MainSite\Bin\HELPER_FUNCTIONS.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\CSTL Solutuion\SMC HRIS\Latest\hr_smc_final\DAL\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ObjectBuilder2, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Microsoft.Practices.ObjectBuilder2.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Providers">
+      <HintPath>..\MainSite\Bin\System.Web.Providers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AllPrintLetter_DAL\ITMayConcernDAL.cs" />
+    <Compile Include="AllPrintLetter_DAL\MemoPromotionDAL.cs" />
+    <Compile Include="API\SMCApiCall.cs" />
+    <Compile Include="Appraisal\AppraisalFunctionalPartHRDAL.cs" />
+    <Compile Include="Appraisal\BSCAppraisalFunctionalPartDALHR.cs" />
+    <Compile Include="Appraisal\KPIMIDAppraisalPartBDAL.cs" />
+    <Compile Include="Appraisal\KPIMIDAppraislDashboardDAL.cs" />
+    <Compile Include="Appraisal\KPIMIDAppraisalFunctionalPartDAL.cs" />
+    <Compile Include="Appraisal\MBSCOKRAppraislDashboardDAL.cs" />
+    <Compile Include="Appraisal\MBSCAppraisalFunctionalPartDAL.cs" />
+    <Compile Include="Appraisal\BSCJDAppraisalDAL.cs" />
+    <Compile Include="Appraisal\BSCKPISETUPAppraisalListDAL.cs" />
+    <Compile Include="Appraisal\MOKRBSCAppraisalPartBDAL.cs" />
+    <Compile Include="Appraisal\OKRBSCAppraisalPartBDAL.cs" />
+    <Compile Include="Appraisal\BSCAppraisalFunctionalPartDAL.cs" />
+    <Compile Include="Appraisal\AppraisalFunctionalPartDAL.cs" />
+    <Compile Include="Appraisal\AppraisalPartBDAL.cs" />
+    <Compile Include="Appraisal\AppraisalSetupListDAL.cs" />
+    <Compile Include="Appraisal\AppraislDashboardDAL.cs" />
+    <Compile Include="Appraisal\BSCOKRAppraislDashboardDAL.cs" />
+    <Compile Include="Appraisal\BSCOKRPermission.cs" />
+    <Compile Include="Appraisal\DeadlineExtendedEntryDAL.cs" />
+    <Compile Include="Appraisal\BSCJDDAL.cs" />
+    <Compile Include="Appraisal\JdDAL.cs" />
+    <Compile Include="Appraisal\JdDesigDAL.cs" />
+    <Compile Include="Appraisal\BSCKPIInformationViewDAL.cs" />
+    <Compile Include="Appraisal\KPIInformationViewDAL.cs" />
+    <Compile Include="Appraisal\BSCKPISETUPListDAL.cs" />
+    <Compile Include="Appraisal\KPISETUPListDAL.cs" />
+    <Compile Include="Audit_Dal\EmployeeAuditDal.cs" />
+    <Compile Include="Benefit_DAL\BenefitDAL.cs" />
+    <Compile Include="Benefit_DAL\FacilityDAL.cs" />
+    <Compile Include="BirthDayMailGenerate_DAL\BirthDayMailGenerateDAL.cs" />
+    <Compile Include="Chart_DAL\ChartDAL.cs" />
+    <Compile Include="COMMON_DAL\CompanyHierarchyDAL.cs" />
+    <Compile Include="COMMON_DAL\CommonDataLoadDAL.cs" />
+    <Compile Include="COMMON_DAL\DataEncryptDecrypt.cs" />
+    <Compile Include="COMMON_DAL\UserOperationPermissionCredentialsDal.cs" />
+    <Compile Include="COMMON_DAL\VivaDao.cs" />
+    <Compile Include="ContractualEmployeeManagement_DAL\ContractualEmpManageDAL.cs" />
+    <Compile Include="DashBoardDal\DashboardSettingPageDAL.cs" />
+    <Compile Include="DivisionWiseEmpTransfer\DivisionWiseTransferDal.cs" />
+    <Compile Include="Employee_DAL\DepartedDal.cs" />
+    <Compile Include="Employee_DAL\EmpExperienceDAL.cs" />
+    <Compile Include="ExecutiveOfficeDocDal\ExecutiveOfficeDocUpDal.cs" />
+    <Compile Include="ExecutiveOfficeDocDal\ExeOfficeDocDal.cs" />
+    <Compile Include="ExecutiveOfficeDocDal\ExeOfficeDocSubcategoryDal.cs" />
+    <Compile Include="ExitManagement_DAL\ClearanceForwardingDal.cs" />
+    <Compile Include="ExitManagement_DAL\ClearenceFormDal.cs" />
+    <Compile Include="ExitManagement_DAL\EmpExitDal.cs" />
+    <Compile Include="ExitManagement_DAL\EmployeeJobLeftEntryDAL.cs" />
+    <Compile Include="ExitManagement_DAL\ExitInterviewFormDal.cs" />
+    <Compile Include="HealthCare_DAL\AdvanceBillDal.cs" />
+    <Compile Include="HealthCare_DAL\ApplicationActionChangeDal.cs" />
+    <Compile Include="HealthCare_DAL\BillSettlementDal.cs" />
+    <Compile Include="HealthCare_DAL\CommitteeApprovalPanelDal.cs" />
+    <Compile Include="HealthCare_DAL\CommitteSetupDal.cs" />
+    <Compile Include="HealthCare_DAL\EMpInfoSapDal.cs" />
+    <Compile Include="HealthCare_DAL\HealthCareListDal.cs" />
+    <Compile Include="HealthCare_DAL\HRDeclarationDal.cs" />
+    <Compile Include="HealthCare_DAL\HRPanelDal.cs" />
+    <Compile Include="HealthCare_DAL\IPDOPDHeadOfExpenseDal.cs" />
+    <Compile Include="HealthCare_DAL\MedicalSupportComDal.cs" />
+    <Compile Include="HealthCare_DAL\ReimbursmentFormDal.cs" />
+    <Compile Include="HealthCare_DAL\TopSheetDal.cs" />
+    <Compile Include="Increment_DAL\ICSignaturePersonDAL.cs" />
+    <Compile Include="Increment_DAL\IncrementApprovalDal.cs" />
+    <Compile Include="Increment_DAL\MemoPrintIncrementDAL.cs" />
+    <Compile Include="Increment_DAL\IncrementDal.cs" />
+    <Compile Include="InternalCls\ClsApprovalAction.cs" />
+    <Compile Include="InternalCls\ClsCommonInternalDAL.cs" />
+    <Compile Include="InternalCls\ClsCommonOperationDAL.cs" />
+    <Compile Include="InternalCls\ClsPrimaryKeyFind.cs" />
+    <Compile Include="Inverview_DAL\InterviewBoardSetupDAL.cs" />
+    <Compile Include="Inverview_DAL\InterviewCandidateInfoListDAL.cs" />
+    <Compile Include="Inverview_DAL\InterviewCommonDAL.cs" />
+    <Compile Include="Lunch_Allowance_DAL\LunchAllowanceCancelDAL.cs" />
+    <Compile Include="Lunch_Allowance_DAL\Lunch_Allowance_Dal_Common.cs" />
+    <Compile Include="MAIN_FUNCTION\DataAccessManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MAIN_FUNCTION\DataBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MAIN_FUNCTION\DB_Authentication.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MAIN_FUNCTION\DB_Connection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MAIN_FUNCTION\DB_Manager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MAIN_FUNCTION\DB_Names.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MasterSetup_DAL\AchievementsEntryDAL.cs" />
+    <Compile Include="MasterSetup_DAL\EducationResultEntryDAL.cs" />
+    <Compile Include="MasterSetup_DAL\EducationSubjectGroupEntryDAL.cs" />
+    <Compile Include="MasterSetup_DAL\EduInstitiueEntryDAL.cs" />
+    <Compile Include="MasterSetup_DAL\EmployeeApprovalByOpearationEntryDAL.cs" />
+    <Compile Include="MasterSetup_DAL\EmployeeTypeEntryDAL.cs" />
+    <Compile Include="MasterSetup_DAL\ExtraCurriculamActivitiesEntryDAL.cs" />
+    <Compile Include="MasterSetup_DAL\FieldofspecializationEntryDAL.cs" />
+    <Compile Include="MasterSetup_DAL\FinancialYearDAL.cs" />
+    <Compile Include="MasterSetup_DAL\HobbyEntryDAL.cs" />
+    <Compile Include="MasterSetup_DAL\NationalityEntryDAL.cs" />
+    <Compile Include="MasterSetup_DAL\NominationPurposeEntryDAL.cs" />
+    <Compile Include="MasterSetup_DAL\NominationRelationDAL.cs" />
+    <Compile Include="MasterSetup_DAL\KPIMIdyearStatusSetupDAL.cs" />
+    <Compile Include="MasterSetup_DAL\OtherTalentsEntryDAL.cs" />
+    <Compile Include="MasterSetup_DAL\ProjectWiseEmployeeAllocationEntryDAL.cs" />
+    <Compile Include="MasterSetup_DAL\AddressDistrictEntryDAL.cs" />
+    <Compile Include="MasterSetup_DAL\AddressDivisionEntryDAL.cs" />
+    <Compile Include="MasterSetup_DAL\AddressThanaEntryDAL.cs" />
+    <Compile Include="MasterSetup_DAL\BoardUniversityDAL.cs" />
+    <Compile Include="MasterSetup_DAL\EducationNameEntryDAL.cs" />
+    <Compile Include="MasterSetup_DAL\OccupationEntryDaL.cs" />
+    <Compile Include="MasterSetup_DAL\TrainingTopicEntryDAL.cs" />
+    <Compile Include="MasterSetup_DAL\SuspendReasonEntryDaL.cs" />
+    <Compile Include="MasterSetup_DAL\JobLeftTypeDAL.cs" />
+    <Compile Include="MasterSetup_DAL\TraningInstitiueEntryDAL.cs" />
+    <Compile Include="MasterSetup_DAL\TraingingHeadingEntryDAL.cs" />
+    <Compile Include="MasterSetup_DAL\VaencyEntryDaL.cs" />
+    <Compile Include="MasterSetup_DAL\PlaceInformationDal.cs" />
+    <Compile Include="MasterSetup_DAL\AreaInformationDal.cs" />
+    <Compile Include="MasterSetup_DAL\CompanyInformationDal.cs" />
+    <Compile Include="MasterSetup_DAL\DepartmentInformationDal.cs" />
+    <Compile Include="MasterSetup_DAL\DesignationInformationDal.cs" />
+    <Compile Include="MasterSetup_DAL\DesignationStepInformationDal.cs" />
+    <Compile Include="MasterSetup_DAL\DesignationTypeDAL.cs" />
+    <Compile Include="MasterSetup_DAL\DivisionInformationDal.cs" />
+    <Compile Include="MasterSetup_DAL\DivisionWingInformationDal.cs" />
+    <Compile Include="MasterSetup_DAL\EmpGeneralInfoDAL.cs" />
+    <Compile Include="MasterSetup_DAL\EmployeeCategoryInformationDal.cs" />
+    <Compile Include="MasterSetup_DAL\EmployeeTypeChangeDAL.cs" />
+    <Compile Include="MasterSetup_DAL\InterviewBoardSetupDal.cs" />
+    <Compile Include="MasterSetup_DAL\JobLocationDal.cs" />
+    <Compile Include="MasterSetup_DAL\ProjectSetupDal.cs" />
+    <Compile Include="MasterSetup_DAL\OfficeInformationDal.cs" />
+    <Compile Include="MasterSetup_DAL\RegionInformationDal.cs" />
+    <Compile Include="MasterSetup_DAL\SalaryGradeInformationDal.cs" />
+    <Compile Include="MasterSetup_DAL\SalaryLocationInformationDal.cs" />
+    <Compile Include="MasterSetup_DAL\SalaryStepInforamtionDal.cs" />
+    <Compile Include="MasterSetup_DAL\SalaryTypeInformationDal.cs" />
+    <Compile Include="MasterSetup_DAL\SectionInformationDal.cs" />
+    <Compile Include="MasterSetup_DAL\SubSectionInformationDal.cs" />
+    <Compile Include="MasterSetup_DAL\UserDAL.cs" />
+    <Compile Include="MasterSetup_DAL\VacancyCirculationDAL.cs" />
+    <Compile Include="MasterSetup_DAL\ValidationDeleteCommonDAL.cs" />
+    <Compile Include="MasterSetup_DAL\VivaSetupInfoEntryDAL.cs" />
+    <Compile Include="MasterSetup_DAL\WeeklyHolidayDAL.cs" />
+    <Compile Include="MeetingMinorsDAL\MeetingCategoryDal.cs" />
+    <Compile Include="MeetingMinorsDAL\MeetingEntryDAL.cs" />
+    <Compile Include="MeetingMinorsDAL\FloorDal.cs" />
+    <Compile Include="MeetingMinorsDAL\MemberInfoDaL.cs" />
+    <Compile Include="MeetingMinorsDAL\MeetingMinors.cs" />
+    <Compile Include="MeetingMinorsDAL\MeetingRoomDal.cs" />
+    <Compile Include="MeetingMinorsDAL\MiscellaneousInformationDAL.cs" />
+    <Compile Include="MeetingMinorsDAL\RoutingPath.cs" />
+    <Compile Include="MeetingMinorsDAL\SubcommitteeSetupDAL.cs" />
+    <Compile Include="MenuSetup_DAL\MenuSetupCommonDAL.cs" />
+    <Compile Include="MenuSetup_DAL\UserCommonDAL.cs" />
+    <Compile Include="MPBudget\MPBudgetCommonDAL.cs" />
+    <Compile Include="PanalCls\PanalClsDAL.cs" />
+    <Compile Include="Panal_DAL\PanalDAL.cs" />
+    <Compile Include="Permission_DAL\PermissionDAL.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecruitmentApp_DAL\RecruitmentAppDAL.cs" />
+    <Compile Include="RecruitmentManagement_DAL\EducationRequirementsDetailDAL.cs" />
+    <Compile Include="RecruitmentManagement_DAL\EmployeeRequsitionDAL.cs" />
+    <Compile Include="RecruitmentManagement_DAL\InterviewCandidateInfoDal.cs" />
+    <Compile Include="RecruitmentManagement_DAL\JobCreationDal.cs" />
+    <Compile Include="RecruitmentManagement_DAL\OtherRequirementDetailDAL.cs" />
+    <Compile Include="Report_DAL\AccountsInformationReportDAL.cs" />
+    <Compile Include="Report_DAL\SalaryMatrixReportDAL.cs" />
+    <Compile Include="Report_DAL\AppLogReportDAL.cs" />
+    <Compile Include="Report_DAL\ConfirmationReportListDal.cs" />
+    <Compile Include="Report_DAL\ContractRenewalReportDal.cs" />
+    <Compile Include="Report_DAL\ContractualEmpManagementReportDal.cs" />
+    <Compile Include="Report_DAL\EmployeeContractualReportDAL.cs" />
+    <Compile Include="Report_DAL\EmployeeDiciplinaryReportDAL.cs" />
+    <Compile Include="Report_DAL\EmployeeJobLeftEntryReportDAL.cs" />
+    <Compile Include="Report_DAL\EmployeeProfileDAL.cs" />
+    <Compile Include="Report_DAL\EmployeeSuspendReportDAL.cs" />
+    <Compile Include="Report_DAL\ExitManagementReportViwerDAL.cs" />
+    <Compile Include="Report_DAL\IncrementInformationReportDal.cs" />
+    <Compile Include="Report_DAL\IncrementReportDAL.cs" />
+    <Compile Include="Report_DAL\InterviewBoardSetupReportDAL.cs" />
+    <Compile Include="Report_DAL\InterviewCandidateInfoListReportDAL.cs" />
+    <Compile Include="Report_DAL\JobDescriptionViewReportDAL.cs" />
+    <Compile Include="Report_DAL\KPISetupListReportViwerDAL.cs" />
+    <Compile Include="Report_DAL\MemoPrintJobCirculationDAL.cs" />
+    <Compile Include="Report_DAL\MPBudgetListReportDAL.cs" />
+    <Compile Include="Report_DAL\EmployeePromotionReportDAL.cs" />
+    <Compile Include="Report_DAL\NewJoinerReportDal.cs" />
+    <Compile Include="Report_DAL\PrintJobCirculationDAL.cs" />
+    <Compile Include="Report_DAL\ProbationaryEmployeeReportDal.cs" />
+    <Compile Include="Report_DAL\ProbationListReportDAL.cs" />
+    <Compile Include="Report_DAL\PromotionalReportDal.cs" />
+    <Compile Include="Report_DAL\RedesignationReportDal.cs" />
+    <Compile Include="Report_DAL\SeparationReportDal.cs" />
+    <Compile Include="Report_DAL\SummaryReportPageDAL.cs" />
+    <Compile Include="Report_DAL\TrainingAttendanceReportDal.cs" />
+    <Compile Include="Report_DAL\TrainingInformationDal.cs" />
+    <Compile Include="Report_DAL\TrainingRecordsReportDAL.cs" />
+    <Compile Include="Report_DAL\EmployeeSeparationReportDAL.cs" />
+    <Compile Include="Report_DAL\ReportDAL.cs" />
+    <Compile Include="Report_DAL\TransferInfoReportDal.cs" />
+    <Compile Include="SKILL_WILL_DAL\SkillWillDeclarationDal.cs" />
+    <Compile Include="SKILL_WILL_DAL\Skill_Will_Dal.cs" />
+    <Compile Include="SurveyNew_DAL\SurveyDeclaretionEntryDAL.cs" />
+    <Compile Include="SurveyNew_DAL\surveyQuestionGroupEntryDAL.cs" />
+    <Compile Include="SurveyNew_DAL\SurveyQuestionSetupEntryDAL.cs" />
+    <Compile Include="Survey\ProbationperiodDAL.cs" />
+    <Compile Include="Survey\SurveyCommonDAL.cs" />
+    <Compile Include="SuspendAndDiciplinary_Dal\DiciplinaryActionDal.cs" />
+    <Compile Include="SuspendAndDiciplinary_Dal\EmployeeSuspendDal.cs" />
+    <Compile Include="TrainingAndLearningDevelopment_DAL\TrainingOrgSetupDal.cs" />
+    <Compile Include="TrainingAndLearningDevelopment_DAL\TrainingRequirementFormDal.cs" />
+    <Compile Include="TrainingAndLearningDevelopment_DAL\TrainingSetupDal.cs" />
+    <Compile Include="TrainingDAL\TrainingBudgetDal.cs" />
+    <Compile Include="TrainingDAL\TrainingEffeftivenessDAL.cs" />
+    <Compile Include="TrainingDAL\TrainingOrganizationReportDal.cs" />
+    <Compile Include="TrainingDAL\TrainingRecordDAL.cs" />
+    <Compile Include="TrainingDAL\TrainingTypeDAL.cs" />
+    <Compile Include="TrainingDAL\VenueDAL.cs" />
+    <Compile Include="TrainingDAL\TrainingDAL.cs" />
+    <Compile Include="TrainingDAL\TrainingHelper.cs" />
+    <Compile Include="Transfer_DAL\EmpTransferAndRedesignationDAL.cs" />
+    <Compile Include="Transfer_DAL\MemoPrintEmployeePromotionDAL.cs" />
+    <Compile Include="Transfer_DAL\EmployeeReDesignationDAL.cs" />
+    <Compile Include="Transfer_DAL\tblEmployeePromotionEntryDAL.cs" />
+    <Compile Include="userDal.cs" />
+    <Compile Include="UserPermissions_DAL\EmployeeBeenCardDal.cs" />
+    <Compile Include="UserPermissions_DAL\EmployeeInfoListReportDAL.cs" />
+    <Compile Include="UserPermissions_DAL\MenuDataPermissionDAL.cs" />
+    <Compile Include="UserPermissions_DAL\PermissionDAL.cs" />
+    <Compile Include="UserPermissions_DAL\SupervisorMenuAppDAL.cs" />
+    <Compile Include="UserPermissions_DAL\UserDAL.cs" />
+    <Compile Include="UserProfileDAL\ChangePasswordDAL.cs" />
+    <Compile Include="UserProfileDAL\KPIDashboardDAL.cs" />
+    <Compile Include="UserProfileDAL\UserProfileDAL.cs" />
+    <Compile Include="WebServiceDal\WebServiceDal.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="JobCirculationReport_DAL\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DAO\DAO.csproj">
+      <Project>{1507E2AF-7AF4-4A5B-BD11-BD3920CD914F}</Project>
+      <Name>DAO</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,71 @@
+<?xml version="1.0" standalone="yes"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="EmployeeSuspendDataTable">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ShortName" type="xs:string" minOccurs="0" />
+              <xs:element name="FinancialYearDesc" type="xs:string" minOccurs="0" />
+              <xs:element name="SuspendId" type="xs:int" minOccurs="0" />
+              <xs:element name="EmpInfoId" type="xs:long" minOccurs="0" />
+              <xs:element name="EmpMasterCode" type="xs:string" minOccurs="0" />
+              <xs:element name="DepartmentName" type="xs:string" minOccurs="0" />
+              <xs:element name="EmpTypeId" type="xs:int" minOccurs="0" />
+              <xs:element name="EmpType" type="xs:string" minOccurs="0" />
+              <xs:element name="ReasonId" type="xs:int" minOccurs="0" />
+              <xs:element name="CompanyInfoId" type="xs:int" minOccurs="0" />
+              <xs:element name="DateOfJoin" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="EmpName" type="xs:string" minOccurs="0" />
+              <xs:element name="EffectiveDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Description" type="xs:string" minOccurs="0" />
+              <xs:element name="Remarks" type="xs:string" minOccurs="0" />
+              <xs:element name="SuspendReasonEntry" type="xs:string" minOccurs="0" />
+              <xs:element name="DepartmentId" type="xs:int" minOccurs="0" />
+              <xs:element name="DepartmentName1" type="xs:string" minOccurs="0" />
+              <xs:element name="DesignationId" type="xs:int" minOccurs="0" />
+              <xs:element name="Designation" type="xs:string" minOccurs="0" />
+              <xs:element name="SuspendReasonEntry1" type="xs:string" minOccurs="0" />
+              <xs:element name="SuspendId1" type="xs:int" minOccurs="0" />
+              <xs:element name="EmpInfoId1" type="xs:int" minOccurs="0" />
+              <xs:element name="CompanyInfoId1" type="xs:int" minOccurs="0" />
+              <xs:element name="DivisionId" type="xs:int" minOccurs="0" />
+              <xs:element name="DivisionWId" type="xs:int" minOccurs="0" />
+              <xs:element name="DeptId" type="xs:int" minOccurs="0" />
+              <xs:element name="SectionId" type="xs:int" minOccurs="0" />
+              <xs:element name="SubSectionId" type="xs:int" minOccurs="0" />
+              <xs:element name="DesigId" type="xs:int" minOccurs="0" />
+              <xs:element name="EmpTypeId1" type="xs:int" minOccurs="0" />
+              <xs:element name="JoiningDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="EffectiveDate1" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ActionStatus" type="xs:string" minOccurs="0" />
+              <xs:element name="RelesedOn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="IsActive" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Description1" type="xs:string" minOccurs="0" />
+              <xs:element name="Remarks1" type="xs:string" minOccurs="0" />
+              <xs:element name="isRelease" type="xs:boolean" minOccurs="0" />
+              <xs:element name="ReleasedBy" type="xs:string" minOccurs="0" />
+              <xs:element name="ReleaseExplain" type="xs:string" minOccurs="0" />
+              <xs:element name="ReleaseRemarks" type="xs:string" minOccurs="0" />
+              <xs:element name="ReasonId1" type="xs:int" minOccurs="0" />
+              <xs:element name="IsSuspand" type="xs:boolean" minOccurs="0" />
+              <xs:element name="ReleaseDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="EntryBy" type="xs:string" minOccurs="0" />
+              <xs:element name="EntryDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="DeleteBy" type="xs:string" minOccurs="0" />
+              <xs:element name="DeleteDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="FinancialYearId" type="xs:int" minOccurs="0" />
+              <xs:element name="EmpCode" type="xs:string" minOccurs="0" />
+              <xs:element name="SalaryLoationId" type="xs:int" minOccurs="0" />
+              <xs:element name="JobLocationId" type="xs:int" minOccurs="0" />
+              <xs:element name="UpdateBy" type="xs:int" minOccurs="0" />
+              <xs:element name="UpdateDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="AutoProcess" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

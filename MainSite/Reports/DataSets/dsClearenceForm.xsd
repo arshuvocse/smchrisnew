@@ -1,0 +1,80 @@
+<?xml version="1.0" standalone="yes"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ClearanceDataTable">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EmpCode" type="xs:string" minOccurs="0" />
+              <xs:element name="EmpName" type="xs:string" minOccurs="0" />
+              <xs:element name="Designation" type="xs:string" minOccurs="0" />
+              <xs:element name="GradeName" type="xs:string" minOccurs="0" />
+              <xs:element name="DivisionName" type="xs:string" minOccurs="0" />
+              <xs:element name="JoiningDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Description" type="xs:string" minOccurs="0" />
+              <xs:element name="SeparationDate" type="xs:string" minOccurs="0" />
+              <xs:element name="EffictiveDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="DepartmentName" type="xs:string" minOccurs="0" />
+              <xs:element name="ClearanceEntryDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Location" type="xs:string" minOccurs="0" />
+              <xs:element name="ImagePath" type="xs:string" minOccurs="0" />
+              <xs:element name="Resource" type="xs:string" minOccurs="0" />
+              <xs:element name="Remarks" type="xs:string" minOccurs="0" />
+              <xs:element name="YesterdayDate" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dsResource">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ApprovalCondition" type="xs:string" minOccurs="0" />
+              <xs:element name="Recommend" type="xs:boolean" minOccurs="0" />
+              <xs:element name="MainRemarks" type="xs:string" minOccurs="0" />
+              <xs:element name="Designation" type="xs:string" minOccurs="0" />
+              <xs:element name="IsDoneEmpId" type="xs:int" minOccurs="0" />
+              <xs:element name="Resource" type="xs:string" minOccurs="0" />
+              <xs:element name="Remarks" type="xs:string" minOccurs="0" />
+              <xs:element name="DepartmentName" type="xs:string" minOccurs="0" />
+              <xs:element name="ImagePath" type="xs:string" minOccurs="0" />
+              <xs:element name="IsDoneDate" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Emp_Clearance">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EmpClearanceId" type="xs:int" minOccurs="0" />
+              <xs:element name="EmpInfoId" type="xs:int" minOccurs="0" />
+              <xs:element name="MobIssuDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="MobActualPrice" type="xs:decimal" minOccurs="0" />
+              <xs:element name="MoDABeforeOne" type="xs:decimal" minOccurs="0" />
+              <xs:element name="MoDABeforeOnetotwo" type="xs:decimal" minOccurs="0" />
+              <xs:element name="MoDAAboveTwo" type="xs:decimal" minOccurs="0" />
+              <xs:element name="MoRemarks" type="xs:string" minOccurs="0" />
+              <xs:element name="DBIssuDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="DBActualPrice" type="xs:decimal" minOccurs="0" />
+              <xs:element name="DBDeductionAmount" type="xs:decimal" minOccurs="0" />
+              <xs:element name="DBRemark" type="xs:string" minOccurs="0" />
+              <xs:element name="PIActualCost" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PIDeductionAmount" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PIRemark" type="xs:string" minOccurs="0" />
+              <xs:element name="IDCard" type="xs:string" minOccurs="0" />
+              <xs:element name="IDCardRemark" type="xs:string" minOccurs="0" />
+              <xs:element name="MarketDues" type="xs:decimal" minOccurs="0" />
+              <xs:element name="MarketRemarks" type="xs:string" minOccurs="0" />
+              <xs:element name="TotalDeductionAmount" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ToDeducAmtRemark" type="xs:string" minOccurs="0" />
+              <xs:element name="EntryBy" type="xs:int" minOccurs="0" />
+              <xs:element name="EntryDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="UpdateBy" type="xs:int" minOccurs="0" />
+              <xs:element name="UpdateDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="TickMark" type="xs:string" minOccurs="0" />
+              <xs:element name="ClearenceId" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

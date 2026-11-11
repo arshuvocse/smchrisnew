@@ -1,0 +1,158 @@
+<?xml version="1.0" standalone="yes"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="MasterDataTable">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ShortName" type="xs:string" minOccurs="0" />
+              <xs:element name="DepartmentName" type="xs:string" minOccurs="0" />
+              <xs:element name="FinancialYearDesc" type="xs:string" minOccurs="0" />
+              <xs:element name="CirculationStartDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="CirculationsdeadlineDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="JobTitle" type="xs:string" minOccurs="0" />
+              <xs:element name="Vanue" type="xs:string" minOccurs="0" />
+              <xs:element name="InterviewDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="InterviewFromTime" type="xs:string" minOccurs="0" />
+              <xs:element name="InterviewToTime" type="xs:string" minOccurs="0" />
+              <xs:element name="Remarks" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DetailsDataTable">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EmpMasterCode" type="xs:string" minOccurs="0" />
+              <xs:element name="ShortName" type="xs:string" minOccurs="0" />
+              <xs:element name="BoardDetailsId" type="xs:int" minOccurs="0" />
+              <xs:element name="MasterId" type="xs:int" minOccurs="0" />
+              <xs:element name="MemberType" type="xs:string" minOccurs="0" />
+              <xs:element name="EmployeeId" type="xs:int" minOccurs="0" />
+              <xs:element name="Name" type="xs:string" minOccurs="0" />
+              <xs:element name="Designation" type="xs:string" minOccurs="0" />
+              <xs:element name="Department" type="xs:string" minOccurs="0" />
+              <xs:element name="Company" type="xs:string" minOccurs="0" />
+              <xs:element name="Email" type="xs:string" minOccurs="0" />
+              <xs:element name="Phone" type="xs:string" minOccurs="0" />
+              <xs:element name="IsActive" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Written" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Viva" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Other" type="xs:boolean" minOccurs="0" />
+              <xs:element name="OtherRemarks" type="xs:string" minOccurs="0" />
+              <xs:element name="EmpInfoId" type="xs:long" minOccurs="0" />
+              <xs:element name="ReportingEmpId" type="xs:int" minOccurs="0" />
+              <xs:element name="EmpMasterCode1" type="xs:string" minOccurs="0" />
+              <xs:element name="CompanyId" type="xs:int" minOccurs="0" />
+              <xs:element name="DivisionId" type="xs:int" minOccurs="0" />
+              <xs:element name="DivisionWId" type="xs:int" minOccurs="0" />
+              <xs:element name="DepartmentId" type="xs:int" minOccurs="0" />
+              <xs:element name="SectionId" type="xs:int" minOccurs="0" />
+              <xs:element name="SubSectionId" type="xs:int" minOccurs="0" />
+              <xs:element name="EmpCategoryId" type="xs:int" minOccurs="0" />
+              <xs:element name="SalaryGradeId" type="xs:int" minOccurs="0" />
+              <xs:element name="SalaryStepId" type="xs:int" minOccurs="0" />
+              <xs:element name="DesignationId" type="xs:int" minOccurs="0" />
+              <xs:element name="DesignationTypeId" type="xs:int" minOccurs="0" />
+              <xs:element name="SalaryLoationId" type="xs:int" minOccurs="0" />
+              <xs:element name="JobLocationId" type="xs:int" minOccurs="0" />
+              <xs:element name="EmpName" type="xs:string" minOccurs="0" />
+              <xs:element name="ShortName1" type="xs:string" minOccurs="0" />
+              <xs:element name="Gender" type="xs:string" minOccurs="0" />
+              <xs:element name="BloodGroup" type="xs:string" minOccurs="0" />
+              <xs:element name="TinNo" type="xs:string" minOccurs="0" />
+              <xs:element name="FatherName" type="xs:string" minOccurs="0" />
+              <xs:element name="FatherOccupation" type="xs:int" minOccurs="0" />
+              <xs:element name="MotherName" type="xs:string" minOccurs="0" />
+              <xs:element name="MotherOccupation" type="xs:int" minOccurs="0" />
+              <xs:element name="DateOfBirth" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="DateOfJoin" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Religion" type="xs:string" minOccurs="0" />
+              <xs:element name="MaritalStatus" type="xs:string" minOccurs="0" />
+              <xs:element name="EmpTypeId" type="xs:int" minOccurs="0" />
+              <xs:element name="ProjectID" type="xs:int" minOccurs="0" />
+              <xs:element name="SalaryFromProject" type="xs:int" minOccurs="0" />
+              <xs:element name="IsProbationary" type="xs:boolean" minOccurs="0" />
+              <xs:element name="ProbationEndDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ExtProbationPeriodDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ContractEndDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ExtContractDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Nationality" type="xs:string" minOccurs="0" />
+              <xs:element name="NationalityID" type="xs:string" minOccurs="0" />
+              <xs:element name="PassportNo" type="xs:string" minOccurs="0" />
+              <xs:element name="ExpectedServiceLength" type="xs:string" minOccurs="0" />
+              <xs:element name="DateOfRetirement" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="DateOfConformation" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="PlaceOfBirth" type="xs:string" minOccurs="0" />
+              <xs:element name="AddressPresent" type="xs:string" minOccurs="0" />
+              <xs:element name="PresentDivision" type="xs:int" minOccurs="0" />
+              <xs:element name="PresentDistrict" type="xs:int" minOccurs="0" />
+              <xs:element name="PresentThana" type="xs:int" minOccurs="0" />
+              <xs:element name="PresentTelNo" type="xs:string" minOccurs="0" />
+              <xs:element name="AddressPermanent" type="xs:string" minOccurs="0" />
+              <xs:element name="ParmanentDivision" type="xs:int" minOccurs="0" />
+              <xs:element name="PermanentDistrict" type="xs:int" minOccurs="0" />
+              <xs:element name="PermanentThana" type="xs:int" minOccurs="0" />
+              <xs:element name="ParmanentTelNo" type="xs:string" minOccurs="0" />
+              <xs:element name="PersonalEmail" type="xs:string" minOccurs="0" />
+              <xs:element name="OfficialEmail" type="xs:string" minOccurs="0" />
+              <xs:element name="PersonalMobile" type="xs:string" minOccurs="0" />
+              <xs:element name="OfficialMobile" type="xs:string" minOccurs="0" />
+              <xs:element name="FaxNo" type="xs:string" minOccurs="0" />
+              <xs:element name="EmergencyContactPerson" type="xs:string" minOccurs="0" />
+              <xs:element name="EmergencyContactAddress" type="xs:string" minOccurs="0" />
+              <xs:element name="EmergencyContactNumber" type="xs:string" minOccurs="0" />
+              <xs:element name="SpouseName" type="xs:string" minOccurs="0" />
+              <xs:element name="SpouseDateOfBirth" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="SpouseMaxEducation" type="xs:int" minOccurs="0" />
+              <xs:element name="SpouseOccupation" type="xs:int" minOccurs="0" />
+              <xs:element name="DateOfMarriage" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="DateOfConfirmation" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ConformationStatus" type="xs:string" minOccurs="0" />
+              <xs:element name="Age" type="xs:string" minOccurs="0" />
+              <xs:element name="NAge" type="xs:string" minOccurs="0" />
+              <xs:element name="IsActive1" type="xs:boolean" minOccurs="0" />
+              <xs:element name="ActionStatus" type="xs:string" minOccurs="0" />
+              <xs:element name="MedicalInformation" type="xs:string" minOccurs="0" />
+              <xs:element name="JobID" type="xs:int" minOccurs="0" />
+              <xs:element name="CandidateID" type="xs:int" minOccurs="0" />
+              <xs:element name="Remarks" type="xs:string" minOccurs="0" />
+              <xs:element name="EntryBy" type="xs:string" minOccurs="0" />
+              <xs:element name="EntryDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Updateby" type="xs:string" minOccurs="0" />
+              <xs:element name="UpdateDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="EmployeeStatus" type="xs:string" minOccurs="0" />
+              <xs:element name="InactiveReason" type="xs:string" minOccurs="0" />
+              <xs:element name="ApprovalDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="IsDeleted" type="xs:boolean" minOccurs="0" />
+              <xs:element name="DeleteBy" type="xs:string" minOccurs="0" />
+              <xs:element name="DeleteDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="EmpImage" type="xs:string" minOccurs="0" />
+              <xs:element name="EmpSign" type="xs:string" minOccurs="0" />
+              <xs:element name="PayType" type="xs:int" minOccurs="0" />
+              <xs:element name="SMCOldCode" type="xs:string" minOccurs="0" />
+              <xs:element name="NationalIdNo" type="xs:string" minOccurs="0" />
+              <xs:element name="IsProgramContractual" type="xs:boolean" minOccurs="0" />
+              <xs:element name="NomineeImage" type="xs:string" minOccurs="0" />
+              <xs:element name="CompanyId1" type="xs:int" minOccurs="0" />
+              <xs:element name="CompanyName" type="xs:string" minOccurs="0" />
+              <xs:element name="ShortName2" type="xs:string" minOccurs="0" />
+              <xs:element name="Address" type="xs:string" minOccurs="0" />
+              <xs:element name="ContactNo" type="xs:string" minOccurs="0" />
+              <xs:element name="FaxNumber" type="xs:string" minOccurs="0" />
+              <xs:element name="Pabx" type="xs:string" minOccurs="0" />
+              <xs:element name="EmailAdress" type="xs:string" minOccurs="0" />
+              <xs:element name="Hotline" type="xs:string" minOccurs="0" />
+              <xs:element name="Description" type="xs:string" minOccurs="0" />
+              <xs:element name="Remarks1" type="xs:string" minOccurs="0" />
+              <xs:element name="EntryBy1" type="xs:string" minOccurs="0" />
+              <xs:element name="EntryDate1" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="UpdateBy1" type="xs:string" minOccurs="0" />
+              <xs:element name="UpdateDate1" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

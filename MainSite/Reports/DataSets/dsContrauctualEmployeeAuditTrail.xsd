@@ -1,0 +1,44 @@
+<?xml version="1.0" standalone="yes"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dtContrauctualEmployeeAuditTrail">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EmpName" type="xs:string" minOccurs="0" />
+              <xs:element name="EmpMasterCode" type="xs:string" minOccurs="0" />
+              <xs:element name="ShortName" type="xs:string" minOccurs="0" />
+              <xs:element name="UserName" type="xs:string" minOccurs="0" />
+              <xs:element name="StatusMode" type="xs:string" minOccurs="0" />
+              <xs:element name="ModifyDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="AuditTrail_ContractualEmpManageId" type="xs:int" minOccurs="0" />
+              <xs:element name="ContractualEmpManageId" type="xs:int" minOccurs="0" />
+              <xs:element name="IsExtension" type="xs:boolean" minOccurs="0" />
+              <xs:element name="IsRenew" type="xs:boolean" minOccurs="0" />
+              <xs:element name="IsPermanentToContractual" type="xs:boolean" minOccurs="0" />
+              <xs:element name="IsContractualToPermanent" type="xs:boolean" minOccurs="0" />
+              <xs:element name="IsSalaryIncrement" type="xs:boolean" minOccurs="0" />
+              <xs:element name="IsNoIncrement" type="xs:boolean" minOccurs="0" />
+              <xs:element name="IsFacilityIncluded" type="xs:boolean" minOccurs="0" />
+              <xs:element name="IsNoFacility" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Remarks" type="xs:string" minOccurs="0" />
+              <xs:element name="ExtensionFromDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ExtensionToDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="RenewStartDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="RenewToDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="PermanentToContractualEffectiveDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ContractualToPermanentDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="EffectiveDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ContractEndDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="PermanentToContractualEndDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ContractPreiod" type="xs:int" minOccurs="0" />
+              <xs:element name="IsSMCFundedProjectstoSMCContract" type="xs:int" minOccurs="0" />
+              <xs:element name="IsSMCContracttoSMCFundedProjects" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

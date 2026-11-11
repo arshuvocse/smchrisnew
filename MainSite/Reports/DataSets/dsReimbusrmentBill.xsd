@@ -1,0 +1,40 @@
+<?xml version="1.0" standalone="yes"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ReimbusrmentBill">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ClaimNo" type="xs:string" minOccurs="0" />
+              <xs:element name="SettlementDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="CheckDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ClaimReceivedNo" type="xs:string" minOccurs="0" />
+              <xs:element name="CurrentBalanceIPD" type="xs:string" minOccurs="0" />
+              <xs:element name="CurrentBalanceOPD" type="xs:string" minOccurs="0" />
+              <xs:element name="RemainingBalanceIPD" type="xs:string" minOccurs="0" />
+              <xs:element name="RemainingBalanceOPD" type="xs:string" minOccurs="0" />
+              <xs:element name="PaybleAmount" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PayableFrom" type="xs:string" minOccurs="0" />
+              <xs:element name="SignatureOfAuthPerson" type="xs:string" minOccurs="0" />
+              <xs:element name="BillSettlmentId" type="xs:int" minOccurs="0" />
+              <xs:element name="ReimbursFromMasterId" type="xs:int" minOccurs="0" />
+              <xs:element name="ClaimNo1" type="xs:string" minOccurs="0" />
+              <xs:element name="SettlementDate1" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="RecommendedPayment" type="xs:boolean" minOccurs="0" />
+              <xs:element name="PayableFrom1" type="xs:string" minOccurs="0" />
+              <xs:element name="OPDIPDBalance" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PaybleAmount1" type="xs:decimal" minOccurs="0" />
+              <xs:element name="RemainBalance" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PaymentType" type="xs:string" minOccurs="0" />
+              <xs:element name="CheckDate1" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="EntryBy" type="xs:int" minOccurs="0" />
+              <xs:element name="EntryDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="OtherBalance" type="xs:decimal" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

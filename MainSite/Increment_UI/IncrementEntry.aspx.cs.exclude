@@ -1,0 +1,606 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Globalization;
+using System.Linq;
+using System.Reflection.Emit;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using DAL.Increment_DAL;
+using DAO.HRIS_DAO;
+using HELPER_FUNCTIONS.HELPERS;
+using Library.DAO.HRM_Entities;
+
+public partial class Increment_UI_IncrementEntry : System.Web.UI.Page
+{
+    readonly IncrementDal aIncrementDal = new IncrementDal();
+    ShowMessage aShowMessage = new ShowMessage();
+    Messages aMessages = new Messages();
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            ButtonVisible();
+            LoadDropDownList();
+            
+            EffectiveDateTextBox.Attributes.Add("readonly", "readonly");
+        }
+    }
+
+    public void ButtonVisible()
+    {
+        if (Session["Status"] != null)
+        {
+
+
+            if (Session["Status"].ToString() == "Add")
+            {
+                submitButton.Visible = true;
+            }
+           
+            Session["Status"] = null;
+        }
+        else
+        {
+            Response.Redirect("IncrementView.aspx");
+        }
+
+    }
+
+    private void LoadDropDownList()
+    {
+        try
+        {
+            aIncrementDal.LoadCompany(ddlCompany);
+            ddlCompany.SelectedIndex = 1;
+            ddlCompany_SelectedIndexChanged(null, null);
+        }
+        catch (Exception)
+        {
+            
+            Response.Redirect("/Default.aspx");
+        }
+    }
+
+    protected void ddlCompany_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (ddlCompany.SelectedValue != "")
+        {
+       
+            Session["CompanyId"] = ddlCompany.SelectedValue;
+            aIncrementDal.LoadFinancialYear(ddlFinYear,ddlCompany.SelectedValue);
+            aIncrementDal.LoadDivision(ddlDivision, ddlCompany.SelectedValue);
+            aIncrementDal.LoadCategory(ddlCategory);
+        }
+        else
+        {
+            ddlFinYear.Items.Clear();
+            ddlDivision.Items.Clear();
+        }
+    }
+
+    //protected void loadGridView_RowCommand(object sender, GridViewCommandEventArgs e)
+    //{
+    //    throw new NotImplementedException();
+    //}
+
+    protected void btnSearch_OnClick(object sender, EventArgs e)
+    {
+        if (CheckSearchValidation())
+        {
+            DataTable aTable = aIncrementDal.LoadEmployeeInformation(GetParameter());
+
+            if (aTable.Rows.Count > 0)
+            {
+                loadGridView.DataSource = aTable;
+                loadGridView.DataBind();
+
+                for (int i = 0; i < loadGridView.Rows.Count; i++)
+                {
+                    var ddlDesignation = (DropDownList)loadGridView.Rows[i].Cells[0].FindControl("designationDropDownList");
+                    aIncrementDal.LoadDesignation(ddlDesignation);
+                    ddlDesignation.SelectedValue = aTable.Rows[i].Field<Int32>("DesignationId").ToString(CultureInfo.InvariantCulture);
+
+                    var ddlDepartment = (DropDownList)loadGridView.Rows[i].Cells[0].FindControl("departmentDropDownList");
+                    aIncrementDal.LoadDepartment(ddlDepartment);
+                    ddlDepartment.SelectedValue = aTable.Rows[i].Field<Int32>("DepartmentId").ToString(CultureInfo.InvariantCulture);
+
+                    var ddlSalaryGrade = (DropDownList)loadGridView.Rows[i].Cells[0].FindControl("salaryGradeDropDownList");
+                    aIncrementDal.LoadSalaryGrade(ddlSalaryGrade);
+                    ddlSalaryGrade.SelectedValue = aTable.Rows[i].Field<Int32>("SalaryGradeId").ToString(CultureInfo.InvariantCulture);
+
+                    var ddlSalaryStep = (DropDownList)loadGridView.Rows[i].Cells[0].FindControl("salaryStepDropDownList");
+                    aIncrementDal.LoadSalaryStep(ddlSalaryStep, ddlSalaryGrade.SelectedValue);
+                    ddlSalaryStep.SelectedValue = aTable.Rows[i].Field<Int32>("SalaryStepId").ToString(CultureInfo.InvariantCulture);
+
+                    var ddlIncrementalStep = (DropDownList)loadGridView.Rows[i].Cells[0].FindControl("incrementalStepDropDownList");
+                    aIncrementDal.LoadSalaryStep(ddlIncrementalStep, ddlSalaryGrade.SelectedValue);
+                    //SetIncrementalStep(i);
+
+                    var feedSalary = (TextBox)loadGridView.Rows[i].Cells[0].FindControl("feedSalaryTextBox");
+                    feedSalary.Text = 5.ToString(CultureInfo.InvariantCulture);
+
+                    ddlSalaryGrade.Enabled = false;
+                }
+            }
+            else
+            {
+                loadGridView.DataSource = null;
+                loadGridView.DataBind();
+                ShowMessageBox("No Information found !!!");
+            }
+            
+        }
+    }
+
+    private void SetIncrementalStep(int i)
+    {
+        for (int j = 0; j < loadGridView.Rows.Count; j++)
+        {
+            var ddlSalaryStep = (DropDownList)loadGridView.Rows[i].Cells[0].FindControl("salaryStepDropDownList");
+            Int32 stepIndex = ddlSalaryStep.SelectedIndex;
+
+            var ddlIncrementalStep = (DropDownList)loadGridView.Rows[i].Cells[0].FindControl("incrementalStepDropDownList");
+            ddlIncrementalStep.SelectedIndex = stepIndex + 1;
+        }
+    }
+
+    private string GetParameter()
+    {
+        string parameter = "";
+
+        if (ddlCompany.SelectedValue != "")
+        {
+            parameter = parameter + " AND EGI.CompanyId  = '" + ddlCompany.SelectedValue + "'";
+        }
+
+        if (ddlFinYear.SelectedValue != "")
+        {
+            parameter = parameter + " AND FINY.FinancialYearId = '" + ddlFinYear.SelectedValue + "'";
+        }
+
+        if (EmployeeIdHiddenField.Value != "")
+        {
+            parameter = parameter + " AND EGI.EmpInfoId = '" + EmployeeIdHiddenField.Value + "'";
+        }
+
+
+        if (ddlDivision.SelectedValue != "")
+        {
+            parameter = parameter + " AND EGI.DivisionId = '" + ddlDivision.SelectedValue + "'";
+        }
+
+        if (ddlCategory.SelectedValue != "")
+        {
+            parameter = parameter + " AND EGI.EmpCategoryId = '" + ddlCategory.SelectedValue + "'";
+        }
+
+
+        return parameter;
+    }
+
+    private void ShowMessageBox(string message)
+    {
+        message = message.Replace("'", "\'");
+        string sScript = String.Format("alert('{0}');", message);
+        ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", sScript, true);
+    }
+    private bool CheckSearchValidation()
+    {
+        if (ddlCompany.SelectedValue == "")
+        {
+            ShowMessageBox("Please select a company !!!");
+            return false;
+        }
+
+        if (ddlFinYear.SelectedValue == "")
+        {
+            ShowMessageBox("Please select a financial year !!!");
+            return false;
+        }
+
+        //if (ddlDivision.SelectedValue == "")
+        //{
+        //    ShowMessageBox("You have to select a division !!!");
+        //    return false;
+        //}
+
+        return true;
+    }
+
+    protected void chkSelectAll_CheckedChanged(object sender, EventArgs e)
+    {
+        var chkBoxHeader = (CheckBox)loadGridView.HeaderRow.FindControl("chkSelectAll");
+
+        for (int i = 0; i < loadGridView.Rows.Count; i++)
+        {
+            var chkBoxRows = (CheckBox)loadGridView.Rows[i].Cells[0].FindControl("chkSelect");
+            chkBoxRows.Checked = chkBoxHeader.Checked;
+        }
+    }
+
+    protected void submitButton_OnClick(object sender, EventArgs e)
+    {
+        if (DataValidation())
+        {
+            Int32 id = SaveIncrementInfo(PrepareDataForSave());
+
+            if (id > 0)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(),
+                       "alert",
+                       "alert('Data Saved Successfully...');window.location ='IncrementView.aspx';",
+                       true);
+                Clear();
+            }
+        }
+    }
+
+    private void Clear()
+    {
+        ddlCompany.SelectedValue = "";
+        ddlFinYear.Items.Clear();
+        ddlDivision.Items.Clear();
+
+        loadGridView.DataSource = null;
+        loadGridView.DataBind();
+    }
+
+    private int SaveIncrementInfo(List<IncrementDao> aIncrementDaos)
+    {
+        Int32 id = 0;
+
+        foreach (var aDao in aIncrementDaos)
+        {
+            
+
+            id = aIncrementDal.SaveIncrementInfo(aDao);
+        }
+
+        return id;
+    }
+
+    private List<IncrementDao> PrepareDataForSave()
+    {
+        List<IncrementDao> aDaos = new List<IncrementDao>();
+        IncrementDao aDao;
+
+        List<EmpGeneralInfo> aList = new List<EmpGeneralInfo>();
+        EmpGeneralInfo aInfo;
+
+
+        for (int i = 0; i < loadGridView.Rows.Count; i++)
+        {
+            var chkBoxRows = (CheckBox)loadGridView.Rows[i].Cells[0].FindControl("chkSelect");
+
+
+            DataTable aTable =
+                          aIncrementDal.ValidattionForEffectiveDate(
+                                 (loadGridView.DataKeys[i].Value.ToString()), EffectiveDateTextBox.Text);
+
+            if (chkBoxRows.Checked && aTable.Rows.Count == 0)
+            {
+                aDao = new IncrementDao();
+
+                aDao.CompanyId = Convert.ToInt32(ddlCompany.SelectedValue);
+                aDao.FinancialYearId = Convert.ToInt32(ddlFinYear.SelectedValue);
+                aDao.EffectiveDate = Convert.ToDateTime(EffectiveDateTextBox.Text);
+               
+
+                Int32 empId = Convert.ToInt32(loadGridView.DataKeys[i].Value.ToString());
+                aDao.EmployeeId = empId;
+                
+
+                aDao.EmployeeCode = loadGridView.Rows[i].Cells[2].Text.Trim();
+
+
+
+
+                if (((string)loadGridView.DataKeys[i][1].ToString()) != "")
+                {
+                    aDao.DivisionId = Convert.ToInt32(loadGridView.DataKeys[i][1].ToString());
+                }
+
+             //   int DivisionWId = Convert.ToInt32(loadGridView.DataKeys[i][2].ToString());
+
+               //  int id = (int) loadGridView.DataKeys[i][2];
+
+
+
+                if (((string)loadGridView.DataKeys[i][2].ToString()) != "")
+                {
+                    aDao.DivisionWId = Convert.ToInt32(loadGridView.DataKeys[i][2].ToString());
+                }
+
+                
+                if (((string) loadGridView.DataKeys[i][3].ToString()) != "")
+                {
+                    aDao.DepartmentId = Convert.ToInt32(loadGridView.DataKeys[i][3].ToString());
+                }
+                if (((string) loadGridView.DataKeys[i][4].ToString()) != "")
+                {
+                    aDao.SectionId = Convert.ToInt32(loadGridView.DataKeys[i][4].ToString());
+                }
+                if (((string) loadGridView.DataKeys[i][5].ToString()) != "")
+                {
+                    aDao.SubSectionId = Convert.ToInt32(loadGridView.DataKeys[i][5].ToString());
+                }
+                if (((string) loadGridView.DataKeys[i][6].ToString()) != "")
+                {
+                    aDao.DesignationId = Convert.ToInt32(loadGridView.DataKeys[i][6].ToString());
+                }
+                if (((string) loadGridView.DataKeys[i][7].ToString()) != "")
+                {
+                    aDao.SalaryLoationId = Convert.ToInt32(loadGridView.DataKeys[i][7].ToString());
+                }
+
+                if (((string) loadGridView.DataKeys[i][8].ToString()) != "")
+                {
+                    aDao.JobLocationId = Convert.ToInt32(loadGridView.DataKeys[i][8].ToString());
+                }
+                if (((string) loadGridView.DataKeys[i][9].ToString()) != "")
+                {
+                    aDao.EmpTypeId = Convert.ToInt32(loadGridView.DataKeys[i][9].ToString());
+                }
+
+
+
+
+                //var ddlDesignation = (DropDownList)loadGridView.Rows[i].Cells[0].FindControl("designationDropDownList");
+                //var ddlDepartment = (DropDownList)loadGridView.Rows[i].Cells[0].FindControl("departmentDropDownList");
+                var ddlSalaryGrade = (DropDownList)loadGridView.Rows[i].Cells[0].FindControl("salaryGradeDropDownList");
+                var ddlSalaryStep = (DropDownList)loadGridView.Rows[i].Cells[0].FindControl("salaryStepDropDownList");
+                var ddlIncrementalStep = (DropDownList)loadGridView.Rows[i].Cells[0].FindControl("incrementalStepDropDownList");
+                var feedSalary = (TextBox)loadGridView.Rows[i].Cells[0].FindControl("feedSalaryTextBox");
+              
+
+                //aDao.DesignationId = Convert.ToInt32(ddlDesignation.SelectedValue);
+                //aDao.DepartmentId = Convert.ToInt32(ddlDepartment.SelectedValue);
+                aDao.SalaryGradeId = Convert.ToInt32(ddlSalaryGrade.SelectedValue);
+                aDao.CurrentStepId = Convert.ToInt32(ddlSalaryStep.SelectedValue);
+                aDao.IncrementalStepId = Convert.ToInt32(ddlIncrementalStep.SelectedValue);
+
+
+                //For Employee Master Information update ------------------------------------------------------------------------
+
+                
+
+                //--------------------------------------------------------------------------------------------------------------
+
+                aDao.FeedSalary = Convert.ToDecimal(feedSalary.Text.Trim());
+
+                if (manualUpdateCheckBox.Checked)
+                {
+                    aDao.AutoProcess = "Manually Updated";
+
+                    Int32 empGenId = 0;
+                    Int32 stepId = 0;
+
+                    empGenId = Convert.ToInt32(loadGridView.DataKeys[i].Value.ToString());
+                    stepId = Convert.ToInt32(ddlIncrementalStep.SelectedValue);
+
+                    UpdateEmployeeStepId(empGenId, stepId);
+                }
+
+                aDao.EntryBy = Convert.ToInt32(Session["UserId"]);
+                aDao.EntryDate = DateTime.Now;
+
+                aDaos.Add(aDao);
+            }
+            else
+            {
+                aShowMessage.ShowMessageBox("Some Employee Already Exists within this effective date!!", this);
+            }
+        }
+
+        return aDaos;
+    }
+
+    private void UpdateEmployeeStepId(int empGenId, int stepId)
+    {
+        EmpGeneralInfo aInfo = new EmpGeneralInfo();
+
+        aInfo.SalScaleId = stepId;
+        aInfo.EmpInfoId = empGenId;
+
+        aIncrementDal.UpdateEmployeeIncrementalStepInfo(aInfo);
+
+    }
+
+    private bool DataValidation()
+    {
+        if (ddlCompany.SelectedValue == "")
+        {
+            ShowMessageBox("You have to select a company !!!");
+            return false;
+        }
+
+        if (EffectiveDateTextBox.Text == "")
+        {
+            ShowMessageBox("You have to select this !!!");
+            EffectiveDateTextBox.Focus();
+            return false;
+        }
+
+        if (ddlFinYear.SelectedValue == "")
+        {
+            ShowMessageBox("You have to select a financial year !!!");
+            return false;
+        }
+
+         
+
+        Int32 count = 0;
+
+        for (int i = 0; i < loadGridView.Rows.Count; i++)
+        {
+            var chkBoxRows = (CheckBox)loadGridView.Rows[i].Cells[0].FindControl("chkSelect");
+
+            if (chkBoxRows.Checked)
+            {
+                count ++;
+            }
+
+            if (count > 0)
+            {
+                break;
+            }
+        }
+
+        if (count == 0)
+        {
+            ShowMessageBox("You have to select at least one employee !!!");
+            return false;
+        }
+
+        for (int i = 0; i < loadGridView.Rows.Count; i++)
+        {
+            
+
+            var chkBoxRows = (CheckBox)loadGridView.Rows[i].Cells[0].FindControl("chkSelect");
+
+            if (chkBoxRows.Checked)
+            {
+                var ddlIncrementalStep = (DropDownList)loadGridView.Rows[i].FindControl("incrementalStepDropDownList");
+                if (ddlIncrementalStep.SelectedValue == "")
+                {
+                    ShowMessageBox("You have to select incremental step !!!");
+                    return false;
+                }
+            }
+
+            
+        }
+
+        for (int i = 0; i < loadGridView.Rows.Count; i++)
+        {
+            var feedSalary = (TextBox)loadGridView.Rows[i].Cells[0].FindControl("feedSalaryTextBox");
+
+            if (feedSalary.Text == "")
+            {
+                ShowMessageBox("You have to select feed salary !!!");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    protected void incrementalStepDropDownList_OnTextChanged(object sender, EventArgs e)
+    {
+        DropDownList dropDown = (DropDownList)sender;
+        GridViewRow currentRow = (GridViewRow)dropDown.Parent.Parent;
+        int rowindex = 0;
+        rowindex = currentRow.RowIndex;
+
+        var ddlSalaryStep = (DropDownList)loadGridView.Rows[rowindex].Cells[0].FindControl("salaryStepDropDownList");
+        Int32 stepIndex = ddlSalaryStep.SelectedIndex;
+        var ddlIncrementalStep = (DropDownList)loadGridView.Rows[rowindex].Cells[0].FindControl("incrementalStepDropDownList");
+
+        if (ddlIncrementalStep.SelectedIndex <= ddlSalaryStep.SelectedIndex)
+        {
+           ddlIncrementalStep.SelectedIndex = stepIndex ;
+            ShowMessageBox("Incremental step must be greater than current salary step !!!");
+            ddlIncrementalStep.Focus();
+        }
+    }
+
+    protected void clearButton_OnClick(object sender, EventArgs e)
+    {
+       Clear();
+    }
+
+    protected void detailsViewButton_OnClick(object sender, EventArgs e)
+    {
+        Response.Redirect("IncrementView.aspx");
+    }
+
+    protected void HomeButton_OnClick(object sender, EventArgs e)
+    {
+        Response.Redirect("../DashBoard_UI/DashBoard.aspx");
+    }
+
+    protected void SearchEmployeeNameTextBoxTextBox_OnTextChanged(object sender, EventArgs e)
+    {
+        if (ddlCompany.SelectedValue != "")
+        {
+            string empName = SearchEmployeeNameTextBoxTextBox.Text.Trim();
+
+            if (empName.Contains(':'))
+            {
+                string[] emp = empName.Split(':');
+
+                SearchEmployeeNameTextBoxTextBox.Text = emp[2];
+                EmployeeIdHiddenField.Value = emp[0];
+
+                
+               
+            }
+            else
+            {
+
+                SearchEmployeeNameTextBoxTextBox.Text = "";
+                EmployeeIdHiddenField.Value = "";
+                aShowMessage.ShowMessageBox("Input Correct Data !!", this);
+            }
+
+        }
+        else
+        {
+            aShowMessage.ShowMessageBox("Please Select a Company !!", this);
+            SearchEmployeeNameTextBoxTextBox.Text = "";
+            EmployeeIdHiddenField.Value = "";
+            ddlCompany.Focus();
+        }
+    }
+
+    protected void EffectiveDateTextBox_Changed(object sender, EventArgs e)
+    {
+        if (ddlFinYear.SelectedValue != "")
+        {
+            if (EffectiveDateTextBox.Text != "")
+            {
+
+
+                if (CheckStartEndDateExistOrNot(EffectiveDateTextBox.Text, EffectiveDateTextBox.Text) == true)
+                {
+
+                }
+                if (CheckStartEndDateExistOrNot(EffectiveDateTextBox.Text, EffectiveDateTextBox.Text) == false)
+                {
+                    aShowMessage.ShowMessageBox("Effective date must be within the finnancial year!!", this);
+                    EffectiveDateTextBox.Text = "";
+                    EffectiveDateTextBox.Focus();
+
+                }
+            }
+
+
+
+        }
+        else
+        {
+            aShowMessage.ShowMessageBox("Please Select this.", this);
+            EffectiveDateTextBox.Text = "";
+            ddlFinYear.Focus();
+        }
+    }
+    private bool CheckStartEndDateExistOrNot(string Start, string End)
+    {
+        bool status = false;
+
+        DataTable dataTable = aIncrementDal.CheckStartEndDateExistOrNotDAL(ddlFinYear.SelectedValue, Start, End);
+
+        if (dataTable.Rows.Count > 0)
+        {
+            status = true;
+        }
+
+        return status;
+    }
+
+    protected void companyDropDownList_OnSelectedIndexChanged(object sender, EventArgs e)
+    {
+        EffectiveDateTextBox.Text = "";
+    }
+}

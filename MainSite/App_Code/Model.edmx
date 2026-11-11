@@ -1,0 +1,2385 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="HRIS_SMC_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DELtblInterviewBoardMemberFileUp">
+          <Key>
+            <PropertyRef Name="DELInterviewBoardMemberFileUpId" />
+          </Key>
+          <Property Name="DELInterviewBoardMemberFileUpId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InterviewBoardMemberFileUpId" Type="int" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="JobId" Type="int" />
+          <Property Name="FileUp" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="DEltblInterviewCandidateInfo">
+          <Key>
+            <PropertyRef Name="DELCandidateID" />
+          </Key>
+          <Property Name="DELCandidateID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CandidateID" Type="bigint" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
+          <Property Name="JobID" Type="int" Nullable="false" />
+          <Property Name="CandidateName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PhoneNo" Type="nvarchar(max)" />
+          <Property Name="EmailAdress" Type="nvarchar(max)" />
+          <Property Name="TotalYearsOfExp" Type="nvarchar(max)" />
+          <Property Name="LastOrganization" Type="nvarchar(max)" />
+          <Property Name="LastPosition" Type="nvarchar(max)" />
+          <Property Name="LastExam" Type="nvarchar(max)" />
+          <Property Name="LastMajor" Type="nvarchar(max)" />
+          <Property Name="LastPassingYear" Type="nvarchar(max)" />
+          <Property Name="LastResultType" Type="nvarchar(max)" />
+          <Property Name="LastResultDivision" Type="int" />
+          <Property Name="LastResultCGPA" Type="nvarchar(max)" />
+          <Property Name="LastResultOutOf" Type="nvarchar(max)" />
+          <Property Name="CvUploadID" Type="int" />
+          <Property Name="PhotoUploadID" Type="int" />
+          <Property Name="CurrentSalary" Type="nvarchar(max)" />
+          <Property Name="ExpectedSalary" Type="nvarchar(max)" />
+          <Property Name="Remarks" Type="nvarchar(max)" />
+          <Property Name="ApprovalStatus" Type="nvarchar(max)" />
+          <Property Name="EntryBy" Type="nvarchar(max)" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="Updateby" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="VerifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="VerifiedDate" Type="datetime" />
+          <Property Name="ApproveBy" Type="nvarchar(max)" />
+          <Property Name="ApproveDate" Type="datetime" />
+          <Property Name="InternalNote" Type="nvarchar(max)" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="DateOfBirth" Type="datetime" />
+          <Property Name="Age" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tblCandidateCvUpload">
+          <Key>
+            <PropertyRef Name="CvUploadId" />
+          </Key>
+          <Property Name="CvUploadId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CandidateID" Type="int" />
+          <Property Name="Cv_Upload" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tblCandidateSelecTionStatus">
+          <Key>
+            <PropertyRef Name="CandidateSelecTionStatusId" />
+          </Key>
+          <Property Name="CandidateSelecTionStatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblContractualEmpManage">
+          <Key>
+            <PropertyRef Name="ContractualEmpManageId" />
+          </Key>
+          <Property Name="ContractualEmpManageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsExtension" Type="bit" />
+          <Property Name="IsRenew" Type="bit" />
+          <Property Name="IsPermanentToContractual" Type="bit" />
+          <Property Name="IsContractualToPermanent" Type="bit" />
+          <Property Name="IsSalaryIncrement" Type="bit" />
+          <Property Name="IsNoIncrement" Type="bit" />
+          <Property Name="IsFacilityIncluded" Type="bit" />
+          <Property Name="IsNoFacility" Type="bit" />
+          <Property Name="Remarks" Type="nvarchar(max)" />
+          <Property Name="EntryBy" Type="nvarchar" MaxLength="500" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="500" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="ExtensionFromDate" Type="datetime" />
+          <Property Name="ExtensionToDate" Type="datetime" />
+          <Property Name="RenewStartDate" Type="datetime" />
+          <Property Name="RenewToDate" Type="datetime" />
+          <Property Name="PermanentToContractualEffectiveDate" Type="datetime" />
+          <Property Name="ContractualToPermanentDate" Type="datetime" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="ActionStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="DeleteBy" Type="int" />
+          <Property Name="DeleteDate" Type="datetime" />
+          <Property Name="EffectiveDate" Type="datetime" />
+          <Property Name="DivisionId" Type="int" />
+          <Property Name="DivisionWId" Type="int" />
+          <Property Name="DepartmentId" Type="int" />
+          <Property Name="SectionId" Type="int" />
+          <Property Name="SubSectionId" Type="int" />
+          <Property Name="EmployeeCode" Type="nvarchar" MaxLength="500" />
+          <Property Name="DesignationId" Type="int" />
+          <Property Name="EmpTypeId" Type="int" />
+          <Property Name="SalaryLoationId" Type="int" />
+          <Property Name="JobLocationId" Type="int" />
+          <Property Name="SalaryGradeId" Type="int" />
+          <Property Name="SalaryStepId" Type="int" />
+          <Property Name="ContractEndDate" Type="datetime" />
+          <Property Name="PermanentToContractualEndDate" Type="datetime" />
+          <Property Name="AutoProcess" Type="bit" />
+          <Property Name="ActionStatus2" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsSelfApp" Type="bit" />
+          <Property Name="ContractPreiod" Type="int" />
+          <Property Name="IsAutoUpdate12" Type="bit" />
+          <Property Name="IsSMCFundedProjectstoSMCContract" Type="int" />
+          <Property Name="IsSMCContracttoSMCFundedProjects" Type="int" />
+          <Property Name="isToProject" Type="bit" />
+          <Property Name="isReappointment" Type="bit" />
+          <Property Name="TypeOfPromotion" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsRedesignation" Type="bit" />
+          <Property Name="FromProject" Type="nvarchar(max)" />
+          <Property Name="ToProject" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tblEmployeeApprovalByOpearationDetail">
+          <Key>
+            <PropertyRef Name="EmployeeApprovalByOpearationDetailId" />
+          </Key>
+          <Property Name="EmployeeApprovalByOpearationDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MasterId" Type="int" />
+          <Property Name="Operation" Type="int" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="EmpInfoId" Type="int" />
+          <Property Name="Serial" Type="int" />
+          <Property Name="Isheadperson" Type="int" />
+        </EntityType>
+        <EntityType Name="tblEmployeeJobLeft">
+          <Key>
+            <PropertyRef Name="EmployeeJobLeftId" />
+          </Key>
+          <Property Name="EmployeeJobLeftId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="JobLeftTypeId" Type="int" />
+          <Property Name="JobLeftDate" Type="datetime" />
+          <Property Name="Reason" Type="nvarchar" MaxLength="500" />
+          <Property Name="EntryBy" Type="int" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="IsClearanceForm" Type="bit" />
+          <Property Name="IsExitInterview" Type="bit" />
+          <Property Name="SubmissionDate" Type="datetime" />
+          <Property Name="DeleteBy" Type="int" />
+          <Property Name="DeleteDate" Type="datetime" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="IsJobLeft" Type="bit" />
+          <Property Name="AutoProcess" Type="nvarchar(max)" />
+          <Property Name="ActionStatus" Type="nvarchar(max)" />
+          <Property Name="ActionStatus2" Type="nvarchar(max)" />
+          <Property Name="IsSelfApp" Type="bit" />
+          <Property Name="IsAutoUpdate12" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblEmployeePromotionEntry">
+          <Key>
+            <PropertyRef Name="EmployeePromotionEntryId" />
+          </Key>
+          <Property Name="EmployeePromotionEntryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="FinancialYearId" Type="int" />
+          <Property Name="PSalGradeId" Type="int" />
+          <Property Name="PStepId" Type="int" />
+          <Property Name="PDesignationId" Type="int" />
+          <Property Name="PRepEmpId" Type="int" />
+          <Property Name="NSalGradeId" Type="int" />
+          <Property Name="NSalaryStepId" Type="int" />
+          <Property Name="NDesignationId" Type="int" />
+          <Property Name="NRepEmpId" Type="int" />
+          <Property Name="NPromoTypeId" Type="int" />
+          <Property Name="Remarks" Type="nvarchar(max)" />
+          <Property Name="Effectivedate" Type="datetime" />
+          <Property Name="EntryBy" Type="nvarchar" MaxLength="500" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="500" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="DeleteBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="DeleteDate" Type="datetime" />
+          <Property Name="DivisionId" Type="int" />
+          <Property Name="DivisionWId" Type="int" />
+          <Property Name="DepartmentId" Type="int" />
+          <Property Name="SectionId" Type="int" />
+          <Property Name="SubSectionId" Type="int" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="EmployeeCode" Type="nvarchar" MaxLength="500" />
+          <Property Name="EmpTypeId" Type="int" />
+          <Property Name="SalaryLoationId" Type="int" />
+          <Property Name="JobLocationId" Type="int" />
+          <Property Name="IsPromotion" Type="bit" />
+          <Property Name="AutoProcess" Type="nvarchar(max)" />
+          <Property Name="IsReappointment" Type="bit" />
+          <Property Name="IsSelfApp" Type="bit" />
+          <Property Name="ActionStatus" Type="nvarchar(max)" />
+          <Property Name="ActionStatus2" Type="nvarchar(max)" />
+          <Property Name="IsB_DirectlySupervisor" Type="bit" />
+          <Property Name="IsB_ReportingBody" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblEmpTransferAndRedesignation">
+          <Key>
+            <PropertyRef Name="EmpTransferAndRedesignationId" />
+          </Key>
+          <Property Name="EmpTransferAndRedesignationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="FinancialYearId" Type="int" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="EmpTypeId" Type="int" />
+          <Property Name="IsInterCompanyTransfer" Type="bit" />
+          <Property Name="IsOnlyTransfer" Type="bit" />
+          <Property Name="NewCompanyId" Type="int" />
+          <Property Name="NewSalaryLocationId" Type="int" />
+          <Property Name="NewJobLocationId" Type="int" />
+          <Property Name="NewDivisionId" Type="int" />
+          <Property Name="NewWingId" Type="int" />
+          <Property Name="NewDepartmentId" Type="int" />
+          <Property Name="NewSectionId" Type="int" />
+          <Property Name="NewSubSectionId" Type="int" />
+          <Property Name="NewEmpReportingBodyId" Type="int" />
+          <Property Name="OldCompanyId" Type="int" />
+          <Property Name="OldSalaryLocationId" Type="int" />
+          <Property Name="OldJobLocationId" Type="int" />
+          <Property Name="OldDivisionId" Type="int" />
+          <Property Name="OldWingId" Type="int" />
+          <Property Name="OldDepartmentId" Type="int" />
+          <Property Name="OldSectionId" Type="int" />
+          <Property Name="OldSubSectionId" Type="int" />
+          <Property Name="OldReportingBodyID" Type="int" />
+          <Property Name="EffectiveDate" Type="datetime" />
+          <Property Name="Remarks" Type="nvarchar(max)" />
+          <Property Name="EntryBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="DeleteBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="DeleteDate" Type="datetime" />
+          <Property Name="AutoProcess" Type="varchar" MaxLength="500" />
+          <Property Name="EmployeeCode" Type="varchar" MaxLength="500" />
+          <Property Name="IsSelfApp" Type="bit" />
+          <Property Name="ActionStatus" Type="varchar" MaxLength="500" />
+          <Property Name="ActionStatus2" Type="varchar" MaxLength="500" />
+          <Property Name="IsReappointment" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblFoodRate">
+          <Key>
+            <PropertyRef Name="FoodRateId" />
+          </Key>
+          <Property Name="FoodRateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="EmployeeType" Type="int" />
+          <Property Name="EffectiveDate" Type="datetime" />
+          <Property Name="Rate" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="EntryBy" Type="int" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="DeleteBy" Type="int" />
+          <Property Name="DeleteDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblIncrement">
+          <Key>
+            <PropertyRef Name="IncrementId" />
+          </Key>
+          <Property Name="IncrementId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="FinancialYearId" Type="int" />
+          <Property Name="DivisionId" Type="int" />
+          <Property Name="DivisionWId" Type="int" />
+          <Property Name="DepartmentId" Type="int" />
+          <Property Name="SectionId" Type="int" />
+          <Property Name="SubSectionId" Type="int" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="EmployeeCode" Type="nvarchar" MaxLength="500" />
+          <Property Name="DesignationId" Type="int" />
+          <Property Name="EmpTypeId" Type="int" />
+          <Property Name="SalaryLoationId" Type="int" />
+          <Property Name="JobLocationId" Type="int" />
+          <Property Name="SalaryGradeId" Type="int" />
+          <Property Name="CurrentStepId" Type="int" />
+          <Property Name="IncrementalStepId" Type="int" />
+          <Property Name="FeedSalary" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="EntryBy" Type="int" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="EffectiveDate" Type="datetime" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="DeleteBy" Type="int" />
+          <Property Name="DeleteDate" Type="datetime" />
+          <Property Name="AutoProcess" Type="nvarchar(max)" />
+          <Property Name="IncrementTypeId" Type="int" />
+          <Property Name="ActionStatus2" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsSelfApp" Type="bit" />
+          <Property Name="ActionStatus" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tblInterviewBoardMemberFileUp">
+          <Key>
+            <PropertyRef Name="InterviewBoardMemberFileUpId" />
+          </Key>
+          <Property Name="InterviewBoardMemberFileUpId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="JobId" Type="int" />
+          <Property Name="FileUp" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tblInterViewCandidateSelection">
+          <Key>
+            <PropertyRef Name="InterViewCandidateSelectionId" />
+          </Key>
+          <Property Name="InterViewCandidateSelectionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CandidateID" Type="int" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="JobID" Type="int" />
+          <Property Name="CandidateStatus" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblInterviewMarksDetails">
+          <Key>
+            <PropertyRef Name="InterviewMarksDetailsId" />
+          </Key>
+          <Property Name="InterviewMarksDetailsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JobId" Type="int" />
+          <Property Name="BoardDetailsId" Type="int" Nullable="false" />
+          <Property Name="CandidateID" Type="int" Nullable="false" />
+          <Property Name="VivaId" Type="int" />
+          <Property Name="VivaMarks" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="WrittenMarks" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OtherMarks" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Tag" Type="nvarchar(max)" />
+          <Property Name="EntryBy" Type="int" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="VivaOutOf" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OtherOutOf" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="WrittenOutOf" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="tblITMayConcern">
+          <Key>
+            <PropertyRef Name="ITMayConcernId" />
+          </Key>
+          <Property Name="ITMayConcernId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="Header" Type="nvarchar" MaxLength="500" />
+          <Property Name="FirstPara" Type="nvarchar" MaxLength="500" />
+          <Property Name="SeceondPara" Type="nvarchar" MaxLength="500" />
+          <Property Name="ThirdPara" Type="nvarchar" MaxLength="500" />
+          <Property Name="ToEmployeeId" Type="int" />
+          <Property Name="EntryBy" Type="nvarchar" MaxLength="500" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblLunchAllowDetails">
+          <Key>
+            <PropertyRef Name="LunchAllowDetailsID" />
+          </Key>
+          <Property Name="LunchAllowDetailsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LunchAllowID" Type="int" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="RateId" Type="int" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="Rate" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Status" Type="nvarchar" MaxLength="500" />
+          <Property Name="fromDate" Type="datetime" />
+          <Property Name="ToDate" Type="datetime" />
+          <Property Name="InactiveDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblLunchAllowDetailsLog">
+          <Key>
+            <PropertyRef Name="LunchAllowDetailsLogID" />
+          </Key>
+          <Property Name="LunchAllowDetailsLogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LunchAllowDetailsID" Type="int" />
+          <Property Name="LunchAllowID" Type="int" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="RateId" Type="int" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="Rate" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Status" Type="nvarchar" MaxLength="500" />
+          <Property Name="fromDate" Type="datetime" />
+          <Property Name="ToDate" Type="datetime" />
+          <Property Name="InactiveDate" Type="datetime" />
+          <Property Name="EntryBy" Type="int" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblLunchAllowMaster">
+          <Key>
+            <PropertyRef Name="LunchAllowID" />
+          </Key>
+          <Property Name="LunchAllowID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EntryBy" Type="int" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="DeleteBy" Type="int" />
+          <Property Name="DeleteDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblLunchTimeSet">
+          <Key>
+            <PropertyRef Name="LunchTimeSetId" />
+          </Key>
+          <Property Name="LunchTimeSetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LunchTime" Type="time" Precision="7" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="UpdateBy" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblMedicalCheckUp">
+          <Key>
+            <PropertyRef Name="MedicalCheckUpId" />
+          </Key>
+          <Property Name="MedicalCheckUpId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="EmpInfoId" Type="int" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="500" />
+          <Property Name="Remarks" Type="nvarchar" MaxLength="500" />
+          <Property Name="EntryBy" Type="int" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="MasterId" Type="int" />
+        </EntityType>
+        <EntityType Name="tblMedicalCheckUpMaster">
+          <Key>
+            <PropertyRef Name="MedicalCheckUpMasterId" />
+          </Key>
+          <Property Name="MedicalCheckUpMasterId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="500" />
+          <Property Name="EntryBy" Type="int" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="DeleteBy" Type="int" />
+          <Property Name="DeleteDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblSeparationITMayConcern">
+          <Key>
+            <PropertyRef Name="SeparationITMayConcern" />
+          </Key>
+          <Property Name="SeparationITMayConcern" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JobleftTypeID" Type="int" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="Header" Type="nvarchar" MaxLength="500" />
+          <Property Name="FirstPara" Type="nvarchar" MaxLength="500" />
+          <Property Name="SeceondPara" Type="nvarchar" MaxLength="500" />
+          <Property Name="ThirdPara" Type="nvarchar" MaxLength="500" />
+          <Property Name="ToEmployeeId" Type="int" />
+          <Property Name="EntryBy" Type="nvarchar" MaxLength="500" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblSurveyDetails">
+          <Key>
+            <PropertyRef Name="SurveyDetailsId" />
+          </Key>
+          <Property Name="SurveyDetailsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SurveyMasterId" Type="int" />
+          <Property Name="SurveyQuestionId" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblSurveyMaster">
+          <Key>
+            <PropertyRef Name="SurveyMasterId" />
+          </Key>
+          <Property Name="SurveyMasterId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SurveyName" Type="nvarchar" MaxLength="50" />
+          <Property Name="SurveyFrom" Type="date" />
+          <Property Name="SurveyTo" Type="date" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="FinancialYearId" Type="int" />
+          <Property Name="EntryBy" Type="int" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="DeleteBy" Type="int" />
+          <Property Name="DeleteDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblSurveyQuestion">
+          <Key>
+            <PropertyRef Name="SurveyQuestionId" />
+          </Key>
+          <Property Name="SurveyQuestionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuestionTitle" Type="nvarchar" MaxLength="200" />
+          <Property Name="SurveyQuestionTypeId" Type="int" />
+          <Property Name="SurveyQuestionGroupId" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="EntryBy" Type="int" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblSurveyQuestionAnswer">
+          <Key>
+            <PropertyRef Name="SurveyQuestionAnswerId" />
+          </Key>
+          <Property Name="SurveyQuestionAnswerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SurveyQuestionTitleId" Type="int" />
+          <Property Name="SurveyQuestionGroupId" Type="int" />
+          <Property Name="SurveyQuestionAnswer" Type="nvarchar" MaxLength="500" />
+          <Property Name="EntryBy" Type="int" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblSurveyQuestionGroup">
+          <Key>
+            <PropertyRef Name="SurveyQuestionGroupId" />
+          </Key>
+          <Property Name="SurveyQuestionGroupId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SurveyQuestionGroup" Type="nvarchar" MaxLength="200" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="EntryBy" Type="int" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblSurveySubmitDetail">
+          <Key>
+            <PropertyRef Name="SurveySubmitDetailId" />
+          </Key>
+          <Property Name="SurveySubmitDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SurveySubmitMasterId" Type="int" />
+          <Property Name="QuestionGroupId" Type="int" />
+          <Property Name="QuestionGroupName" Type="nvarchar(max)" />
+          <Property Name="QuestionNameId" Type="int" />
+          <Property Name="QuestionName" Type="nvarchar(max)" />
+          <Property Name="QuestionTypeId" Type="int" />
+          <Property Name="QuestionType" Type="nvarchar(max)" />
+          <Property Name="Option01Id" Type="int" />
+          <Property Name="Option01Name" Type="nvarchar(max)" />
+          <Property Name="Option02Id" Type="int" />
+          <Property Name="Option02Name" Type="nvarchar(max)" />
+          <Property Name="Option03Id" Type="int" />
+          <Property Name="Option03Name" Type="nvarchar(max)" />
+          <Property Name="Option04Id" Type="int" />
+          <Property Name="Option04Name" Type="nvarchar(max)" />
+          <Property Name="OptionAnsId" Type="int" />
+          <Property Name="OptionAns" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tblSurveySubmitMaster">
+          <Key>
+            <PropertyRef Name="SurveySubmitMasterId" />
+          </Key>
+          <Property Name="SurveySubmitMasterId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="SurveyName" Type="nvarchar" MaxLength="500" />
+          <Property Name="EntryBy" Type="int" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="SurveyID" Type="int" />
+        </EntityType>
+        <EntityType Name="tblTraingingHeading">
+          <Key>
+            <PropertyRef Name="TraingingHeadingId" />
+          </Key>
+          <Property Name="TraingingHeadingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TraingingHeading" Type="nvarchar(max)" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="EntryBy" Type="int" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="DeleteBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="DeleteDate" Type="datetime" />
+          <Property Name="TraingingSerial" Type="int" />
+        </EntityType>
+        <EntityType Name="tblTrainingRecordMaster">
+          <Key>
+            <PropertyRef Name="TrainingRecordMasterId" />
+          </Key>
+          <Property Name="TrainingRecordMasterId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="FinancialYearId" Type="int" />
+          <Property Name="TrainingTypeId" Type="int" />
+          <Property Name="TrainingBudget2Id" Type="int" />
+          <Property Name="TrainingTitle" Type="nvarchar(max)" />
+          <Property Name="TrainingDetails" Type="nvarchar(max)" />
+          <Property Name="TrainingOrgId" Type="int" />
+          <Property Name="TrainingOrgLocation" Type="int" />
+          <Property Name="TrainingVenue" Type="int" />
+          <Property Name="TrainingCost" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="LogisticCost" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OtherCost" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TrainingDays" Type="nvarchar(max)" />
+          <Property Name="NoOfDays" Type="int" />
+          <Property Name="StartDate" Type="date" />
+          <Property Name="EndDate" Type="date" />
+          <Property Name="StartTime" Type="time" Precision="7" />
+          <Property Name="EndTime" Type="time" Precision="7" />
+          <Property Name="TotalHoure" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="EntryBy" Type="int" />
+          <Property Name="EntryDate" Type="date" />
+          <Property Name="UpdateBy" Type="int" />
+          <Property Name="UpdateDate" Type="date" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="DeleteDate" Type="date" />
+          <Property Name="DeleteBy" Type="int" />
+          <Property Name="TrainingRecordNo" Type="nvarchar" MaxLength="500" />
+          <Property Name="GrandTotal" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CostPerParticipant" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ActionStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="ApproveBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ApproveDate" Type="datetime" />
+          <Property Name="ActionStatus2" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="tblTrainingSetupTopic">
+          <Key>
+            <PropertyRef Name="TrainingTopicId" />
+          </Key>
+          <Property Name="TrainingTopicId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TrainingTopic" Type="nvarchar(max)" />
+          <Property Name="TraingingHeadingId" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="EntryBy" Type="int" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="DeleteBy" Type="int" />
+          <Property Name="DeleteDate" Type="datetime" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="TraingingSerial" Type="int" />
+        </EntityType>
+        <EntityType Name="tblTrainingTopic">
+          <Key>
+            <PropertyRef Name="TopicId" />
+          </Key>
+          <Property Name="TopicId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TrainingTopicTitle" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tblunchGuestInternInformation">
+          <Key>
+            <PropertyRef Name="GuestInternInformationId" />
+          </Key>
+          <Property Name="GuestInternInformationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="nvarchar(max)" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="DivisionId" Type="int" />
+          <Property Name="DepartmentId" Type="int" />
+          <Property Name="LunchDate" Type="datetime" />
+          <Property Name="ReferancePersonId" Type="int" />
+          <Property Name="Remarks" Type="nvarchar(max)" />
+          <Property Name="EntryBy" Type="int" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="LunchToDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="MasterId" Type="int" />
+        </EntityType>
+        <EntityType Name="tblunchGuestInternInformationMaster">
+          <Key>
+            <PropertyRef Name="GuestInternInformationMasterId" />
+          </Key>
+          <Property Name="GuestInternInformationMasterId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="nvarchar(max)" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="DivisionId" Type="int" />
+          <Property Name="DepartmentId" Type="int" />
+          <Property Name="LunchDate" Type="datetime" />
+          <Property Name="ReferancePersonId" Type="int" />
+          <Property Name="Remarks" Type="nvarchar(max)" />
+          <Property Name="EntryBy" Type="int" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="LunchToDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblVivaDetailsMark">
+          <Key>
+            <PropertyRef Name="VivaDetailsMarkId" />
+          </Key>
+          <Property Name="VivaDetailsMarkId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JobId" Type="int" />
+          <Property Name="BoardDetailsId" Type="int" Nullable="false" />
+          <Property Name="CandidateID" Type="int" Nullable="false" />
+          <Property Name="VivaId" Type="int" />
+          <Property Name="VivaMarks" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="EntryBy" Type="int" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="VivaOutOf" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="tblVivaSetupInfo">
+          <Key>
+            <PropertyRef Name="VivaId" />
+          </Key>
+          <Property Name="VivaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VivaName" Type="nvarchar(max)" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="Category" Type="nvarchar(max)" />
+          <Property Name="EntryBy" Type="int" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="DeleteBy" Type="int" />
+          <Property Name="DeleteDate" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="Remarks" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tblYearlyHoliday">
+          <Key>
+            <PropertyRef Name="YearlyHolidayId" />
+          </Key>
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="YearlyHolidayFromDate" Type="datetime" />
+          <Property Name="YearlyHolidayToDate" Type="datetime" />
+          <Property Name="Details" Type="nvarchar" MaxLength="500" />
+          <Property Name="EntryBy" Type="int" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="DeleteBy" Type="int" />
+          <Property Name="DeleteDate" Type="datetime" />
+          <Property Name="YearlyHolidayId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="HRIS_SMC_DBModelStoreContainer">
+          <EntitySet Name="DELtblInterviewBoardMemberFileUp" EntityType="Self.DELtblInterviewBoardMemberFileUp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DEltblInterviewCandidateInfo" EntityType="Self.DEltblInterviewCandidateInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCandidateCvUpload" EntityType="Self.tblCandidateCvUpload" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCandidateSelecTionStatus" EntityType="Self.tblCandidateSelecTionStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblContractualEmpManage" EntityType="Self.tblContractualEmpManage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblEmployeeApprovalByOpearationDetail" EntityType="Self.tblEmployeeApprovalByOpearationDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblEmployeeJobLeft" EntityType="Self.tblEmployeeJobLeft" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblEmployeePromotionEntry" EntityType="Self.tblEmployeePromotionEntry" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblEmpTransferAndRedesignation" EntityType="Self.tblEmpTransferAndRedesignation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFoodRate" EntityType="Self.tblFoodRate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblIncrement" EntityType="Self.tblIncrement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblInterviewBoardMemberFileUp" EntityType="Self.tblInterviewBoardMemberFileUp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblInterViewCandidateSelection" EntityType="Self.tblInterViewCandidateSelection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblInterviewMarksDetails" EntityType="Self.tblInterviewMarksDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblITMayConcern" EntityType="Self.tblITMayConcern" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblLunchAllowDetails" EntityType="Self.tblLunchAllowDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblLunchAllowDetailsLog" EntityType="Self.tblLunchAllowDetailsLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblLunchAllowMaster" EntityType="Self.tblLunchAllowMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblLunchTimeSet" EntityType="Self.tblLunchTimeSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblMedicalCheckUp" EntityType="Self.tblMedicalCheckUp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblMedicalCheckUpMaster" EntityType="Self.tblMedicalCheckUpMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSeparationITMayConcern" EntityType="Self.tblSeparationITMayConcern" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSurveyDetails" EntityType="Self.tblSurveyDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSurveyMaster" EntityType="Self.tblSurveyMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSurveyQuestion" EntityType="Self.tblSurveyQuestion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSurveyQuestionAnswer" EntityType="Self.tblSurveyQuestionAnswer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSurveyQuestionGroup" EntityType="Self.tblSurveyQuestionGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSurveySubmitDetail" EntityType="Self.tblSurveySubmitDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSurveySubmitMaster" EntityType="Self.tblSurveySubmitMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTraingingHeading" EntityType="Self.tblTraingingHeading" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTrainingRecordMaster" EntityType="Self.tblTrainingRecordMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTrainingSetupTopic" EntityType="Self.tblTrainingSetupTopic" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTrainingTopic" EntityType="Self.tblTrainingTopic" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblunchGuestInternInformation" EntityType="Self.tblunchGuestInternInformation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblunchGuestInternInformationMaster" EntityType="Self.tblunchGuestInternInformationMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblVivaDetailsMark" EntityType="Self.tblVivaDetailsMark" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblVivaSetupInfo" EntityType="Self.tblVivaSetupInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblYearlyHoliday" EntityType="Self.tblYearlyHoliday" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HRIS_SMC_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblVivaSetupInfo">
+          <Key>
+            <PropertyRef Name="VivaId" />
+          </Key>
+          <Property Name="VivaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VivaName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="Category" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EntryBy" Type="Int32" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="DeleteBy" Type="Int32" />
+          <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="HRIS_SMC_DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblVivaSetupInfoes" EntityType="Self.tblVivaSetupInfo" />
+          <EntitySet Name="tblITMayConcerns" EntityType="HRIS_SMC_DBModel.tblITMayConcern" />
+          <EntitySet Name="tblInterviewMarksDetails" EntityType="HRIS_SMC_DBModel.tblInterviewMarksDetail" />
+          <EntitySet Name="tblVivaDetailsMarks" EntityType="HRIS_SMC_DBModel.tblVivaDetailsMark" />
+          <EntitySet Name="tblInterviewBoardMemberFileUps" EntityType="HRIS_SMC_DBModel.tblInterviewBoardMemberFileUp" />
+          <EntitySet Name="tblSeparationITMayConcerns" EntityType="HRIS_SMC_DBModel.tblSeparationITMayConcern" />
+          <EntitySet Name="DELtblInterviewBoardMemberFileUps" EntityType="HRIS_SMC_DBModel.DELtblInterviewBoardMemberFileUp" />
+          <EntitySet Name="tblCandidateCvUploads" EntityType="HRIS_SMC_DBModel.tblCandidateCvUpload" />
+          <EntitySet Name="tblInterViewCandidateSelections" EntityType="HRIS_SMC_DBModel.tblInterViewCandidateSelection" />
+          <EntitySet Name="tblMedicalCheckUps" EntityType="HRIS_SMC_DBModel.tblMedicalCheckUp" />
+          <EntitySet Name="tblMedicalCheckUpMasters" EntityType="HRIS_SMC_DBModel.tblMedicalCheckUpMaster" />
+          <EntitySet Name="DEltblInterviewCandidateInfoes" EntityType="HRIS_SMC_DBModel.DEltblInterviewCandidateInfo" />
+          <EntitySet Name="tblCandidateSelecTionStatus" EntityType="HRIS_SMC_DBModel.tblCandidateSelecTionStatu" />
+          <EntitySet Name="tblTrainingRecordMasters" EntityType="HRIS_SMC_DBModel.tblTrainingRecordMaster" />
+          <EntitySet Name="tblEmployeeApprovalByOpearationDetails" EntityType="HRIS_SMC_DBModel.tblEmployeeApprovalByOpearationDetail" />
+          <EntitySet Name="tblSurveyQuestionAnswers" EntityType="HRIS_SMC_DBModel.tblSurveyQuestionAnswer" />
+          <EntitySet Name="tblSurveySubmitMasters" EntityType="HRIS_SMC_DBModel.tblSurveySubmitMaster" />
+          <EntitySet Name="tblSurveySubmitDetails" EntityType="HRIS_SMC_DBModel.tblSurveySubmitDetail" />
+          <EntitySet Name="tblSurveyMasters" EntityType="HRIS_SMC_DBModel.tblSurveyMaster" />
+          <EntitySet Name="tblSurveyQuestions" EntityType="HRIS_SMC_DBModel.tblSurveyQuestion" />
+          <EntitySet Name="tblSurveyQuestionGroups" EntityType="HRIS_SMC_DBModel.tblSurveyQuestionGroup" />
+          <EntitySet Name="tblSurveyDetails" EntityType="HRIS_SMC_DBModel.tblSurveyDetail" />
+          <EntitySet Name="tblYearlyHolidays" EntityType="HRIS_SMC_DBModel.tblYearlyHoliday" />
+          <EntitySet Name="tblFoodRates" EntityType="HRIS_SMC_DBModel.tblFoodRate" />
+          <EntitySet Name="tblLunchAllowDetails" EntityType="HRIS_SMC_DBModel.tblLunchAllowDetail" />
+          <EntitySet Name="tblLunchAllowMasters" EntityType="HRIS_SMC_DBModel.tblLunchAllowMaster" />
+          <EntitySet Name="tblContractualEmpManages" EntityType="HRIS_SMC_DBModel.tblContractualEmpManage" />
+          <EntitySet Name="tblTraingingHeadings" EntityType="HRIS_SMC_DBModel.tblTraingingHeading" />
+          <EntitySet Name="tblTrainingTopics" EntityType="HRIS_SMC_DBModel.tblTrainingTopic" />
+          <EntitySet Name="tblTrainingSetupTopics" EntityType="HRIS_SMC_DBModel.tblTrainingSetupTopic" />
+          <EntitySet Name="tblIncrements" EntityType="HRIS_SMC_DBModel.tblIncrement" />
+          <EntitySet Name="tblEmployeePromotionEntries" EntityType="HRIS_SMC_DBModel.tblEmployeePromotionEntry" />
+          <EntitySet Name="tblEmployeeJobLefts" EntityType="HRIS_SMC_DBModel.tblEmployeeJobLeft" />
+          <EntitySet Name="tblEmpTransferAndRedesignations" EntityType="HRIS_SMC_DBModel.tblEmpTransferAndRedesignation" />
+          <EntitySet Name="tblLunchAllowDetailsLogs" EntityType="HRIS_SMC_DBModel.tblLunchAllowDetailsLog" />
+          <EntitySet Name="tblunchGuestInternInformations" EntityType="HRIS_SMC_DBModel.tblunchGuestInternInformation" />
+          <EntitySet Name="tblLunchTimeSets" EntityType="HRIS_SMC_DBModel.tblLunchTimeSet" />
+          <EntitySet Name="tblunchGuestInternInformationMasters" EntityType="HRIS_SMC_DBModel.tblunchGuestInternInformationMaster" />
+        </EntityContainer>
+        <EntityType Name="tblITMayConcern">
+          <Key>
+            <PropertyRef Name="ITMayConcernId" />
+          </Key>
+          <Property Name="ITMayConcernId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="Header" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="FirstPara" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SeceondPara" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ThirdPara" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ToEmployeeId" Type="Int32" />
+          <Property Name="EntryBy" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblInterviewMarksDetail">
+          <Key>
+            <PropertyRef Name="InterviewMarksDetailsId" />
+          </Key>
+          <Property Name="InterviewMarksDetailsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobId" Type="Int32" />
+          <Property Name="BoardDetailsId" Type="Int32" Nullable="false" />
+          <Property Name="CandidateID" Type="Int32" Nullable="false" />
+          <Property Name="VivaId" Type="Int32" />
+          <Property Name="VivaMarks" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="WrittenMarks" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OtherMarks" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Tag" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EntryBy" Type="Int32" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="VivaOutOf" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OtherOutOf" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="WrittenOutOf" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="tblVivaDetailsMark">
+          <Key>
+            <PropertyRef Name="VivaDetailsMarkId" />
+          </Key>
+          <Property Name="VivaDetailsMarkId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobId" Type="Int32" />
+          <Property Name="BoardDetailsId" Type="Int32" Nullable="false" />
+          <Property Name="CandidateID" Type="Int32" Nullable="false" />
+          <Property Name="VivaId" Type="Int32" />
+          <Property Name="VivaMarks" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="EntryBy" Type="Int32" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="VivaOutOf" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="tblInterviewBoardMemberFileUp">
+          <Key>
+            <PropertyRef Name="InterviewBoardMemberFileUpId" />
+          </Key>
+          <Property Name="InterviewBoardMemberFileUpId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="JobId" Type="Int32" />
+          <Property Name="FileUp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblSeparationITMayConcern">
+          <Key>
+            <PropertyRef Name="SeparationITMayConcern" />
+          </Key>
+          <Property Name="SeparationITMayConcern" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobleftTypeID" Type="Int32" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="Header" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="FirstPara" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SeceondPara" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ThirdPara" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ToEmployeeId" Type="Int32" />
+          <Property Name="EntryBy" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="DELtblInterviewBoardMemberFileUp">
+          <Key>
+            <PropertyRef Name="DELInterviewBoardMemberFileUpId" />
+          </Key>
+          <Property Name="DELInterviewBoardMemberFileUpId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InterviewBoardMemberFileUpId" Type="Int32" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="JobId" Type="Int32" />
+          <Property Name="FileUp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblCandidateCvUpload">
+          <Key>
+            <PropertyRef Name="CvUploadId" />
+          </Key>
+          <Property Name="CvUploadId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CandidateID" Type="Int32" />
+          <Property Name="Cv_Upload" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblInterViewCandidateSelection">
+          <Key>
+            <PropertyRef Name="InterViewCandidateSelectionId" />
+          </Key>
+          <Property Name="InterViewCandidateSelectionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CandidateID" Type="Int32" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="JobID" Type="Int32" />
+          <Property Name="CandidateStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblMedicalCheckUp">
+          <Key>
+            <PropertyRef Name="MedicalCheckUpId" />
+          </Key>
+          <Property Name="MedicalCheckUpId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="EmpInfoId" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Remarks" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="EntryBy" Type="Int32" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="MasterId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tblMedicalCheckUpMaster">
+          <Key>
+            <PropertyRef Name="MedicalCheckUpMasterId" />
+          </Key>
+          <Property Name="MedicalCheckUpMasterId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="EntryBy" Type="Int32" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="DeleteBy" Type="Int32" />
+          <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="DEltblInterviewCandidateInfo">
+          <Key>
+            <PropertyRef Name="DELCandidateID" />
+          </Key>
+          <Property Name="DELCandidateID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CandidateID" Type="Int64" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="JobID" Type="Int32" Nullable="false" />
+          <Property Name="CandidateName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EmailAdress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TotalYearsOfExp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastOrganization" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastPosition" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastExam" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastMajor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastPassingYear" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastResultType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastResultDivision" Type="Int32" />
+          <Property Name="LastResultCGPA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastResultOutOf" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CvUploadID" Type="Int32" />
+          <Property Name="PhotoUploadID" Type="Int32" />
+          <Property Name="CurrentSalary" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ExpectedSalary" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ApprovalStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EntryBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="Updateby" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="VerifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VerifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="ApproveBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ApproveDate" Type="DateTime" Precision="3" />
+          <Property Name="InternalNote" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+          <Property Name="Age" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblCandidateSelecTionStatu">
+          <Key>
+            <PropertyRef Name="CandidateSelecTionStatusId" />
+          </Key>
+          <Property Name="CandidateSelecTionStatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblTrainingRecordMaster">
+          <Key>
+            <PropertyRef Name="TrainingRecordMasterId" />
+          </Key>
+          <Property Name="TrainingRecordMasterId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="FinancialYearId" Type="Int32" />
+          <Property Name="TrainingTypeId" Type="Int32" />
+          <Property Name="TrainingBudget2Id" Type="Int32" />
+          <Property Name="TrainingTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TrainingDetails" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TrainingOrgId" Type="Int32" />
+          <Property Name="TrainingOrgLocation" Type="Int32" />
+          <Property Name="TrainingVenue" Type="Int32" />
+          <Property Name="TrainingCost" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="LogisticCost" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OtherCost" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TrainingDays" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NoOfDays" Type="Int32" />
+          <Property Name="StartDate" Type="DateTime" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="StartTime" Type="Time" Precision="7" />
+          <Property Name="EndTime" Type="Time" Precision="7" />
+          <Property Name="TotalHoure" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="EntryBy" Type="Int32" />
+          <Property Name="EntryDate" Type="DateTime" Precision="0" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="0" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="DeleteDate" Type="DateTime" Precision="0" />
+          <Property Name="DeleteBy" Type="Int32" />
+          <Property Name="TrainingRecordNo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="GrandTotal" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CostPerParticipant" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ActionStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ApproveBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ApproveDate" Type="DateTime" Precision="3" />
+          <Property Name="ActionStatus2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblEmployeeApprovalByOpearationDetail">
+          <Key>
+            <PropertyRef Name="EmployeeApprovalByOpearationDetailId" />
+          </Key>
+          <Property Name="EmployeeApprovalByOpearationDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MasterId" Type="Int32" />
+          <Property Name="Operation" Type="Int32" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="EmpInfoId" Type="Int32" />
+          <Property Name="Serial" Type="Int32" />
+          <Property Name="Isheadperson" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tblSurveyQuestionAnswer">
+          <Key>
+            <PropertyRef Name="SurveyQuestionAnswerId" />
+          </Key>
+          <Property Name="SurveyQuestionAnswerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SurveyQuestionTitleId" Type="Int32" />
+          <Property Name="SurveyQuestionGroupId" Type="Int32" />
+          <Property Name="SurveyQuestionAnswer" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="EntryBy" Type="Int32" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblSurveySubmitMaster">
+          <Key>
+            <PropertyRef Name="SurveySubmitMasterId" />
+          </Key>
+          <Property Name="SurveySubmitMasterId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="SurveyName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="EntryBy" Type="Int32" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="SurveyID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tblSurveySubmitDetail">
+          <Key>
+            <PropertyRef Name="SurveySubmitDetailId" />
+          </Key>
+          <Property Name="SurveySubmitDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SurveySubmitMasterId" Type="Int32" />
+          <Property Name="QuestionGroupId" Type="Int32" />
+          <Property Name="QuestionGroupName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="QuestionNameId" Type="Int32" />
+          <Property Name="QuestionName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="QuestionTypeId" Type="Int32" />
+          <Property Name="QuestionType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Option01Id" Type="Int32" />
+          <Property Name="Option01Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Option02Id" Type="Int32" />
+          <Property Name="Option02Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Option03Id" Type="Int32" />
+          <Property Name="Option03Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Option04Id" Type="Int32" />
+          <Property Name="Option04Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OptionAnsId" Type="Int32" />
+          <Property Name="OptionAns" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblSurveyMaster">
+          <Key>
+            <PropertyRef Name="SurveyMasterId" />
+          </Key>
+          <Property Name="SurveyMasterId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SurveyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SurveyFrom" Type="DateTime" Precision="0" />
+          <Property Name="SurveyTo" Type="DateTime" Precision="0" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="FinancialYearId" Type="Int32" />
+          <Property Name="EntryBy" Type="Int32" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="DeleteBy" Type="Int32" />
+          <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblSurveyQuestion">
+          <Key>
+            <PropertyRef Name="SurveyQuestionId" />
+          </Key>
+          <Property Name="SurveyQuestionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuestionTitle" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SurveyQuestionTypeId" Type="Int32" />
+          <Property Name="SurveyQuestionGroupId" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="EntryBy" Type="Int32" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblSurveyQuestionGroup">
+          <Key>
+            <PropertyRef Name="SurveyQuestionGroupId" />
+          </Key>
+          <Property Name="SurveyQuestionGroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SurveyQuestionGroup" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="EntryBy" Type="Int32" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblSurveyDetail">
+          <Key>
+            <PropertyRef Name="SurveyDetailsId" />
+          </Key>
+          <Property Name="SurveyDetailsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SurveyMasterId" Type="Int32" />
+          <Property Name="SurveyQuestionId" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="tblYearlyHoliday">
+          <Key>
+            <PropertyRef Name="YearlyHolidayId" />
+          </Key>
+          <Property Name="YearlyHolidayId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="YearlyHolidayFromDate" Type="DateTime" Precision="3" />
+          <Property Name="YearlyHolidayToDate" Type="DateTime" Precision="3" />
+          <Property Name="Details" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="EntryBy" Type="Int32" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="DeleteBy" Type="Int32" />
+          <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblFoodRate">
+          <Key>
+            <PropertyRef Name="FoodRateId" />
+          </Key>
+          <Property Name="FoodRateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="EmployeeType" Type="Int32" />
+          <Property Name="EffectiveDate" Type="DateTime" Precision="3" />
+          <Property Name="Rate" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="EntryBy" Type="Int32" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="DeleteBy" Type="Int32" />
+          <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblLunchAllowDetail">
+          <Key>
+            <PropertyRef Name="LunchAllowDetailsID" />
+          </Key>
+          <Property Name="LunchAllowDetailsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LunchAllowID" Type="Int32" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="RateId" Type="Int32" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="Rate" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Status" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="fromDate" Type="DateTime" Precision="3" />
+          <Property Name="ToDate" Type="DateTime" Precision="3" />
+          <Property Name="InactiveDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblLunchAllowMaster">
+          <Key>
+            <PropertyRef Name="LunchAllowID" />
+          </Key>
+          <Property Name="LunchAllowID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntryBy" Type="Int32" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="DeleteBy" Type="Int32" />
+          <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblContractualEmpManage">
+          <Key>
+            <PropertyRef Name="ContractualEmpManageId" />
+          </Key>
+          <Property Name="ContractualEmpManageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsExtension" Type="Boolean" />
+          <Property Name="IsRenew" Type="Boolean" />
+          <Property Name="IsPermanentToContractual" Type="Boolean" />
+          <Property Name="IsContractualToPermanent" Type="Boolean" />
+          <Property Name="IsSalaryIncrement" Type="Boolean" />
+          <Property Name="IsNoIncrement" Type="Boolean" />
+          <Property Name="IsFacilityIncluded" Type="Boolean" />
+          <Property Name="IsNoFacility" Type="Boolean" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EntryBy" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="ExtensionFromDate" Type="DateTime" Precision="3" />
+          <Property Name="ExtensionToDate" Type="DateTime" Precision="3" />
+          <Property Name="RenewStartDate" Type="DateTime" Precision="3" />
+          <Property Name="RenewToDate" Type="DateTime" Precision="3" />
+          <Property Name="PermanentToContractualEffectiveDate" Type="DateTime" Precision="3" />
+          <Property Name="ContractualToPermanentDate" Type="DateTime" Precision="3" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="ActionStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="DeleteBy" Type="Int32" />
+          <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+          <Property Name="EffectiveDate" Type="DateTime" Precision="3" />
+          <Property Name="DivisionId" Type="Int32" />
+          <Property Name="DivisionWId" Type="Int32" />
+          <Property Name="DepartmentId" Type="Int32" />
+          <Property Name="SectionId" Type="Int32" />
+          <Property Name="SubSectionId" Type="Int32" />
+          <Property Name="EmployeeCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DesignationId" Type="Int32" />
+          <Property Name="EmpTypeId" Type="Int32" />
+          <Property Name="SalaryLoationId" Type="Int32" />
+          <Property Name="JobLocationId" Type="Int32" />
+          <Property Name="SalaryGradeId" Type="Int32" />
+          <Property Name="SalaryStepId" Type="Int32" />
+          <Property Name="ContractEndDate" Type="DateTime" Precision="3" />
+          <Property Name="PermanentToContractualEndDate" Type="DateTime" Precision="3" />
+          <Property Name="AutoProcess" Type="Boolean" />
+          <Property Name="ActionStatus2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsSelfApp" Type="Boolean" />
+          <Property Name="ContractPreiod" Type="Int32" />
+          <Property Name="IsAutoUpdate12" Type="Boolean" />
+          <Property Name="IsSMCFundedProjectstoSMCContract" Type="Int32" />
+          <Property Name="IsSMCContracttoSMCFundedProjects" Type="Int32" />
+          <Property Name="isToProject" Type="Boolean" />
+          <Property Name="isReappointment" Type="Boolean" />
+          <Property Name="TypeOfPromotion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsRedesignation" Type="Boolean" />
+          <Property Name="FromProject" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ToProject" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblTraingingHeading">
+          <Key>
+            <PropertyRef Name="TraingingHeadingId" />
+          </Key>
+          <Property Name="TraingingHeadingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TraingingHeading" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TraingingSerial" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="EntryBy" Type="Int32" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="DeleteBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblTrainingTopic">
+          <Key>
+            <PropertyRef Name="TopicId" />
+          </Key>
+          <Property Name="TopicId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TrainingTopicTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblTrainingSetupTopic">
+          <Key>
+            <PropertyRef Name="TrainingTopicId" />
+          </Key>
+          <Property Name="TrainingTopicId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TrainingTopic" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TraingingSerial" Type="Int32" />
+          <Property Name="TraingingHeadingId" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="EntryBy" Type="Int32" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="DeleteBy" Type="Int32" />
+          <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDelete" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="tblIncrement">
+          <Key>
+            <PropertyRef Name="IncrementId" />
+          </Key>
+          <Property Name="IncrementId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="FinancialYearId" Type="Int32" />
+          <Property Name="DivisionId" Type="Int32" />
+          <Property Name="DivisionWId" Type="Int32" />
+          <Property Name="DepartmentId" Type="Int32" />
+          <Property Name="SectionId" Type="Int32" />
+          <Property Name="SubSectionId" Type="Int32" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="EmployeeCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DesignationId" Type="Int32" />
+          <Property Name="EmpTypeId" Type="Int32" />
+          <Property Name="SalaryLoationId" Type="Int32" />
+          <Property Name="JobLocationId" Type="Int32" />
+          <Property Name="SalaryGradeId" Type="Int32" />
+          <Property Name="CurrentStepId" Type="Int32" />
+          <Property Name="IncrementalStepId" Type="Int32" />
+          <Property Name="FeedSalary" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="EntryBy" Type="Int32" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="EffectiveDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="DeleteBy" Type="Int32" />
+          <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+          <Property Name="AutoProcess" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IncrementTypeId" Type="Int32" />
+          <Property Name="ActionStatus2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsSelfApp" Type="Boolean" />
+          <Property Name="ActionStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblEmployeePromotionEntry">
+          <Key>
+            <PropertyRef Name="EmployeePromotionEntryId" />
+          </Key>
+          <Property Name="EmployeePromotionEntryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="FinancialYearId" Type="Int32" />
+          <Property Name="PSalGradeId" Type="Int32" />
+          <Property Name="PStepId" Type="Int32" />
+          <Property Name="PDesignationId" Type="Int32" />
+          <Property Name="PRepEmpId" Type="Int32" />
+          <Property Name="NSalGradeId" Type="Int32" />
+          <Property Name="NSalaryStepId" Type="Int32" />
+          <Property Name="NDesignationId" Type="Int32" />
+          <Property Name="NRepEmpId" Type="Int32" />
+          <Property Name="NPromoTypeId" Type="Int32" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Effectivedate" Type="DateTime" Precision="3" />
+          <Property Name="EntryBy" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="DeleteBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+          <Property Name="DivisionId" Type="Int32" />
+          <Property Name="DivisionWId" Type="Int32" />
+          <Property Name="DepartmentId" Type="Int32" />
+          <Property Name="SectionId" Type="Int32" />
+          <Property Name="SubSectionId" Type="Int32" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="EmployeeCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="EmpTypeId" Type="Int32" />
+          <Property Name="SalaryLoationId" Type="Int32" />
+          <Property Name="JobLocationId" Type="Int32" />
+          <Property Name="IsPromotion" Type="Boolean" />
+          <Property Name="AutoProcess" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsReappointment" Type="Boolean" />
+          <Property Name="IsSelfApp" Type="Boolean" />
+          <Property Name="ActionStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ActionStatus2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsB_DirectlySupervisor" Type="Boolean" />
+          <Property Name="IsB_ReportingBody" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="tblEmployeeJobLeft">
+          <Key>
+            <PropertyRef Name="EmployeeJobLeftId" />
+          </Key>
+          <Property Name="EmployeeJobLeftId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="JobLeftTypeId" Type="Int32" />
+          <Property Name="JobLeftDate" Type="DateTime" Precision="3" />
+          <Property Name="Reason" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="EntryBy" Type="Int32" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="IsClearanceForm" Type="Boolean" />
+          <Property Name="IsExitInterview" Type="Boolean" />
+          <Property Name="SubmissionDate" Type="DateTime" Precision="3" />
+          <Property Name="DeleteBy" Type="Int32" />
+          <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="IsJobLeft" Type="Boolean" />
+          <Property Name="AutoProcess" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ActionStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ActionStatus2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsSelfApp" Type="Boolean" />
+          <Property Name="IsAutoUpdate12" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="tblEmpTransferAndRedesignation">
+          <Key>
+            <PropertyRef Name="EmpTransferAndRedesignationId" />
+          </Key>
+          <Property Name="EmpTransferAndRedesignationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="FinancialYearId" Type="Int32" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="EmpTypeId" Type="Int32" />
+          <Property Name="IsInterCompanyTransfer" Type="Boolean" />
+          <Property Name="IsOnlyTransfer" Type="Boolean" />
+          <Property Name="NewCompanyId" Type="Int32" />
+          <Property Name="NewSalaryLocationId" Type="Int32" />
+          <Property Name="NewJobLocationId" Type="Int32" />
+          <Property Name="NewDivisionId" Type="Int32" />
+          <Property Name="NewWingId" Type="Int32" />
+          <Property Name="NewDepartmentId" Type="Int32" />
+          <Property Name="NewSectionId" Type="Int32" />
+          <Property Name="NewSubSectionId" Type="Int32" />
+          <Property Name="NewEmpReportingBodyId" Type="Int32" />
+          <Property Name="OldCompanyId" Type="Int32" />
+          <Property Name="OldSalaryLocationId" Type="Int32" />
+          <Property Name="OldJobLocationId" Type="Int32" />
+          <Property Name="OldDivisionId" Type="Int32" />
+          <Property Name="OldWingId" Type="Int32" />
+          <Property Name="OldDepartmentId" Type="Int32" />
+          <Property Name="OldSectionId" Type="Int32" />
+          <Property Name="OldSubSectionId" Type="Int32" />
+          <Property Name="OldReportingBodyID" Type="Int32" />
+          <Property Name="EffectiveDate" Type="DateTime" Precision="3" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EntryBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="DeleteBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+          <Property Name="AutoProcess" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeCode" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IsSelfApp" Type="Boolean" />
+          <Property Name="ActionStatus" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ActionStatus2" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IsReappointment" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="tblLunchAllowDetailsLog">
+          <Key>
+            <PropertyRef Name="LunchAllowDetailsLogID" />
+          </Key>
+          <Property Name="LunchAllowDetailsLogID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LunchAllowDetailsID" Type="Int32" />
+          <Property Name="LunchAllowID" Type="Int32" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="RateId" Type="Int32" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="Rate" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Status" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="fromDate" Type="DateTime" Precision="3" />
+          <Property Name="ToDate" Type="DateTime" Precision="3" />
+          <Property Name="InactiveDate" Type="DateTime" Precision="3" />
+          <Property Name="EntryBy" Type="Int32" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblunchGuestInternInformation">
+          <Key>
+            <PropertyRef Name="GuestInternInformationId" />
+          </Key>
+          <Property Name="GuestInternInformationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="DivisionId" Type="Int32" />
+          <Property Name="DepartmentId" Type="Int32" />
+          <Property Name="LunchDate" Type="DateTime" Precision="3" />
+          <Property Name="ReferancePersonId" Type="Int32" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EntryBy" Type="Int32" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="LunchToDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="MasterId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tblLunchTimeSet">
+          <Key>
+            <PropertyRef Name="LunchTimeSetId" />
+          </Key>
+          <Property Name="LunchTimeSetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LunchTime" Type="Time" Precision="7" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblunchGuestInternInformationMaster">
+          <Key>
+            <PropertyRef Name="GuestInternInformationMasterId" />
+          </Key>
+          <Property Name="GuestInternInformationMasterId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="DivisionId" Type="Int32" />
+          <Property Name="DepartmentId" Type="Int32" />
+          <Property Name="LunchDate" Type="DateTime" Precision="3" />
+          <Property Name="ReferancePersonId" Type="Int32" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EntryBy" Type="Int32" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="LunchToDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HRIS_SMC_DBModelStoreContainer" CdmEntityContainer="HRIS_SMC_DBEntities">
+          <EntitySetMapping Name="tblVivaSetupInfoes">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblVivaSetupInfo">
+              <MappingFragment StoreEntitySet="tblVivaSetupInfo">
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="VivaId" ColumnName="VivaId" />
+                <ScalarProperty Name="VivaName" ColumnName="VivaName" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="DeleteBy" ColumnName="DeleteBy" />
+                <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblITMayConcerns">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblITMayConcern">
+              <MappingFragment StoreEntitySet="tblITMayConcern">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="ToEmployeeId" ColumnName="ToEmployeeId" />
+                <ScalarProperty Name="ThirdPara" ColumnName="ThirdPara" />
+                <ScalarProperty Name="SeceondPara" ColumnName="SeceondPara" />
+                <ScalarProperty Name="FirstPara" ColumnName="FirstPara" />
+                <ScalarProperty Name="Header" ColumnName="Header" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="ITMayConcernId" ColumnName="ITMayConcernId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblInterviewMarksDetails">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblInterviewMarksDetail">
+              <MappingFragment StoreEntitySet="tblInterviewMarksDetails">
+                <ScalarProperty Name="WrittenOutOf" ColumnName="WrittenOutOf" />
+                <ScalarProperty Name="OtherOutOf" ColumnName="OtherOutOf" />
+                <ScalarProperty Name="VivaOutOf" ColumnName="VivaOutOf" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="Tag" ColumnName="Tag" />
+                <ScalarProperty Name="OtherMarks" ColumnName="OtherMarks" />
+                <ScalarProperty Name="WrittenMarks" ColumnName="WrittenMarks" />
+                <ScalarProperty Name="VivaMarks" ColumnName="VivaMarks" />
+                <ScalarProperty Name="VivaId" ColumnName="VivaId" />
+                <ScalarProperty Name="CandidateID" ColumnName="CandidateID" />
+                <ScalarProperty Name="BoardDetailsId" ColumnName="BoardDetailsId" />
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
+                <ScalarProperty Name="InterviewMarksDetailsId" ColumnName="InterviewMarksDetailsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblVivaDetailsMarks">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblVivaDetailsMark">
+              <MappingFragment StoreEntitySet="tblVivaDetailsMark">
+                <ScalarProperty Name="VivaOutOf" ColumnName="VivaOutOf" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="VivaMarks" ColumnName="VivaMarks" />
+                <ScalarProperty Name="VivaId" ColumnName="VivaId" />
+                <ScalarProperty Name="CandidateID" ColumnName="CandidateID" />
+                <ScalarProperty Name="BoardDetailsId" ColumnName="BoardDetailsId" />
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
+                <ScalarProperty Name="VivaDetailsMarkId" ColumnName="VivaDetailsMarkId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblInterviewBoardMemberFileUps">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblInterviewBoardMemberFileUp">
+              <MappingFragment StoreEntitySet="tblInterviewBoardMemberFileUp">
+                <ScalarProperty Name="FileUp" ColumnName="FileUp" />
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="InterviewBoardMemberFileUpId" ColumnName="InterviewBoardMemberFileUpId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSeparationITMayConcerns">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblSeparationITMayConcern">
+              <MappingFragment StoreEntitySet="tblSeparationITMayConcern">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="ToEmployeeId" ColumnName="ToEmployeeId" />
+                <ScalarProperty Name="ThirdPara" ColumnName="ThirdPara" />
+                <ScalarProperty Name="SeceondPara" ColumnName="SeceondPara" />
+                <ScalarProperty Name="FirstPara" ColumnName="FirstPara" />
+                <ScalarProperty Name="Header" ColumnName="Header" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="JobleftTypeID" ColumnName="JobleftTypeID" />
+                <ScalarProperty Name="SeparationITMayConcern" ColumnName="SeparationITMayConcern" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DELtblInterviewBoardMemberFileUps">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.DELtblInterviewBoardMemberFileUp">
+              <MappingFragment StoreEntitySet="DELtblInterviewBoardMemberFileUp">
+                <ScalarProperty Name="FileUp" ColumnName="FileUp" />
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="InterviewBoardMemberFileUpId" ColumnName="InterviewBoardMemberFileUpId" />
+                <ScalarProperty Name="DELInterviewBoardMemberFileUpId" ColumnName="DELInterviewBoardMemberFileUpId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCandidateCvUploads">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblCandidateCvUpload">
+              <MappingFragment StoreEntitySet="tblCandidateCvUpload">
+                <ScalarProperty Name="Cv_Upload" ColumnName="Cv_Upload" />
+                <ScalarProperty Name="CandidateID" ColumnName="CandidateID" />
+                <ScalarProperty Name="CvUploadId" ColumnName="CvUploadId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblInterViewCandidateSelections">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblInterViewCandidateSelection">
+              <MappingFragment StoreEntitySet="tblInterViewCandidateSelection">
+                <ScalarProperty Name="CandidateStatus" ColumnName="CandidateStatus" />
+                <ScalarProperty Name="JobID" ColumnName="JobID" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="CandidateID" ColumnName="CandidateID" />
+                <ScalarProperty Name="InterViewCandidateSelectionId" ColumnName="InterViewCandidateSelectionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblMedicalCheckUps">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblMedicalCheckUp">
+              <MappingFragment StoreEntitySet="tblMedicalCheckUp">
+                <ScalarProperty Name="MasterId" ColumnName="MasterId" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="EmpInfoId" ColumnName="EmpInfoId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="MedicalCheckUpId" ColumnName="MedicalCheckUpId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblMedicalCheckUpMasters">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblMedicalCheckUpMaster">
+              <MappingFragment StoreEntitySet="tblMedicalCheckUpMaster">
+                <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
+                <ScalarProperty Name="DeleteBy" ColumnName="DeleteBy" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="MedicalCheckUpMasterId" ColumnName="MedicalCheckUpMasterId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DEltblInterviewCandidateInfoes">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.DEltblInterviewCandidateInfo">
+              <MappingFragment StoreEntitySet="DEltblInterviewCandidateInfo">
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="InternalNote" ColumnName="InternalNote" />
+                <ScalarProperty Name="ApproveDate" ColumnName="ApproveDate" />
+                <ScalarProperty Name="ApproveBy" ColumnName="ApproveBy" />
+                <ScalarProperty Name="VerifiedDate" ColumnName="VerifiedDate" />
+                <ScalarProperty Name="VerifiedBy" ColumnName="VerifiedBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="Updateby" ColumnName="Updateby" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="ApprovalStatus" ColumnName="ApprovalStatus" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="ExpectedSalary" ColumnName="ExpectedSalary" />
+                <ScalarProperty Name="CurrentSalary" ColumnName="CurrentSalary" />
+                <ScalarProperty Name="PhotoUploadID" ColumnName="PhotoUploadID" />
+                <ScalarProperty Name="CvUploadID" ColumnName="CvUploadID" />
+                <ScalarProperty Name="LastResultOutOf" ColumnName="LastResultOutOf" />
+                <ScalarProperty Name="LastResultCGPA" ColumnName="LastResultCGPA" />
+                <ScalarProperty Name="LastResultDivision" ColumnName="LastResultDivision" />
+                <ScalarProperty Name="LastResultType" ColumnName="LastResultType" />
+                <ScalarProperty Name="LastPassingYear" ColumnName="LastPassingYear" />
+                <ScalarProperty Name="LastMajor" ColumnName="LastMajor" />
+                <ScalarProperty Name="LastExam" ColumnName="LastExam" />
+                <ScalarProperty Name="LastPosition" ColumnName="LastPosition" />
+                <ScalarProperty Name="LastOrganization" ColumnName="LastOrganization" />
+                <ScalarProperty Name="TotalYearsOfExp" ColumnName="TotalYearsOfExp" />
+                <ScalarProperty Name="EmailAdress" ColumnName="EmailAdress" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="CandidateName" ColumnName="CandidateName" />
+                <ScalarProperty Name="JobID" ColumnName="JobID" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="CandidateID" ColumnName="CandidateID" />
+                <ScalarProperty Name="DELCandidateID" ColumnName="DELCandidateID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCandidateSelecTionStatus">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblCandidateSelecTionStatu">
+              <MappingFragment StoreEntitySet="tblCandidateSelecTionStatus">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CandidateSelecTionStatusId" ColumnName="CandidateSelecTionStatusId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTrainingRecordMasters">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblTrainingRecordMaster">
+              <MappingFragment StoreEntitySet="tblTrainingRecordMaster">
+                <ScalarProperty Name="ActionStatus2" ColumnName="ActionStatus2" />
+                <ScalarProperty Name="ApproveDate" ColumnName="ApproveDate" />
+                <ScalarProperty Name="ApproveBy" ColumnName="ApproveBy" />
+                <ScalarProperty Name="ActionStatus" ColumnName="ActionStatus" />
+                <ScalarProperty Name="CostPerParticipant" ColumnName="CostPerParticipant" />
+                <ScalarProperty Name="GrandTotal" ColumnName="GrandTotal" />
+                <ScalarProperty Name="TrainingRecordNo" ColumnName="TrainingRecordNo" />
+                <ScalarProperty Name="DeleteBy" ColumnName="DeleteBy" />
+                <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="TotalHoure" ColumnName="TotalHoure" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="NoOfDays" ColumnName="NoOfDays" />
+                <ScalarProperty Name="TrainingDays" ColumnName="TrainingDays" />
+                <ScalarProperty Name="OtherCost" ColumnName="OtherCost" />
+                <ScalarProperty Name="LogisticCost" ColumnName="LogisticCost" />
+                <ScalarProperty Name="TrainingCost" ColumnName="TrainingCost" />
+                <ScalarProperty Name="TrainingVenue" ColumnName="TrainingVenue" />
+                <ScalarProperty Name="TrainingOrgLocation" ColumnName="TrainingOrgLocation" />
+                <ScalarProperty Name="TrainingOrgId" ColumnName="TrainingOrgId" />
+                <ScalarProperty Name="TrainingDetails" ColumnName="TrainingDetails" />
+                <ScalarProperty Name="TrainingTitle" ColumnName="TrainingTitle" />
+                <ScalarProperty Name="TrainingBudget2Id" ColumnName="TrainingBudget2Id" />
+                <ScalarProperty Name="TrainingTypeId" ColumnName="TrainingTypeId" />
+                <ScalarProperty Name="FinancialYearId" ColumnName="FinancialYearId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="TrainingRecordMasterId" ColumnName="TrainingRecordMasterId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblEmployeeApprovalByOpearationDetails">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblEmployeeApprovalByOpearationDetail">
+              <MappingFragment StoreEntitySet="tblEmployeeApprovalByOpearationDetail">
+                <ScalarProperty Name="Isheadperson" ColumnName="Isheadperson" />
+                <ScalarProperty Name="Serial" ColumnName="Serial" />
+                <ScalarProperty Name="EmpInfoId" ColumnName="EmpInfoId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Operation" ColumnName="Operation" />
+                <ScalarProperty Name="MasterId" ColumnName="MasterId" />
+                <ScalarProperty Name="EmployeeApprovalByOpearationDetailId" ColumnName="EmployeeApprovalByOpearationDetailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSurveyQuestionAnswers">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblSurveyQuestionAnswer">
+              <MappingFragment StoreEntitySet="tblSurveyQuestionAnswer">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="SurveyQuestionAnswer" ColumnName="SurveyQuestionAnswer" />
+                <ScalarProperty Name="SurveyQuestionGroupId" ColumnName="SurveyQuestionGroupId" />
+                <ScalarProperty Name="SurveyQuestionTitleId" ColumnName="SurveyQuestionTitleId" />
+                <ScalarProperty Name="SurveyQuestionAnswerId" ColumnName="SurveyQuestionAnswerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSurveySubmitMasters">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblSurveySubmitMaster">
+              <MappingFragment StoreEntitySet="tblSurveySubmitMaster">
+                <ScalarProperty Name="SurveyID" ColumnName="SurveyID" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="SurveyName" ColumnName="SurveyName" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="SurveySubmitMasterId" ColumnName="SurveySubmitMasterId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSurveySubmitDetails">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblSurveySubmitDetail">
+              <MappingFragment StoreEntitySet="tblSurveySubmitDetail">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="OptionAns" ColumnName="OptionAns" />
+                <ScalarProperty Name="OptionAnsId" ColumnName="OptionAnsId" />
+                <ScalarProperty Name="Option04Name" ColumnName="Option04Name" />
+                <ScalarProperty Name="Option04Id" ColumnName="Option04Id" />
+                <ScalarProperty Name="Option03Name" ColumnName="Option03Name" />
+                <ScalarProperty Name="Option03Id" ColumnName="Option03Id" />
+                <ScalarProperty Name="Option02Name" ColumnName="Option02Name" />
+                <ScalarProperty Name="Option02Id" ColumnName="Option02Id" />
+                <ScalarProperty Name="Option01Name" ColumnName="Option01Name" />
+                <ScalarProperty Name="Option01Id" ColumnName="Option01Id" />
+                <ScalarProperty Name="QuestionType" ColumnName="QuestionType" />
+                <ScalarProperty Name="QuestionTypeId" ColumnName="QuestionTypeId" />
+                <ScalarProperty Name="QuestionName" ColumnName="QuestionName" />
+                <ScalarProperty Name="QuestionNameId" ColumnName="QuestionNameId" />
+                <ScalarProperty Name="QuestionGroupName" ColumnName="QuestionGroupName" />
+                <ScalarProperty Name="QuestionGroupId" ColumnName="QuestionGroupId" />
+                <ScalarProperty Name="SurveySubmitMasterId" ColumnName="SurveySubmitMasterId" />
+                <ScalarProperty Name="SurveySubmitDetailId" ColumnName="SurveySubmitDetailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSurveyMasters">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblSurveyMaster">
+              <MappingFragment StoreEntitySet="tblSurveyMaster">
+                <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
+                <ScalarProperty Name="DeleteBy" ColumnName="DeleteBy" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="FinancialYearId" ColumnName="FinancialYearId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="SurveyTo" ColumnName="SurveyTo" />
+                <ScalarProperty Name="SurveyFrom" ColumnName="SurveyFrom" />
+                <ScalarProperty Name="SurveyName" ColumnName="SurveyName" />
+                <ScalarProperty Name="SurveyMasterId" ColumnName="SurveyMasterId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSurveyQuestions">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblSurveyQuestion">
+              <MappingFragment StoreEntitySet="tblSurveyQuestion">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="SurveyQuestionGroupId" ColumnName="SurveyQuestionGroupId" />
+                <ScalarProperty Name="SurveyQuestionTypeId" ColumnName="SurveyQuestionTypeId" />
+                <ScalarProperty Name="QuestionTitle" ColumnName="QuestionTitle" />
+                <ScalarProperty Name="SurveyQuestionId" ColumnName="SurveyQuestionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSurveyQuestionGroups">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblSurveyQuestionGroup">
+              <MappingFragment StoreEntitySet="tblSurveyQuestionGroup">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="SurveyQuestionGroup" ColumnName="SurveyQuestionGroup" />
+                <ScalarProperty Name="SurveyQuestionGroupId" ColumnName="SurveyQuestionGroupId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSurveyDetails">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblSurveyDetail">
+              <MappingFragment StoreEntitySet="tblSurveyDetails">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="SurveyQuestionId" ColumnName="SurveyQuestionId" />
+                <ScalarProperty Name="SurveyMasterId" ColumnName="SurveyMasterId" />
+                <ScalarProperty Name="SurveyDetailsId" ColumnName="SurveyDetailsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblYearlyHolidays">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblYearlyHoliday">
+              <MappingFragment StoreEntitySet="tblYearlyHoliday">
+                <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
+                <ScalarProperty Name="DeleteBy" ColumnName="DeleteBy" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="YearlyHolidayToDate" ColumnName="YearlyHolidayToDate" />
+                <ScalarProperty Name="YearlyHolidayFromDate" ColumnName="YearlyHolidayFromDate" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="YearlyHolidayId" ColumnName="YearlyHolidayId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFoodRates">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblFoodRate">
+              <MappingFragment StoreEntitySet="tblFoodRate">
+                <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
+                <ScalarProperty Name="DeleteBy" ColumnName="DeleteBy" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
+                <ScalarProperty Name="EmployeeType" ColumnName="EmployeeType" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="FoodRateId" ColumnName="FoodRateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblLunchAllowDetails">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblLunchAllowDetail">
+              <MappingFragment StoreEntitySet="tblLunchAllowDetails">
+                <ScalarProperty Name="InactiveDate" ColumnName="InactiveDate" />
+                <ScalarProperty Name="ToDate" ColumnName="ToDate" />
+                <ScalarProperty Name="fromDate" ColumnName="fromDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="RateId" ColumnName="RateId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="LunchAllowID" ColumnName="LunchAllowID" />
+                <ScalarProperty Name="LunchAllowDetailsID" ColumnName="LunchAllowDetailsID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblLunchAllowMasters">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblLunchAllowMaster">
+              <MappingFragment StoreEntitySet="tblLunchAllowMaster">
+                <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
+                <ScalarProperty Name="DeleteBy" ColumnName="DeleteBy" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="LunchAllowID" ColumnName="LunchAllowID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblContractualEmpManages">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblContractualEmpManage">
+              <MappingFragment StoreEntitySet="tblContractualEmpManage">
+                <ScalarProperty Name="ToProject" ColumnName="ToProject" />
+                <ScalarProperty Name="FromProject" ColumnName="FromProject" />
+                <ScalarProperty Name="IsRedesignation" ColumnName="IsRedesignation" />
+                <ScalarProperty Name="TypeOfPromotion" ColumnName="TypeOfPromotion" />
+                <ScalarProperty Name="isReappointment" ColumnName="isReappointment" />
+                <ScalarProperty Name="isToProject" ColumnName="isToProject" />
+                <ScalarProperty Name="IsSMCContracttoSMCFundedProjects" ColumnName="IsSMCContracttoSMCFundedProjects" />
+                <ScalarProperty Name="IsSMCFundedProjectstoSMCContract" ColumnName="IsSMCFundedProjectstoSMCContract" />
+                <ScalarProperty Name="IsAutoUpdate12" ColumnName="IsAutoUpdate12" />
+                <ScalarProperty Name="ContractPreiod" ColumnName="ContractPreiod" />
+                <ScalarProperty Name="IsSelfApp" ColumnName="IsSelfApp" />
+                <ScalarProperty Name="ActionStatus2" ColumnName="ActionStatus2" />
+                <ScalarProperty Name="AutoProcess" ColumnName="AutoProcess" />
+                <ScalarProperty Name="PermanentToContractualEndDate" ColumnName="PermanentToContractualEndDate" />
+                <ScalarProperty Name="ContractEndDate" ColumnName="ContractEndDate" />
+                <ScalarProperty Name="SalaryStepId" ColumnName="SalaryStepId" />
+                <ScalarProperty Name="SalaryGradeId" ColumnName="SalaryGradeId" />
+                <ScalarProperty Name="JobLocationId" ColumnName="JobLocationId" />
+                <ScalarProperty Name="SalaryLoationId" ColumnName="SalaryLoationId" />
+                <ScalarProperty Name="EmpTypeId" ColumnName="EmpTypeId" />
+                <ScalarProperty Name="DesignationId" ColumnName="DesignationId" />
+                <ScalarProperty Name="EmployeeCode" ColumnName="EmployeeCode" />
+                <ScalarProperty Name="SubSectionId" ColumnName="SubSectionId" />
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="DivisionWId" ColumnName="DivisionWId" />
+                <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
+                <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
+                <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
+                <ScalarProperty Name="DeleteBy" ColumnName="DeleteBy" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="ActionStatus" ColumnName="ActionStatus" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="ContractualToPermanentDate" ColumnName="ContractualToPermanentDate" />
+                <ScalarProperty Name="PermanentToContractualEffectiveDate" ColumnName="PermanentToContractualEffectiveDate" />
+                <ScalarProperty Name="RenewToDate" ColumnName="RenewToDate" />
+                <ScalarProperty Name="RenewStartDate" ColumnName="RenewStartDate" />
+                <ScalarProperty Name="ExtensionToDate" ColumnName="ExtensionToDate" />
+                <ScalarProperty Name="ExtensionFromDate" ColumnName="ExtensionFromDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="IsNoFacility" ColumnName="IsNoFacility" />
+                <ScalarProperty Name="IsFacilityIncluded" ColumnName="IsFacilityIncluded" />
+                <ScalarProperty Name="IsNoIncrement" ColumnName="IsNoIncrement" />
+                <ScalarProperty Name="IsSalaryIncrement" ColumnName="IsSalaryIncrement" />
+                <ScalarProperty Name="IsContractualToPermanent" ColumnName="IsContractualToPermanent" />
+                <ScalarProperty Name="IsPermanentToContractual" ColumnName="IsPermanentToContractual" />
+                <ScalarProperty Name="IsRenew" ColumnName="IsRenew" />
+                <ScalarProperty Name="IsExtension" ColumnName="IsExtension" />
+                <ScalarProperty Name="ContractualEmpManageId" ColumnName="ContractualEmpManageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTraingingHeadings">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblTraingingHeading">
+              <MappingFragment StoreEntitySet="tblTraingingHeading">
+                <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
+                <ScalarProperty Name="DeleteBy" ColumnName="DeleteBy" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="TraingingSerial" ColumnName="TraingingSerial" />
+                <ScalarProperty Name="TraingingHeading" ColumnName="TraingingHeading" />
+                <ScalarProperty Name="TraingingHeadingId" ColumnName="TraingingHeadingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTrainingTopics">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblTrainingTopic">
+              <MappingFragment StoreEntitySet="tblTrainingTopic">
+                <ScalarProperty Name="TrainingTopicTitle" ColumnName="TrainingTopicTitle" />
+                <ScalarProperty Name="TopicId" ColumnName="TopicId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTrainingSetupTopics">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblTrainingSetupTopic">
+              <MappingFragment StoreEntitySet="tblTrainingSetupTopic">
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
+                <ScalarProperty Name="DeleteBy" ColumnName="DeleteBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="TraingingHeadingId" ColumnName="TraingingHeadingId" />
+                <ScalarProperty Name="TraingingSerial" ColumnName="TraingingSerial" />
+                <ScalarProperty Name="TrainingTopic" ColumnName="TrainingTopic" />
+                <ScalarProperty Name="TrainingTopicId" ColumnName="TrainingTopicId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblIncrements">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblIncrement">
+              <MappingFragment StoreEntitySet="tblIncrement">
+                <ScalarProperty Name="ActionStatus" ColumnName="ActionStatus" />
+                <ScalarProperty Name="IsSelfApp" ColumnName="IsSelfApp" />
+                <ScalarProperty Name="ActionStatus2" ColumnName="ActionStatus2" />
+                <ScalarProperty Name="IncrementTypeId" ColumnName="IncrementTypeId" />
+                <ScalarProperty Name="AutoProcess" ColumnName="AutoProcess" />
+                <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
+                <ScalarProperty Name="DeleteBy" ColumnName="DeleteBy" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="FeedSalary" ColumnName="FeedSalary" />
+                <ScalarProperty Name="IncrementalStepId" ColumnName="IncrementalStepId" />
+                <ScalarProperty Name="CurrentStepId" ColumnName="CurrentStepId" />
+                <ScalarProperty Name="SalaryGradeId" ColumnName="SalaryGradeId" />
+                <ScalarProperty Name="JobLocationId" ColumnName="JobLocationId" />
+                <ScalarProperty Name="SalaryLoationId" ColumnName="SalaryLoationId" />
+                <ScalarProperty Name="EmpTypeId" ColumnName="EmpTypeId" />
+                <ScalarProperty Name="DesignationId" ColumnName="DesignationId" />
+                <ScalarProperty Name="EmployeeCode" ColumnName="EmployeeCode" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="SubSectionId" ColumnName="SubSectionId" />
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="DivisionWId" ColumnName="DivisionWId" />
+                <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
+                <ScalarProperty Name="FinancialYearId" ColumnName="FinancialYearId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="IncrementId" ColumnName="IncrementId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblEmployeePromotionEntries">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblEmployeePromotionEntry">
+              <MappingFragment StoreEntitySet="tblEmployeePromotionEntry">
+                <ScalarProperty Name="IsB_ReportingBody" ColumnName="IsB_ReportingBody" />
+                <ScalarProperty Name="IsB_DirectlySupervisor" ColumnName="IsB_DirectlySupervisor" />
+                <ScalarProperty Name="ActionStatus2" ColumnName="ActionStatus2" />
+                <ScalarProperty Name="ActionStatus" ColumnName="ActionStatus" />
+                <ScalarProperty Name="IsSelfApp" ColumnName="IsSelfApp" />
+                <ScalarProperty Name="IsReappointment" ColumnName="IsReappointment" />
+                <ScalarProperty Name="AutoProcess" ColumnName="AutoProcess" />
+                <ScalarProperty Name="IsPromotion" ColumnName="IsPromotion" />
+                <ScalarProperty Name="JobLocationId" ColumnName="JobLocationId" />
+                <ScalarProperty Name="SalaryLoationId" ColumnName="SalaryLoationId" />
+                <ScalarProperty Name="EmpTypeId" ColumnName="EmpTypeId" />
+                <ScalarProperty Name="EmployeeCode" ColumnName="EmployeeCode" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="SubSectionId" ColumnName="SubSectionId" />
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="DivisionWId" ColumnName="DivisionWId" />
+                <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
+                <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
+                <ScalarProperty Name="DeleteBy" ColumnName="DeleteBy" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="Effectivedate" ColumnName="Effectivedate" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="NPromoTypeId" ColumnName="NPromoTypeId" />
+                <ScalarProperty Name="NRepEmpId" ColumnName="NRepEmpId" />
+                <ScalarProperty Name="NDesignationId" ColumnName="NDesignationId" />
+                <ScalarProperty Name="NSalaryStepId" ColumnName="NSalaryStepId" />
+                <ScalarProperty Name="NSalGradeId" ColumnName="NSalGradeId" />
+                <ScalarProperty Name="PRepEmpId" ColumnName="PRepEmpId" />
+                <ScalarProperty Name="PDesignationId" ColumnName="PDesignationId" />
+                <ScalarProperty Name="PStepId" ColumnName="PStepId" />
+                <ScalarProperty Name="PSalGradeId" ColumnName="PSalGradeId" />
+                <ScalarProperty Name="FinancialYearId" ColumnName="FinancialYearId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="EmployeePromotionEntryId" ColumnName="EmployeePromotionEntryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblEmployeeJobLefts">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblEmployeeJobLeft">
+              <MappingFragment StoreEntitySet="tblEmployeeJobLeft">
+                <ScalarProperty Name="IsAutoUpdate12" ColumnName="IsAutoUpdate12" />
+                <ScalarProperty Name="IsSelfApp" ColumnName="IsSelfApp" />
+                <ScalarProperty Name="ActionStatus2" ColumnName="ActionStatus2" />
+                <ScalarProperty Name="ActionStatus" ColumnName="ActionStatus" />
+                <ScalarProperty Name="AutoProcess" ColumnName="AutoProcess" />
+                <ScalarProperty Name="IsJobLeft" ColumnName="IsJobLeft" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
+                <ScalarProperty Name="DeleteBy" ColumnName="DeleteBy" />
+                <ScalarProperty Name="SubmissionDate" ColumnName="SubmissionDate" />
+                <ScalarProperty Name="IsExitInterview" ColumnName="IsExitInterview" />
+                <ScalarProperty Name="IsClearanceForm" ColumnName="IsClearanceForm" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="JobLeftDate" ColumnName="JobLeftDate" />
+                <ScalarProperty Name="JobLeftTypeId" ColumnName="JobLeftTypeId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="EmployeeJobLeftId" ColumnName="EmployeeJobLeftId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblEmpTransferAndRedesignations">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblEmpTransferAndRedesignation">
+              <MappingFragment StoreEntitySet="tblEmpTransferAndRedesignation">
+                <ScalarProperty Name="IsReappointment" ColumnName="IsReappointment" />
+                <ScalarProperty Name="ActionStatus2" ColumnName="ActionStatus2" />
+                <ScalarProperty Name="ActionStatus" ColumnName="ActionStatus" />
+                <ScalarProperty Name="IsSelfApp" ColumnName="IsSelfApp" />
+                <ScalarProperty Name="EmployeeCode" ColumnName="EmployeeCode" />
+                <ScalarProperty Name="AutoProcess" ColumnName="AutoProcess" />
+                <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
+                <ScalarProperty Name="DeleteBy" ColumnName="DeleteBy" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
+                <ScalarProperty Name="OldReportingBodyID" ColumnName="OldReportingBodyID" />
+                <ScalarProperty Name="OldSubSectionId" ColumnName="OldSubSectionId" />
+                <ScalarProperty Name="OldSectionId" ColumnName="OldSectionId" />
+                <ScalarProperty Name="OldDepartmentId" ColumnName="OldDepartmentId" />
+                <ScalarProperty Name="OldWingId" ColumnName="OldWingId" />
+                <ScalarProperty Name="OldDivisionId" ColumnName="OldDivisionId" />
+                <ScalarProperty Name="OldJobLocationId" ColumnName="OldJobLocationId" />
+                <ScalarProperty Name="OldSalaryLocationId" ColumnName="OldSalaryLocationId" />
+                <ScalarProperty Name="OldCompanyId" ColumnName="OldCompanyId" />
+                <ScalarProperty Name="NewEmpReportingBodyId" ColumnName="NewEmpReportingBodyId" />
+                <ScalarProperty Name="NewSubSectionId" ColumnName="NewSubSectionId" />
+                <ScalarProperty Name="NewSectionId" ColumnName="NewSectionId" />
+                <ScalarProperty Name="NewDepartmentId" ColumnName="NewDepartmentId" />
+                <ScalarProperty Name="NewWingId" ColumnName="NewWingId" />
+                <ScalarProperty Name="NewDivisionId" ColumnName="NewDivisionId" />
+                <ScalarProperty Name="NewJobLocationId" ColumnName="NewJobLocationId" />
+                <ScalarProperty Name="NewSalaryLocationId" ColumnName="NewSalaryLocationId" />
+                <ScalarProperty Name="NewCompanyId" ColumnName="NewCompanyId" />
+                <ScalarProperty Name="IsOnlyTransfer" ColumnName="IsOnlyTransfer" />
+                <ScalarProperty Name="IsInterCompanyTransfer" ColumnName="IsInterCompanyTransfer" />
+                <ScalarProperty Name="EmpTypeId" ColumnName="EmpTypeId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="FinancialYearId" ColumnName="FinancialYearId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="EmpTransferAndRedesignationId" ColumnName="EmpTransferAndRedesignationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblLunchAllowDetailsLogs">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblLunchAllowDetailsLog">
+              <MappingFragment StoreEntitySet="tblLunchAllowDetailsLog">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="InactiveDate" ColumnName="InactiveDate" />
+                <ScalarProperty Name="ToDate" ColumnName="ToDate" />
+                <ScalarProperty Name="fromDate" ColumnName="fromDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="RateId" ColumnName="RateId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="LunchAllowID" ColumnName="LunchAllowID" />
+                <ScalarProperty Name="LunchAllowDetailsID" ColumnName="LunchAllowDetailsID" />
+                <ScalarProperty Name="LunchAllowDetailsLogID" ColumnName="LunchAllowDetailsLogID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblunchGuestInternInformations">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblunchGuestInternInformation">
+              <MappingFragment StoreEntitySet="tblunchGuestInternInformation">
+                <ScalarProperty Name="MasterId" ColumnName="MasterId" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="LunchToDate" ColumnName="LunchToDate" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="ReferancePersonId" ColumnName="ReferancePersonId" />
+                <ScalarProperty Name="LunchDate" ColumnName="LunchDate" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="GuestInternInformationId" ColumnName="GuestInternInformationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblLunchTimeSets">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblLunchTimeSet">
+              <MappingFragment StoreEntitySet="tblLunchTimeSet">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="LunchTime" ColumnName="LunchTime" />
+                <ScalarProperty Name="LunchTimeSetId" ColumnName="LunchTimeSetId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblunchGuestInternInformationMasters">
+            <EntityTypeMapping TypeName="HRIS_SMC_DBModel.tblunchGuestInternInformationMaster">
+              <MappingFragment StoreEntitySet="tblunchGuestInternInformationMaster">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="LunchToDate" ColumnName="LunchToDate" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="ReferancePersonId" ColumnName="ReferancePersonId" />
+                <ScalarProperty Name="LunchDate" ColumnName="LunchDate" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="GuestInternInformationMasterId" ColumnName="GuestInternInformationMasterId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
